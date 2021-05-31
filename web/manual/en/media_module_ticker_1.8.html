@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>SFC Technology Documentation</title>
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!-- favicon -->
+    <link href="../img/favicon.ico" rel="shortcut icon" />
+
+    <!-- Bootstrap -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+    <!-- Stylesheets -->
+    <link href="../manual.css" rel="stylesheet" media="screen">
+
+    <!-- META -->
+    <meta name="keywords" content="SFC Technology Documentation" />
+    <meta name="description" content="SFC Technology is an open source digital signage solution. It supports all main media types and can be interfaced to other sources of data using CSV, Databases or RSS." />
+</head>
+
+<body data-toc="widgets">
+
+    <nav id="top-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#ss-navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                <a href="#" class="navbar-brand">SFC Technology Documentation</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="ss-navbar">
+                <ul class="nav navbar-nav">
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="ss_body container">
+        <div class="row">
+            <div class="col-md-3">
+                <ul id="side-nav" class="nav nav-pills nav-stacked">
+                    <li><a href="index.html" data-toc-name="tour">Tour</a></li>
+                    <li><a href="users.html" data-toc-name="users">Users</a></li>
+                    <li><a href="displays.html" data-toc-name="displays">Displays</a></li>
+                    <li><a href="layouts.html" data-toc-name="layouts">Layouts</a></li>
+                    <li><a href="media.html" data-toc-name="widgets">Media</a></li>
+                    <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+                    <html>
+
+                    <body>
+                        <ul>
+                            <li><a href="media_modules.html">Modules</a></li>
+                            <li><a href="media_module_audio.html">Audio</a></li>
+                            <li><a href="media_module_calendar.html">Calendar</a></li>
+                            <li><a href="media_module_chart.html">Chart</a></li>
+                            <li><a href="media_module_clock.html">Clock</a></li>
+                            <li><a href="media_module_currencies.html">Currencies</a></li>
+                            <li><a href="media_module_dataset_ticker.html">DataSet Ticker</a></li>
+                            <li><a href="media_module_dataset_view.html">DataSet View</a></li>
+                            <li><a href="media_module_embedded.html">Embedded</a></li>
+                            <li><a href="media_module_flash.html">Flash</a></li>
+                            <li><a href="media_module_googletraffic.html">Google Traffic</a></li>
+                            <li><a href="media_module_hls.html">HLS</a></li>
+                            <li><a href="media_module_htmlpackage.html">HTML Package</a></li>
+                            <li><a href="media_module_image.html">Image</a></li>
+                            <li><a href="media_module_localvideo.html">Local Video</a></li>
+                            <li><a href="media_module_notifications.html">Notifications</a></li>
+                            <li><a href="media_module_pdf.html">PDF</a></li>
+                            <li><a href="media_module_powerpoint.html">PowerPoint</a></li>
+                            <li><a href="media_module_shellcommand.html">Shell Command</a></li>
+                            <li><a href="media_module_stocks.html">Stocks</a></li>
+                            <li><a href="media_module_subplaylist.html">Sub Playlist</a></li>
+                            <li><a href="media_module_text.html">Text</a></li>
+                            <li><a href="media_module_ticker.html">Ticker</a></li>
+                            <li><a href="media_module_twitter.html">Twitter</a></li>
+                            <li><a href="media_module_twitter_metro.html">Twitter Metro</a></li>
+                            <li><a href="media_module_video.html">Video</a></li>
+                            <li><a href="media_module_video_in.html">Video In</a></li>
+                            <li><a href="media_module_weather.html">Weather</a></li>
+                            <li><a href="media_module_webpage.html">Web Page</a></li>
+                        </ul>
+                    </body>
+
+                    </html>
+                    <li><a href="scheduling.html" data-toc-name="scheduling">Scheduling</a></li>
+                    <li><a href="troubleshooting.html" data-toc-name="troubleshooting">Troubleshooting</a></li>
+                </ul>
+            </div>
+            <div class="col-md-9" role="main">
+                <!--toc=widgets-->
+                <h1 id="ticker">Ticker <a href="#ticker" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h1>
+                <p>If you are using <strong>v2</strong> of the CMS, please use the following link: <a href="media_module_dataset_ticker.html">Dataset Ticker</a></p>
+                <p>The Ticker Widget allows <strong>dynamic Feed</strong> and <strong>DataSet</strong> content to be added to a Layout. The Ticker module primarily consists of a data source location and a template to apply to each data item retrieved from
+                    that data source.</p>
+                <blockquote class="tip">
+                    <p>For example, if the data source is an RSS Feed, the feed will have multiple items and the template will be applied to each of these items.</p>
+                </blockquote>
+                <p>Tickers are specific to a Layout and not saved in the Library - this means that text items are <strong>not</strong> reusable and will need to be copied/pasted between Layouts if the same text is required on more than one.</p>
+                <h2 id="add_ticker">Add Ticker <a href="#add_ticker" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>When adding a new Ticker the CMS provides a simple form asking for the Data Source and duration of the Ticker. These items cannot be changed without re-creating the Ticker.</p>
+                <p><img src="img/media_ticker_add.png" alt="Add Ticker" /></p>
+                <p><strong>Source Type</strong> - Use the drop-down menu to select whether the Ticker uses a <strong>Feed</strong> (RSS/Atom/XML) or a CMS <strong>DataSet</strong> as its Data Source.</p>
+                <ul>
+                    <li>Feed as Source Type - <strong>Specify the Feed URL</strong>.</li>
+                    <li>DataSet as Source Type - <strong>Select the DataSet</strong> from the drop-down menu you wish to use. </li>
+                </ul>
+                <p><strong>Set a duration</strong> - tick to override the default duration.</p>
+                <p>Once saved the Edit Ticker form will open to provide further options.</p>
+                <h2 id="edit_ticker">Edit Ticker <a href="#edit_ticker" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>Depending on the selected Source Type, options will be presented to configure:</p>
+                <ol>
+                    <li>Ticker with a DataSet</li>
+                    <li>Ticker with an RSS Feed</li>
+                </ol>
+                <h3>Edit Ticker with a DataSet as selected Source</h3>
+                <p><img src="img/media_ticker_edit_datasource.png" alt="Ticker Edit Datasource" /></p>
+                <h3>General</h3>
+                <p><strong>Name</strong> - give an optional name</p>
+                <p><strong>Set a Duration</strong> - tick to optionally override the default duration</p>
+                <p><strong>Effect</strong> - use the drop down to select an Effect to be used to transition between items.</p>
+                <p><strong>Speed</strong> - Set the speed for the Effect selected.</p>
+                <h3>Appearance</h3>
+                <p>Use the Text Editor to format your Ticker. The available columns to use in the template can be found under <strong>Available Substitutions</strong>, double-click on the tags you wish to use to insert into the editing area. </p>
+                <h3>Order</h3>
+                <p>Order the DataSet results by using the clause builder or by using an advanced filter clause using SQL syntax, e.g. Name DESC</p>
+                <h3>Filter</h3>
+                <p>Filter the DataSet to exclude/include results by using the clause builder or by using an advanced filter cause using the SQL syntax.</p>
+                <h3>Format</h3>
+                <p>Select how many Items should appear on each page if an effect to split items has been selected and if they should show side by side.</p>
+                <h3>Advanced</h3>
+                <p><strong>Background Colour</strong> - optionally select a background colour</p>
+                <p><strong>Duration is per item</strong> - if selected, the configured Duration will be extended by the number of items returned by the Data Source.</p>
+                <blockquote class="tip">
+                    <p>This should be used with caution as it can create long-running Media items. It is recommended to use this setting in conjunction with a setting to limit the number of items shown.</p>
+                </blockquote>
+                <p><strong>Update Interval</strong> - Display clients can <strong>cache</strong> the content of this Media type to prevent repeated downloads and off-line playback. Keep this number as high as possible.</p>
+                <p><strong>Lower Row Limit</strong> - lower row count (0 = unlimited)</p>
+                <p><strong>Upper Row Limit</strong> - upper row count (0 = unlimited)</p>
+                <h3>Edit Ticker with an RSS Feed as selected Source</h3>
+                <p><img src="img/media_ticker_edit_rss.png" alt="Ticker Edit RSS Feed" /></p>
+                <h3>General</h3>
+                <p><strong>Name</strong> - give an optional name</p>
+                <p><strong>Set a Duration</strong> - tick to optionally override the default duration</p>
+                <p><strong>Effect</strong> - use the drop down to select an Effect to be used to transition between items.</p>
+                <h3>Appearance</h3>
+                <p>Use the drop-down menu to select a template.</p>
+                <p>Select to override the template to show available keywords that can be used in the template. Double click to add to the text editor. </p>
+                <blockquote class="tip">
+                    <p>A special notation is available where the User can specify the Tag|Namespace within the feed for SFC Technology to extract content.</p>
+                </blockquote>
+                <h3>Format</h3>
+                <p><strong>Speed</strong> - set the transition speed for the selected Effect.</p>
+                <p><strong>Text Direction</strong> - select the direction of the text.</p>
+                <p><strong>Number of items</strong> - choose how many RSS items should be returned.</p>
+                <p><strong>Items per page</strong> - use with a selected Effect to split items</p>
+                <p><strong>Take items from</strong> - select to start with items from the beginning or end of the list.</p>
+                <p><strong>Duration is per item</strong> - tick to configure the Duration to be extended by the number of items. </p>
+                <blockquote class="tip">
+                    <p>Use with caution as this can create long-running media items. Use in conjunction with ‘Number of items’ to limit this.</p>
+                </blockquote>
+                <p><strong>Randomise</strong> - random feeds work offline; the entire feed is parsed, rendered and downloaded to the Player and then sorted in a random fashion for display. We use a Durstenfeld shuffle to randomise the order of items. Randomise
+                    works on the full feed, &quot;Number of items&quot; and &quot;Take items from&quot; options.</p>
+                <h3>Advanced</h3>
+                <p><strong>Background Colour</strong> - optionally select a background colour.</p>
+                <p><strong>Update Interval</strong> - Display clients can <strong>cache</strong> the content of this Media type to prevent repeated downloads and off-line playback. Keep this number as high as possible.</p>
+                <p><strong>Copyright</strong> - display a Copyright notice at the end of the feed.</p>
+                <p><strong>Show item side by side</strong> - opt to display returned results side by side.</p>
+                <p><strong>Data Format</strong> - apply a Date Format to apply to all returned date results. </p>
+                <p><strong>Allowable Attributes</strong> - a comma-separated list of attributes that will not be stripped from the incoming feed.</p>
+                <p><strong>Strip Tags</strong> - a comma-separated list of HTML tags to be stripped from the feed.</p>
+                <p><strong>Disable Date Sort</strong> - disable the date sort for the feed.</p>
+                <h2 id="optional_style_sheet">Optional Style Sheet <a href="#optional_style_sheet" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>This is applied to the entire Ticker media item when shown on Display Clients.</p>
+                <blockquote class="tip">
+                    <p>This is intended for advanced users to ‘tweak’ the CMS generated output.</p>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+    <!-- container-->
+    <footer class="ss_footer" role="contentinfo">
+        <div class="container">
+            <div class="pull-right">
+                <img class="img-responsive logo" src="../img/logo.png" alt="Sfc technology" />
+            </div>
+
+            <p class="ss_back_to_top">Back to Top</p>
+
+
+
+            <p class="ss_languages"><a href="../en/index.html">en</a></p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="../vendor/jquery/jquery-1.9.1.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".ss-sidebar .list-group li").addClass("list-group-item");
+            $(".ss_body img").addClass("img-thumbnail");
+            $(".ss_body table").addClass("table");
+
+            // Set the selected page based on the TOC name
+            // Mark the appropriate top nav element as the selected page
+            $("#top-nav a").each(function() {
+                if ($(this).data().tocName == $("body").data().toc)
+                    $(this).parent().addClass("active");
+            });
+
+            $(".ss_back_to_top").click(function() {
+                $('html, body').animate({
+                    scrollTop: 0
+                }, 800);
+            });
+
+            if (inIframe()) {
+                console.log("In Frame");
+                $("#top-nav").css("display", "none");
+                $(".ss-sidebar").parent().css("display", "none");
+            }
+        });
+
+        function inIframe() {
+            try {
+                return window.self !== window.top;
+            } catch (e) {
+                return true;
+            }
+        }
+    </script>
+</body>
+
+</html>

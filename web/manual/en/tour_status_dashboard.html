@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>SFC Technology Documentation</title>
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!-- favicon -->
+    <link href="../img/favicon.ico" rel="shortcut icon" />
+
+    <!-- Bootstrap -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+    <!-- Stylesheets -->
+    <link href="../manual.css" rel="stylesheet" media="screen">
+
+    <!-- META -->
+    <meta name="keywords" content="SFC Technology Documentation" />
+    <meta name="description" content="SFC Technology is an open source digital signage solution. It supports all main media types and can be interfaced to other sources of data using CSV, Databases or RSS." />
+</head>
+
+<body data-toc="tour">
+
+    <nav id="top-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#ss-navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                <a href="#" class="navbar-brand">SFC Technology Documentation</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="ss-navbar">
+                <ul class="nav navbar-nav">
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="ss_body container">
+        <div class="row">
+            <div class="col-md-3">
+                <ul id="side-nav" class="nav nav-pills nav-stacked">
+                    <li><a href="index.html" data-toc-name="tour">Tour</a></li>
+                    <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+                    <html>
+
+                    <body>
+                        <ul>
+                            <li><a href="index.html">Introduction</a></li>
+                            <li><a href="tour_login.html">Login</a></li>
+                            <li class="active"><a href="tour_status_dashboard.html">CMS Dashboards<span class="glyphicon glyphicon-arrow-left you-are-here-arrow"></span></a></li>
+                            <li><a href="tour_navigation.html">CMS Navigation</a></li>
+                            <li><a href="tour_grids.html">Grids</a></li>
+                            <li><a href="tour_forms.html">Forms</a></li>
+                            <li><a href="tour_guides.html">Guides</a></li>
+                        </ul>
+                    </body>
+
+                    </html>
+                    <li><a href="users.html" data-toc-name="users">Users</a></li>
+                    <li><a href="displays.html" data-toc-name="displays">Displays</a></li>
+                    <li><a href="layouts.html" data-toc-name="layouts">Layouts</a></li>
+                    <li><a href="media.html" data-toc-name="media">Media</a></li>
+                    <li><a href="scheduling.html" data-toc-name="scheduling">Scheduling</a></li>
+                    <li><a href="troubleshooting.html" data-toc-name="troubleshooting">Troubleshooting</a></li>
+                </ul>
+            </div>
+            <div class="col-md-9" role="main">
+                <!--toc=tour-->
+                <h1 id="cms_dashboards">CMS Dashboards <a href="#cms_dashboards" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h1>
+                <p>The assigned Dashboard will be the first screen that <strong>Users</strong> will see after login. There are three <strong>Dashboard views</strong> of the CMS that can be assigned to Users. </p>
+                <h2 id="status_dashboard">Status Dashboard <a href="#status_dashboard" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>The CMS Status Dashboard is the default Dashboard for <strong>Super Admin Users</strong> and is intended as a high-level view of the system for Administrators. It provides information relating to Library and Bandwidth usage, Display Activity
+                    and Latest news.</p>
+                <p><img src="img/tour_cms_status_dashboard.png" alt="CMS Status Dashboard" /></p>
+                <h2 id="icon_dashboard">Icon Dashboard <a href="#icon_dashboard" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>The CMS Icon Dashboard is the default Dashboard for all new assigned <strong>Users</strong> and is intended as a <strong>Launcher</strong> into other areas of the CMS. The icons within the Dashboard are shown/hidden according to the menu
+                    permissions for the User.</p>
+                <p><img src="img/tour_cms_icon_dashboard.png" alt="CMS Icon Dashboard" /></p>
+                <h2 id="media_dashboard">Media Dashboard <a href="#media_dashboard" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>The CMS Media Dashboard can be enabled for <strong>Users</strong> who should only edit the <strong>Media</strong> they have been given permission for. The Media Dashboard gives a restricted access view of the CMS presented in a grid style
+                    interface which lists each item the User has permissions to edit. </p>
+                <p><img src="img/tour_cms_media_dashboard.png" alt="CMS Media Dashboard" /></p>
+                <blockquote class="tip">
+                    <p>Ensure that your User has the required Permissions applied so that they can access the Media Dashboard and view/edit content of a Layout. See <a href="users_permissions.html">Permissions</a> for guidance.</p>
+                </blockquote>
+                <h2 id="how_to_set_dashboard_views">How to set Dashboard views <a href="#how_to_set_dashboard_views" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <ol>
+                    <li>Navigate to the <strong>Users</strong> section under Administration on the Menu.</li>
+                    <li>Use the drop down row menu for the selected User and click on <strong>Edit</strong> to open the Edit User form.</li>
+                    <li>Use the dropdown menu for <strong>Homepage</strong> and scroll to the Dashboard you wish to assign.</li>
+                    <li>Save.</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <!-- container-->
+    <footer class="ss_footer" role="contentinfo">
+        <div class="container">
+            <div class="pull-right">
+                <img class="img-responsive logo" src="../img/logo.png" alt="Sfc technology" />
+            </div>
+
+            <p class="ss_back_to_top">Back to Top</p>
+
+
+
+            <p class="ss_languages"><a href="../en/index.html">en</a></p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="../vendor/jquery/jquery-1.9.1.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".ss-sidebar .list-group li").addClass("list-group-item");
+            $(".ss_body img").addClass("img-thumbnail");
+            $(".ss_body table").addClass("table");
+
+            // Set the selected page based on the TOC name
+            // Mark the appropriate top nav element as the selected page
+            $("#top-nav a").each(function() {
+                if ($(this).data().tocName == $("body").data().toc)
+                    $(this).parent().addClass("active");
+            });
+
+            $(".ss_back_to_top").click(function() {
+                $('html, body').animate({
+                    scrollTop: 0
+                }, 800);
+            });
+
+            if (inIframe()) {
+                console.log("In Frame");
+                $("#top-nav").css("display", "none");
+                $(".ss-sidebar").parent().css("display", "none");
+            }
+        });
+
+        function inIframe() {
+            try {
+                return window.self !== window.top;
+            } catch (e) {
+                return true;
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>SFC Technology Documentation</title>
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!-- favicon -->
+    <link href="../img/favicon.ico" rel="shortcut icon" />
+
+    <!-- Bootstrap -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+    <!-- Stylesheets -->
+    <link href="../manual.css" rel="stylesheet" media="screen">
+
+    <!-- META -->
+    <meta name="keywords" content="SFC Technology Documentation" />
+    <meta name="description" content="SFC Technology is an open source digital signage solution. It supports all main media types and can be interfaced to other sources of data using CSV, Databases or RSS." />
+</head>
+
+<body data-toc="widgets">
+
+    <nav id="top-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#ss-navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                <a href="#" class="navbar-brand">SFC Technology Documentation</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="ss-navbar">
+                <ul class="nav navbar-nav">
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="ss_body container">
+        <div class="row">
+            <div class="col-md-3">
+                <ul id="side-nav" class="nav nav-pills nav-stacked">
+                    <li><a href="index.html" data-toc-name="tour">Tour</a></li>
+                    <li><a href="users.html" data-toc-name="users">Users</a></li>
+                    <li><a href="displays.html" data-toc-name="displays">Displays</a></li>
+                    <li><a href="layouts.html" data-toc-name="layouts">Layouts</a></li>
+                    <li><a href="media.html" data-toc-name="widgets">Media</a></li>
+                    <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+                    <html>
+
+                    <body>
+                        <ul>
+                            <li><a href="media_modules.html">Modules</a></li>
+                            <li><a href="media_module_audio.html">Audio</a></li>
+                            <li><a href="media_module_calendar.html">Calendar</a></li>
+                            <li><a href="media_module_chart.html">Chart</a></li>
+                            <li><a href="media_module_clock.html">Clock</a></li>
+                            <li><a href="media_module_currencies.html">Currencies</a></li>
+                            <li><a href="media_module_dataset_ticker.html">DataSet Ticker</a></li>
+                            <li><a href="media_module_dataset_view.html">DataSet View</a></li>
+                            <li><a href="media_module_embedded.html">Embedded</a></li>
+                            <li><a href="media_module_flash.html">Flash</a></li>
+                            <li><a href="media_module_googletraffic.html">Google Traffic</a></li>
+                            <li><a href="media_module_hls.html">HLS</a></li>
+                            <li><a href="media_module_htmlpackage.html">HTML Package</a></li>
+                            <li><a href="media_module_image.html">Image</a></li>
+                            <li><a href="media_module_localvideo.html">Local Video</a></li>
+                            <li><a href="media_module_notifications.html">Notifications</a></li>
+                            <li><a href="media_module_pdf.html">PDF</a></li>
+                            <li><a href="media_module_powerpoint.html">PowerPoint</a></li>
+                            <li><a href="media_module_shellcommand.html">Shell Command</a></li>
+                            <li><a href="media_module_stocks.html">Stocks</a></li>
+                            <li class="active"><a href="media_module_subplaylist.html">Sub Playlist<span class="glyphicon glyphicon-arrow-left you-are-here-arrow"></span></a></li>
+                            <li><a href="media_module_text.html">Text</a></li>
+                            <li><a href="media_module_ticker.html">Ticker</a></li>
+                            <li><a href="media_module_twitter.html">Twitter</a></li>
+                            <li><a href="media_module_twitter_metro.html">Twitter Metro</a></li>
+                            <li><a href="media_module_video.html">Video</a></li>
+                            <li><a href="media_module_video_in.html">Video In</a></li>
+                            <li><a href="media_module_weather.html">Weather</a></li>
+                            <li><a href="media_module_webpage.html">Web Page</a></li>
+                        </ul>
+                    </body>
+
+                    </html>
+                    <li><a href="scheduling.html" data-toc-name="scheduling">Scheduling</a></li>
+                    <li><a href="troubleshooting.html" data-toc-name="troubleshooting">Troubleshooting</a></li>
+                </ul>
+            </div>
+            <div class="col-md-9" role="main">
+                <!--toc=widgets-->
+                <h1 id="sub-playlists_(new_features_for_v2)">Sub-Playlists (New Features for v2) <a href="#sub-playlists_(new_features_for_v2)" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h1>
+                <p>The Sub-Playlists Widget allows for pre-defined Playlists to be simply added to a Layout.</p>
+                <blockquote class="tip">
+                    <p>Ensure that you have created a <a href="media_playlists.html">Playlist</a> prior to adding this Widget.</p>
+                </blockquote>
+                <p>Click on the <strong>Sub-Playlist Widget</strong> on the toolbar, add / drag to the target <strong>Region</strong>. <img src="img/v2_media_subplaylist_widget.png" alt="Sub-Playlist Widget" /></p>
+                <h3>General</h3>
+                <p>Use the drop-down menu to select a <strong>Playlist</strong> to embed.</p>
+                <p><img src="img/v2_media_subplaylist_spots.png" alt="Spots Configuration" /></p>
+                <p>Included on this tab are optional <strong>Spot</strong> options which allow for the defining of advertising/promotional spots.</p>
+                <p><strong>Spots</strong></p>
+                <ul>
+                    <li>Specify the <strong>total number</strong> of Spots you would like to be available for that Playlist to expand or shrink to a specified size.</li>
+                    <li>Leave this field <strong>blank</strong> to use the count of Widgets assigned to the Playlist to maintain the size.</li>
+                    <li>Set to <strong>0</strong> to omit the <strong>first Playlist</strong> from the play order. This Playlist can be used as a spot filler from the Spot Fill options. <strong>Please note:</strong> If you wish to provide a Playlist to be
+                        used as a 'Spot Fill' you must ensure that it is the first Playlist selected.</li>
+                </ul>
+                <p><strong>Spot Length</strong></p>
+                <ul>
+                    <li>Set the length in seconds that you would like to apply to all Widgets assigned to that Playlist. </li>
+                    <li>Leave this field blank to use the Widget duration.</li>
+                </ul>
+                <p><strong>Spot Fill</strong> Determine how remaining Spots should be filled in the event that there are not enough Widgets on the Playlist to fill the specified number of Spots.</p>
+                <ul>
+                    <li><strong>Repeat</strong> - Widgets are repeated in the Playlist until the number of Spots has been fulfilled.</li>
+                    <li><strong>Fill</strong> - Widgets are taken from the first Playlist to fill any remaining Spots.</li>
+                    <li>
+                        <p><strong>Pad</strong> - Widgets are taken from the first Playlist and distributed evenly with the assigned Widgets on that Playlist.</p>
+                        <p>Use the + button to add multiple Playlists and complete the optional Spot options.</p>
+                    </li>
+                </ul>
+                <p>If you select more than one Playlist, click on the <strong>Configuration</strong> tab to further define a play order.</p>
+                <h3>Configuration</h3>
+                <p><img src="img/v2_media_subplaylist_configuration.png" alt="Sub-Playlist Configuration" /></p>
+                <p>The Configuration tab contains the following options:</p>
+                <p><strong>Playlist Ordering</strong></p>
+                <p><strong>Play all</strong> - Playlists will play in their entirety one after the other in the order they appear on the General tab.</p>
+                <p><strong>Round Robin</strong> - Takes one Widget from each Playlist in the order they appear on the General tab and repeats.</p>
+                <p><strong>Auto</strong> - Ensures that Widgets are played evenly from each Playlist. Auto uses the total count of Widgets in each list and divides by the smallest list. This determines how often it should take media items from each list
+                    to ensure an even play from each Playlist.</p>
+                <blockquote class="tip">
+                    <p><strong>Scenario</strong>:</p>
+                    <p>I have three Playlists with images of Flowers, Sweets and Fruit which vary in Spot allocation. I would like an even spread of media items from each of these Playlists to be played:</p>
+                    <p><img src="img/v2_media_subplaylist_scenario.png" alt="Subplaylist Scenario" /></p>
+                    <p>Set with an <strong>Auto</strong> configuration media would be taken from each Playlist as follows:</p>
+                    <p>5 x Flowers, 1 x Sweet, 2 x Fruit and will then repeat until the specified Slots have been fulfilled, which would be one more rotation in this scenario.</p>
+                </blockquote>
+                <p>There are also options to decide what should be done with any Widgets that are left unordered at the end of a Playlist:</p>
+                <p><strong>Remaining Widgets</strong></p>
+                <p><strong>Add</strong> - includes any remaining Widgets which are then added to the end of the Playlist.</p>
+                <p><strong>Discard</strong> - will use the Playlist with the least Widgets and ignore any remaining Widgets on the longer Playlists. </p>
+                <p><strong>Repeat</strong> - will use the Playlist with the most Widgets and repeat any remaining Widgets on the shorter Playlists.</p>
+                <blockquote class="tip">
+                    <p>The Sub-Playlist preview shows the number of Widgets and total duration after play order and Spot options are taken into consideration. Use the Layout preview to see each Widget in the list previewed in sequence.</p>
+                </blockquote>
+                <blockquote class="tip">
+                    <p><strong>Please note:</strong> Setting Widget start dates may cause fewer Spots to be shown than the total Spots specified.</p>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+    <!-- container-->
+    <footer class="ss_footer" role="contentinfo">
+        <div class="container">
+            <div class="pull-right">
+                <img class="img-responsive logo" src="../img/logo.png" alt="Sfc technology" />
+            </div>
+
+            <p class="ss_back_to_top">Back to Top</p>
+
+
+
+            <p class="ss_languages"><a href="../en/index.html">en</a></p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="../vendor/jquery/jquery-1.9.1.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".ss-sidebar .list-group li").addClass("list-group-item");
+            $(".ss_body img").addClass("img-thumbnail");
+            $(".ss_body table").addClass("table");
+
+            // Set the selected page based on the TOC name
+            // Mark the appropriate top nav element as the selected page
+            $("#top-nav a").each(function() {
+                if ($(this).data().tocName == $("body").data().toc)
+                    $(this).parent().addClass("active");
+            });
+
+            $(".ss_back_to_top").click(function() {
+                $('html, body').animate({
+                    scrollTop: 0
+                }, 800);
+            });
+
+            if (inIframe()) {
+                console.log("In Frame");
+                $("#top-nav").css("display", "none");
+                $(".ss-sidebar").parent().css("display", "none");
+            }
+        });
+
+        function inIframe() {
+            try {
+                return window.self !== window.top;
+            } catch (e) {
+                return true;
+            }
+        }
+    </script>
+</body>
+
+</html>

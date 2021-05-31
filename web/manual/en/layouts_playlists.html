@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>SFC Technology Documentation</title>
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!-- favicon -->
+    <link href="../img/favicon.ico" rel="shortcut icon" />
+
+    <!-- Bootstrap -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+    <!-- Stylesheets -->
+    <link href="../manual.css" rel="stylesheet" media="screen">
+
+    <!-- META -->
+    <meta name="keywords" content="SFC Technology Documentation" />
+    <meta name="description" content="SFC Technology is an open source digital signage solution. It supports all main media types and can be interfaced to other sources of data using CSV, Databases or RSS." />
+</head>
+
+<body data-toc="<h1 id=" playlists ">Playlists <a href="#playlists " class="header-link "><span class="glyphicon glyphicon-link "></span></a></h1>">
+
+    <nav id="top-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#ss-navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                <a href="#" class="navbar-brand">SFC Technology Documentation</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="ss-navbar">
+                <ul class="nav navbar-nav">
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="ss_body container">
+        <div class="row">
+            <div class="col-md-3">
+                <ul id="side-nav" class="nav nav-pills nav-stacked">
+                    <li><a href="index.html" data-toc-name="tour">Tour</a></li>
+                    <li><a href="users.html" data-toc-name="users">Users</a></li>
+                    <li><a href="displays.html" data-toc-name="displays">Displays</a></li>
+                    <li><a href="layouts.html" data-toc-name="layouts">Layouts</a></li>
+                    <li><a href="media.html" data-toc-name="media">Media</a></li>
+                    <li><a href="scheduling.html" data-toc-name="scheduling">Scheduling</a></li>
+                    <li><a href="troubleshooting.html" data-toc-name="troubleshooting">Troubleshooting</a></li>
+                </ul>
+            </div>
+            <div class="col-md-9" role="main">
+                <h1 id="playlists">Playlists <a href="#playlists" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h1>
+                <p>Each Region on a Layout has its own Playlist of content, which is shown in the specified order by the Display Client. A Playlist can consist of a <strong>single item</strong> (such as a company logo), or <strong>multiple items</strong>                    (such as an image slideshow).</p>
+                <p>A Regions Playlist is viewed/edited by using the Region Menu and selecting <strong>Edit Timeline</strong> (or by double clicking within the Region).</p>
+                <p><img src="img/layouts_region_playlist.png" alt="Region Playlist" /></p>
+                <p>Items assigned to Playlists are called <strong>Widgets</strong> which are files stored in the <a href="media_library.html">Library</a> or enabled <a href="media_modules.html">Modules</a>.</p>
+                <h2 id="assigning_widgets">Assigning Widgets <a href="#assigning_widgets" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>Widgets are assigned to a Region Playlist using the Widget Toolbox, shown on the left-hand side of the Region Timeline form. The toolbox lists all of the enabled media types for your CMS.</p>
+                <blockquote class="tip">
+                    <p>Widgets that are available can be enabled/disabled by an Administrator in the Modules section of the CMS.</p>
+                </blockquote>
+                <h2 id="assigning_content">Assigning Content <a href="#assigning_content" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>Library files can be assigned directly from the CMS Library by clicking on Library in the Widget Toolbox. This content may have been uploaded to another Layout or directly to the Library.</p>
+                <p><img src="img/layouts_widgets_library.png" alt="Library Files" /></p>
+                <p>Assign Library items using the plus icon, once pressed the selected item will move to the <strong>Assignments</strong> staging area. Items can be removed from here by using the minus icon.</p>
+                <h3>Playlist Widget Actions</h3>
+                <p>Each Widget assigned to a Playlist has its own set of &quot;Actions&quot; to edit, delete, assign Permissions and assign Audio.</p>
+                <p><img src="img/layouts_widgets_playlist.png" alt="Layout Playlist" /></p>
+                <blockquote class="tip">
+                    <p>Select Edit and use the tabs to locate the <strong>Set a duration?</strong> check box to override the systems default duration for the selected Widget.</p>
+                </blockquote>
+                <h2 id="reordering_items_in_the_playlist">Reordering Items in the Playlist <a href="#reordering_items_in_the_playlist" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>Widgets in the Playlist are played from top to bottom. The sequence can be changed by dragging and dropping to the required order and pressing the <strong>Save Order</strong> button at the bottom of the Region Timeline form.</p>
+                <h2 id="grid_view">Grid View <a href="#grid_view" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>Use the <strong>Switch to Grid</strong> button at the bottom of the Region Timeline form for an alternative view of the Playlist.</p>
+                <p><img src="img/layouts_region_playlist_grid.png" alt="Region Playlist" /></p>
+                <blockquote class="tip">
+                    <p>The grid view is particularly useful for deleting more than one Widget at a time.</p>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+    <!-- container-->
+    <footer class="ss_footer" role="contentinfo">
+        <div class="container">
+            <div class="pull-right">
+                <img class="img-responsive logo" src="../img/logo.png" alt="Sfc technology" />
+            </div>
+
+            <p class="ss_back_to_top">Back to Top</p>
+
+
+
+            <p class="ss_languages"><a href="../en/index.html">en</a></p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="../vendor/jquery/jquery-1.9.1.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".ss-sidebar .list-group li").addClass("list-group-item");
+            $(".ss_body img").addClass("img-thumbnail");
+            $(".ss_body table").addClass("table");
+
+            // Set the selected page based on the TOC name
+            // Mark the appropriate top nav element as the selected page
+            $("#top-nav a").each(function() {
+                if ($(this).data().tocName == $("body").data().toc)
+                    $(this).parent().addClass("active");
+            });
+
+            $(".ss_back_to_top").click(function() {
+                $('html, body').animate({
+                    scrollTop: 0
+                }, 800);
+            });
+
+            if (inIframe()) {
+                console.log("In Frame");
+                $("#top-nav").css("display", "none");
+                $(".ss-sidebar").parent().css("display", "none");
+            }
+        });
+
+        function inIframe() {
+            try {
+                return window.self !== window.top;
+            } catch (e) {
+                return true;
+            }
+        }
+    </script>
+</body>
+
+</html>

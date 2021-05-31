@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>SFC Technology Documentation</title>
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!-- favicon -->
+    <link href="../img/favicon.ico" rel="shortcut icon" />
+
+    <!-- Bootstrap -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+    <!-- Stylesheets -->
+    <link href="../manual.css" rel="stylesheet" media="screen">
+
+    <!-- META -->
+    <meta name="keywords" content="SFC Technology Documentation" />
+    <meta name="description" content="SFC Technology is an open source digital signage solution. It supports all main media types and can be interfaced to other sources of data using CSV, Databases or RSS." />
+</head>
+
+<body data-toc="layouts">
+
+    <nav id="top-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#ss-navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                <a href="#" class="navbar-brand">SFC Technology Documentation</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="ss-navbar">
+                <ul class="nav navbar-nav">
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="ss_body container">
+        <div class="row">
+            <div class="col-md-3">
+                <ul id="side-nav" class="nav nav-pills nav-stacked">
+                    <li><a href="index.html" data-toc-name="tour">Tour</a></li>
+                    <li><a href="users.html" data-toc-name="users">Users</a></li>
+                    <li><a href="displays.html" data-toc-name="displays">Displays</a></li>
+                    <li><a href="layouts.html" data-toc-name="layouts">Layouts</a></li>
+                    <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+                    <html>
+
+                    <body>
+                        <ul>
+                            <li><a href="layouts.html">Introduction</a></li>
+                            <li><a href="layouts_designer.html">Layout Designer</a></li>
+                            <li class="active"><a href="layouts_regions.html">Regions<span class="glyphicon glyphicon-arrow-left you-are-here-arrow"></span></a></li>
+                            <li><a href="layouts_timeline.html">Layout Timeline</a></li>
+                            <li><a href="layouts_tools.html">Tools</a></li>
+                            <li><a href="layouts_widgets.html">Widgets</a></li>
+                            <li><a href="layouts_library_search.html">Library Search</a></li>
+                            <li><a href="layouts_templates.html">Templates</a></li>
+                            <li><a href="layouts_overlay.html">Overlay Layouts</a></li>
+                            <li><a href="layouts_campaigns.html">Campaigns</a></li>
+                        </ul>
+                    </body>
+
+                    </html>
+                    <li><a href="media.html" data-toc-name="media">Media</a></li>
+                    <li><a href="scheduling.html" data-toc-name="scheduling">Scheduling</a></li>
+                    <li><a href="troubleshooting.html" data-toc-name="troubleshooting">Troubleshooting</a></li>
+                </ul>
+            </div>
+            <div class="col-md-9" role="main">
+                <!--toc=layouts-->
+                <h1 id="regions_(new_features_for_v2)">Regions (New Features for v2) <a href="#regions_(new_features_for_v2)" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h1>
+                <p>Regions define areas on a <strong>Layout</strong> which hold <strong>Widgets</strong> (media content) to form sets of timed content.</p>
+                <blockquote class="tip">
+                    <p>If you are using 1.8 please use the following link to the appropriate manual page for your version: <a href="layouts_regions_1.8.html">Regions 1.8</a></p>
+                </blockquote>
+                <blockquote class="tip">
+                    <p>A new Layout will contain one full size empty <strong>Region</strong> by default ready for resizing, positioning and adding media content to. </p>
+                    <p>Ensure that the Layout has been 'checked out' to enable editing.</p>
+                </blockquote>
+                <p>Click on the 'edit' icon located in the top right hand corner of the <strong>Layout Navigator</strong> window to open.</p>
+                <p><strong>Regions</strong> can be positioned anywhere inside the <strong>Layout</strong> canvas using drag and drop, and resized by using the resize handle located in the lower right-hand corner of the Region. </p>
+                <p>Click in the Region to resize and position, further actions are available via the tabs on the <strong>Region Options</strong> form.</p>
+                <p><img src="img/v2_layouts_regions_resize.png" alt="Region Resize" /></p>
+                <h2 id="region_options">Region Options <a href="#region_options" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <h3>General</h3>
+                <p>Complete a name for the Region and use the checkbox to Loop the content if required.</p>
+                <h3>Positioning</h3>
+                <p>This tab allows for precise sizing and positioning. <strong>Make the Region full screen</strong> by clicking on the text which will display the dimensions the Region will be set by.</p>
+                <h3>Transition</h3>
+                <p><strong>Exit Transitions</strong> happen when the last media item in a Region is shown and occurs only when all other media items have expired in the other Regions. </p>
+                <blockquote class="tip">
+                    <p>Transitions are only supported in the Linux, Android and webOS Players and need to be pre configured. Please contact your Administrator.</p>
+                </blockquote>
+                <p>Once you have <strong>Saved</strong> your edits click <strong>Close</strong> to return to the Layout Designer screen.</p>
+                <p><img src="img/v2_layouts_regions_resized_layout_navigator.png" alt="Resized Region Layout Navigator" /></p>
+                <h2 id="adding_regions">Adding Regions <a href="#adding_regions" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>Regions can be added in two ways:</p>
+                <ul>
+                    <li>
+                        <p>open the <strong>Layout Navigator</strong> window and click on the <strong>Add Region</strong> button.<img src="img/v2_layouts_regions_add_button.png" alt="Add Region Button" /></p>
+                    </li>
+                    <li>select <strong>Tools</strong> on the bottom toolbar and click on <strong>Region</strong> to add or drag to the Layout Navigator window.<img src="img/v2_layouts_regions_add.png" alt="Add Region" /></li>
+                </ul>
+                <h3>Deleting Regions</h3>
+                <p>Remove Regions and all associated content by clicking on the <strong>Delete Region</strong> button in the Layout Navigator window. <strong>Please note: This action cannot be undone</strong>.</p>
+                <blockquote class="tip">
+                    <p>Regions can be deleted from the Layout Designer by clicking on the Region and clicking the bin icon on the bottom toolbar or by right clicking on the target Region and using the bin icon.</p>
+                </blockquote>
+                <h3>Permissions for a Region</h3>
+                <p>Control which <strong>User</strong> and <strong>User Groups</strong> can view/edit/delete the Region. Click on the <strong>Permissions</strong> button, located under <strong>Tools</strong> on the toolbar then click or drag to the target
+                    Region. Edit the Permissions form as appropriate.</p>
+                <blockquote class="tip">
+                    <p>Assign/Edit permissions by right clicking on the target Region.</p>
+                </blockquote>
+                <p><strong>Please note:</strong> The owner of the Layout has full control over sharing. </p>
+                <blockquote class="tip">
+                    <p>A globally shared Layout can have Region access rights defined for any other users of the CMS. Read more for <a href="users_permissions.html#user_objects">Permissions for User Objects</a> </p>
+                </blockquote>
+                <blockquote class="tip">
+                    <p><strong>Please note:</strong> The Windows Player does not support overlapping Regions. For a mixed Player network ensure Regions do not overlap for the best results.</p>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+    <!-- container-->
+    <footer class="ss_footer" role="contentinfo">
+        <div class="container">
+            <div class="pull-right">
+                <img class="img-responsive logo" src="../img/logo.png" alt="Sfc technology" />
+            </div>
+
+            <p class="ss_back_to_top">Back to Top</p>
+
+
+
+            <p class="ss_languages"><a href="../en/index.html">en</a></p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="../vendor/jquery/jquery-1.9.1.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".ss-sidebar .list-group li").addClass("list-group-item");
+            $(".ss_body img").addClass("img-thumbnail");
+            $(".ss_body table").addClass("table");
+
+            // Set the selected page based on the TOC name
+            // Mark the appropriate top nav element as the selected page
+            $("#top-nav a").each(function() {
+                if ($(this).data().tocName == $("body").data().toc)
+                    $(this).parent().addClass("active");
+            });
+
+            $(".ss_back_to_top").click(function() {
+                $('html, body').animate({
+                    scrollTop: 0
+                }, 800);
+            });
+
+            if (inIframe()) {
+                console.log("In Frame");
+                $("#top-nav").css("display", "none");
+                $(".ss-sidebar").parent().css("display", "none");
+            }
+        });
+
+        function inIframe() {
+            try {
+                return window.self !== window.top;
+            } catch (e) {
+                return true;
+            }
+        }
+    </script>
+</body>
+
+</html>

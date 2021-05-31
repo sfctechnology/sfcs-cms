@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>SFC Technology Documentation</title>
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!-- favicon -->
+    <link href="../img/favicon.ico" rel="shortcut icon" />
+
+    <!-- Bootstrap -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+    <!-- Stylesheets -->
+    <link href="../manual.css" rel="stylesheet" media="screen">
+
+    <!-- META -->
+    <meta name="keywords" content="SFC Technology Documentation" />
+    <meta name="description" content="SFC Technology is an open source digital signage solution. It supports all main media types and can be interfaced to other sources of data using CSV, Databases or RSS." />
+</head>
+
+<body data-toc="scheduling">
+
+    <nav id="top-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#ss-navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                <a href="#" class="navbar-brand">SFC Technology Documentation</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="ss-navbar">
+                <ul class="nav navbar-nav">
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="ss_body container">
+        <div class="row">
+            <div class="col-md-3">
+                <ul id="side-nav" class="nav nav-pills nav-stacked">
+                    <li><a href="index.html" data-toc-name="tour">Tour</a></li>
+                    <li><a href="users.html" data-toc-name="users">Users</a></li>
+                    <li><a href="displays.html" data-toc-name="displays">Displays</a></li>
+                    <li><a href="layouts.html" data-toc-name="layouts">Layouts</a></li>
+                    <li><a href="media.html" data-toc-name="media">Media</a></li>
+                    <li><a href="scheduling.html" data-toc-name="scheduling">Scheduling</a></li>
+                    <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+                    <html>
+
+                    <body>
+                        <ul>
+                            <li><a href="scheduling.html">Introduction</a></li>
+                            <li><a href="scheduling_calendar.html">Schedule</a></li>
+                            <li><a href="scheduling_events.html">Events</a></li>
+                            <li><a href="scheduling_dayparting.html">Dayparting</a></li>
+                            <li class="active"><a href="scheduling_now.html">Schedule Now<span class="glyphicon glyphicon-arrow-left you-are-here-arrow"></span></a></li>
+                        </ul>
+                    </body>
+
+                    </html>
+                    <li><a href="troubleshooting.html" data-toc-name="troubleshooting">Troubleshooting</a></li>
+                </ul>
+            </div>
+            <div class="col-md-9" role="main">
+                <!--toc=scheduling-->
+                <h1 id="schedule_now">Schedule Now <a href="#schedule_now" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h1>
+                <p>Schedule Now provides a quick way to Schedule a <strong>Campaign</strong> or <strong>Layout</strong> for a specific amount of time.</p>
+                <blockquote class="tip">
+                    <p>This is useful for displaying temporary/important notices on Displays.</p>
+                </blockquote>
+                <p>Schedule Now is available across the CMS and is available from the following pages:</p>
+                <ul>
+                    <li><strong>Campaign</strong> - row menu for selected Campaign</li>
+                    <li><strong>Layout</strong> - row menu for selected Layout</li>
+                    <li><strong>Layout Designer</strong> - on the Actions tab</li>
+                    <li><strong>Display</strong> - row menu for selected Display</li>
+                </ul>
+                <p><img src="img/schedule_schedule_now_form.png" alt="" /></p>
+                <p>Complete the form fields as required.</p>
+                <h2 id="time_zones">Time zones <a href="#time_zones" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>Events created using <strong>Schedule Now</strong> will always have the <strong>Run at CMS time</strong> option selected. This means that the event will be adjusted for each Display time zone and forced to run from the time &quot;Save&quot;
+                    is pressed. Please see <a href="scheduling_events.html">Run at CMS time</a> for further information.</p>
+            </div>
+        </div>
+    </div>
+    <!-- container-->
+    <footer class="ss_footer" role="contentinfo">
+        <div class="container">
+            <div class="pull-right">
+                <img class="img-responsive logo" src="../img/logo.png" alt="Sfc technology" />
+            </div>
+
+            <p class="ss_back_to_top">Back to Top</p>
+
+
+
+            <p class="ss_languages"><a href="../en/index.html">en</a></p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="../vendor/jquery/jquery-1.9.1.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".ss-sidebar .list-group li").addClass("list-group-item");
+            $(".ss_body img").addClass("img-thumbnail");
+            $(".ss_body table").addClass("table");
+
+            // Set the selected page based on the TOC name
+            // Mark the appropriate top nav element as the selected page
+            $("#top-nav a").each(function() {
+                if ($(this).data().tocName == $("body").data().toc)
+                    $(this).parent().addClass("active");
+            });
+
+            $(".ss_back_to_top").click(function() {
+                $('html, body').animate({
+                    scrollTop: 0
+                }, 800);
+            });
+
+            if (inIframe()) {
+                console.log("In Frame");
+                $("#top-nav").css("display", "none");
+                $(".ss-sidebar").parent().css("display", "none");
+            }
+        });
+
+        function inIframe() {
+            try {
+                return window.self !== window.top;
+            } catch (e) {
+                return true;
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>SFC Technology Documentation</title>
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!-- favicon -->
+    <link href="../img/favicon.ico" rel="shortcut icon" />
+
+    <!-- Bootstrap -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+    <!-- Stylesheets -->
+    <link href="../manual.css" rel="stylesheet" media="screen">
+
+    <!-- META -->
+    <meta name="keywords" content="SFC Technology Documentation" />
+    <meta name="description" content="SFC Technology is an open source digital signage solution. It supports all main media types and can be interfaced to other sources of data using CSV, Databases or RSS." />
+</head>
+
+<body data-toc="widgets">
+
+    <nav id="top-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#ss-navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                <a href="#" class="navbar-brand">SFC Technology Documentation</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="ss-navbar">
+                <ul class="nav navbar-nav">
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="ss_body container">
+        <div class="row">
+            <div class="col-md-3">
+                <ul id="side-nav" class="nav nav-pills nav-stacked">
+                    <li><a href="index.html" data-toc-name="tour">Tour</a></li>
+                    <li><a href="users.html" data-toc-name="users">Users</a></li>
+                    <li><a href="displays.html" data-toc-name="displays">Displays</a></li>
+                    <li><a href="layouts.html" data-toc-name="layouts">Layouts</a></li>
+                    <li><a href="media.html" data-toc-name="widgets">Media</a></li>
+                    <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+                    <html>
+
+                    <body>
+                        <ul>
+                            <li><a href="media_modules.html">Modules</a></li>
+                            <li><a href="media_module_audio.html">Audio</a></li>
+                            <li><a href="media_module_calendar.html">Calendar</a></li>
+                            <li><a href="media_module_chart.html">Chart</a></li>
+                            <li><a href="media_module_clock.html">Clock</a></li>
+                            <li><a href="media_module_currencies.html">Currencies</a></li>
+                            <li><a href="media_module_dataset_ticker.html">DataSet Ticker</a></li>
+                            <li><a href="media_module_dataset_view.html">DataSet View</a></li>
+                            <li><a href="media_module_embedded.html">Embedded</a></li>
+                            <li><a href="media_module_flash.html">Flash</a></li>
+                            <li><a href="media_module_googletraffic.html">Google Traffic</a></li>
+                            <li><a href="media_module_hls.html">HLS</a></li>
+                            <li><a href="media_module_htmlpackage.html">HTML Package</a></li>
+                            <li><a href="media_module_image.html">Image</a></li>
+                            <li><a href="media_module_localvideo.html">Local Video</a></li>
+                            <li><a href="media_module_notifications.html">Notifications</a></li>
+                            <li><a href="media_module_pdf.html">PDF</a></li>
+                            <li><a href="media_module_powerpoint.html">PowerPoint</a></li>
+                            <li><a href="media_module_shellcommand.html">Shell Command</a></li>
+                            <li><a href="media_module_stocks.html">Stocks</a></li>
+                            <li><a href="media_module_subplaylist.html">Sub Playlist</a></li>
+                            <li><a href="media_module_text.html">Text</a></li>
+                            <li><a href="media_module_ticker.html">Ticker</a></li>
+                            <li><a href="media_module_twitter.html">Twitter</a></li>
+                            <li><a href="media_module_twitter_metro.html">Twitter Metro</a></li>
+                            <li><a href="media_module_video.html">Video</a></li>
+                            <li><a href="media_module_video_in.html">Video In</a></li>
+                            <li class="active"><a href="media_module_weather.html">Weather<span class="glyphicon glyphicon-arrow-left you-are-here-arrow"></span></a></li>
+                            <li><a href="media_module_webpage.html">Web Page</a></li>
+                        </ul>
+                    </body>
+
+                    </html>
+                    <li><a href="scheduling.html" data-toc-name="scheduling">Scheduling</a></li>
+                    <li><a href="troubleshooting.html" data-toc-name="troubleshooting">Troubleshooting</a></li>
+                </ul>
+            </div>
+            <div class="col-md-9" role="main">
+                <!--toc=widgets-->
+                <h1 id="weather">Weather <a href="#weather" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h1>
+                <p>The Weather Widget provides current daily weather forecasts worldwide using the <a href="https://darksky.net/">DarkSky API</a> as a source of weather data.</p>
+                <h2 id="installation">Installation <a href="#installation" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>To get an API key please visit <a href="https://darksky.net">DarkSky</a> to create an account.</p>
+                <p>(If you are going to exceed 1000 calls per day you will also need to enter your billing information).</p>
+                <p>The Weather Module is installed from the Modules page, under the Administration section of the menu. Click on the <strong>Install Module</strong> button and select the Module to install.</p>
+                <p>After installation, select the Module from the grid and use the row menu to select <strong>Edit</strong>.</p>
+                <p><img src="img/media_weather_module_edit.png" alt="Edit Weather Module" /></p>
+                <p>Complete the form fields and include the <strong>API key</strong>. The CMS allows a Cache period to be specified which will create a delay between requests for each geographic location.</p>
+                <p>DarkSky allows 1000 requests for a forecast, per day before charging a small fee for each subsequent request.</p>
+                <h2 id="add_weather_widget">Add Weather Widget <a href="#add_weather_widget" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>The DarkSky Terms of Service <a href="https://darksky.net/tos">https://darksky.net/tos</a> should be read and understood before using this Widget. </p>
+                <p>Click on the <strong>Weather Widget</strong> on the toolbar, add / drag to the target <strong>Region</strong>. <img src="img/v2_media_weather_widget.png" alt="Weather Widget" /></p>
+                <blockquote class="tip">
+                    <p>If you are using 1.8, select <strong>Weather</strong> or <strong>Forecast IO</strong> from the Widget Toolbox to add to your Region Timeline and complete the form fields as explained below.
+                        <strong>Please note:</strong> The Visual editor is not available in the 1.8 series of the CMS for this Widget.</p>
+                </blockquote>
+                <h3>General</h3>
+                <ul>
+                    <li>Provide an optional name</li>
+                    <li>Choose to override the default duration</li>
+                </ul>
+                <h3>Configuration</h3>
+                <ul>
+                    <li>Use the display location for the lat/long recorded on the <strong>Display</strong> rather than specifying manually.</li>
+                    <li>Select the unit of measurement using the drop-down menu.</li>
+                    <li>Choose the language to use.</li>
+                    <li>Use the checkbox to only show daytime weather conditions.</li>
+                </ul>
+                <h3>Templates</h3>
+                <p>Select <strong>Preset</strong> templates or provide your own using JavaScript.</p>
+                <p><img src="img\v2_media_weather_templates.png" alt="Weather Templates" /></p>
+                <h4>Preset</h4>
+                <ul>
+                    <li>Use the drop-down to select an appropriate template.</li>
+                    <li>Tick to edit the selected template. Please see the section on <a href="media_module_weather.html#editing_default_templates">Editing default templates</a> below for further information.</li>
+                </ul>
+                <h3>Caching</h3>
+                <p>Enter the Update Interval in minutes.</p>
+                <h2 id="attribution">Attribution <a href="#attribution" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>All Layouts that use the Weather Widget need to include the text “Powered by DarkSky” as per the <a href="&lt;https://darksky.net/tos>">DarkSky Terms of Service</a> . </p>
+                <h2 id="editing_default_templates">Editing default templates <a href="#editing_default_templates" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>Default templates can be edited by selecting a template using the drop-down and clicking in the <strong>Override the template</strong> checkbox. </p>
+                <blockquote class="tip">
+                    <p>The template will be automatically scaled and should be designed for the intended output resolution. The following guidelines should be considered when editing templates:</p>
+                    <ul>
+                        <li>Templates must be designed at a fixed size</li>
+                        <li>All elements must use absolute sizing in px, including fonts, margins, widths, heights, etc</li>
+                        <li>If positioning is used, it must be from top,left</li>
+                        <li>Templates can use bootstrap</li>
+                        <li>The aspect ratio will be fixed by SFC Technology and sized to fit the Region</li>
+                        <li>Templates are treated the same as a static image</li>
+                    </ul>
+                </blockquote>
+                <p>Click again on the <strong>Templates</strong> tab and select to edit:</p>
+                <p><img src="img/v2_media_weather_edit_default.png" alt="Edit Default Templates" /></p>
+                <h3>Current forecast template</h3>
+                <p>Also known as the <strong>main template</strong> as it is used for the current weather conditions and as the basis for the repeating Daily forecast template.</p>
+                <blockquote class="tip">
+                    <p>Click on <strong>Get Forecast</strong> to see available substitutions to use.</p>
+                </blockquote>
+                <blockquote class="tip">
+                    <p>Toggle <strong>On</strong> the Visual editor to use the Inline Editor to provide text and formatting.</p>
+                </blockquote>
+                <h3>Daily forecast template</h3>
+                <p>This is the <strong>repeating template</strong> that should be provided for the 7 day forecast. It will be repeated each day and then substituted into the special <code>[dailyForecast]</code> tag (which should feature on the main template).
+                </p>
+                <p>The <code>[dailyForecast]</code> tag has 2 optional settings which can be added to the tag by including the<code>|</code> character. These are <code>[dailyForecast|Number of days|Start day]</code> and default to 7 days, starting at tomorrow
+                    (day 2). If you wanted to see the next 3 days you would use [dailyForecast|3]<code>and for a 3 day forecast starting the day after tomorrow you could use</code>[dailyForecast|3|3]`.</p>
+                <blockquote class="tip">
+                    <p>A common example is to ignore the &quot;Current Template&quot; and produce a full 7 day forecast using the daily forecast - this is achieved with <code>[dailyForecast|7|1]</code>.</p>
+                </blockquote>
+                <h3>CSS</h3>
+                <p>This is the CSS to apply to the template structure above. It will be augmented with a colour attribute and has a special <code>[[ICONS]]</code> which will be replaced with a selected icon sprite. </p>
+                <h3>Get Forecast</h3>
+                <p>It is possible to <strong>request a forecast</strong> at any time to see what forecast data is returned. Any field is available as a substitute in the template by entering the field name between square brackets - for example <code>[nearestStormDistance]</code>.</p>
+                <h3>Extending with new icons</h3>
+                <p>New icons can be added by an Administrator who has access to the file system. Any PNG file in <code>modules/theme/forecastio/weather_icons</code> will be made available for selection in the Icons selector.</p>
+                <p>Weather icons are provided as a sprite, each icon is 128x128 and should represent the same weather conditions as the shipped icon sprite.</p>
+                <blockquote class="tip">
+                    <p>For example, a &quot;clear-day&quot; is represented by the icon in position 1, a &quot;windy day&quot; is represented by the icon in position 11.</p>
+                </blockquote>
+                <blockquote class="tip">
+                    <p>You may have a Layout Status <code>! There are items on this Layout that can only be assessed by the client</code>This is a normal Layout Status if you have online content which will be assessed on the Player side. </p>
+                </blockquote>
+                <h2 id="additional_information">Additional Information <a href="#additional_information" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>SFC Technology should accept any date format that is in a correct PHP date format, the following characters are recognised and can be used:</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Format Character</th>
+                            <th style="text-align: left;">Description</th>
+                            <th>Example returned values</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td style="text-align: left;"><strong>Day</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>d</td>
+                            <td style="text-align: left;">Day of the month, 2 digits with leading zeros</td>
+                            <td>01 to 31</td>
+                        </tr>
+                        <tr>
+                            <td>D</td>
+                            <td style="text-align: left;">A textual representation of a day, three letters</td>
+                            <td>Mon through Sun</td>
+                        </tr>
+                        <tr>
+                            <td>j</td>
+                            <td style="text-align: left;">Day of the month without leading zeros</td>
+                            <td>1 to 31</td>
+                        </tr>
+                        <tr>
+                            <td>l</td>
+                            <td style="text-align: left;">(lowercase ‘L’) A full textual representation of the day of the week</td>
+                            <td>Sunday through Saturday</td>
+                        </tr>
+                        <tr>
+                            <td>N</td>
+                            <td style="text-align: left;">ISO-8601 numeric representation of the day of the week (added in PHP 5.1.0)</td>
+                            <td>1 (for Monday) through 7 (for Sunday)</td>
+                        </tr>
+                        <tr>
+                            <td>S</td>
+                            <td style="text-align: left;">English ordinal suffix for the day of the month, 2 characters</td>
+                            <td>st, nd, rd or th. Works well with j</td>
+                        </tr>
+                        <tr>
+                            <td>w</td>
+                            <td style="text-align: left;">Numeric representation of the day of the week</td>
+                            <td>0 (for Sunday) through 6 (for Saturday)</td>
+                        </tr>
+                        <tr>
+                            <td>z</td>
+                            <td style="text-align: left;">The day of the year (starting from 0)</td>
+                            <td>0 through 365</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td style="text-align: left;"><strong>Week</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>W</td>
+                            <td style="text-align: left;">ISO-8601 week number of year, weeks starting on Monday (added in PHP 4.1.0)</td>
+                            <td>42 (the 42nd week in the year)</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td style="text-align: left;"><strong>Month</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>F</td>
+                            <td style="text-align: left;">A full textual representation of a month, such as January or March</td>
+                            <td>January through December</td>
+                        </tr>
+                        <tr>
+                            <td>m</td>
+                            <td style="text-align: left;">Numeric representation of a month, with leading zeros</td>
+                            <td>01 through 12</td>
+                        </tr>
+                        <tr>
+                            <td>M</td>
+                            <td style="text-align: left;">A short textual representation of a month, three letters</td>
+                            <td>Jan through Dec</td>
+                        </tr>
+                        <tr>
+                            <td>n</td>
+                            <td style="text-align: left;">Numeric representation of a month, without leading zeros</td>
+                            <td>1 through 12</td>
+                        </tr>
+                        <tr>
+                            <td>t</td>
+                            <td style="text-align: left;">Number of days in the given month</td>
+                            <td>28 through 31</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td style="text-align: left;"><strong>Year</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>L</td>
+                            <td style="text-align: left;">Whether it’s a leap year</td>
+                            <td>1 if it is a leap year, 0 otherwise.</td>
+                        </tr>
+                        <tr>
+                            <td>o</td>
+                            <td style="text-align: left;">ISO-8601 year number. This has the same value as Y, except that if the ISO week number (W) belongs to the previous or next year, that year is used instead. (added in PHP 5.1.0)</td>
+                            <td>1999 or 2003</td>
+                        </tr>
+                        <tr>
+                            <td>Y</td>
+                            <td style="text-align: left;">A full numeric representation of a year, 4 digits</td>
+                            <td>1999 or 2003</td>
+                        </tr>
+                        <tr>
+                            <td>y</td>
+                            <td style="text-align: left;">A two digit representation of a year</td>
+                            <td>99 or 0</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td style="text-align: left;"><strong>Time</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>a</td>
+                            <td style="text-align: left;">Lowercase Ante meridiem and Post meridiem</td>
+                            <td>am or pm</td>
+                        </tr>
+                        <tr>
+                            <td>A</td>
+                            <td style="text-align: left;">Uppercase Ante meridiem and Post meridiem</td>
+                            <td>AM or PM</td>
+                        </tr>
+                        <tr>
+                            <td>B</td>
+                            <td style="text-align: left;">Swatch Internet time</td>
+                            <td>000 through 999</td>
+                        </tr>
+                        <tr>
+                            <td>g</td>
+                            <td style="text-align: left;">12-hour format of an hour without leading zeros</td>
+                            <td>1 through 12</td>
+                        </tr>
+                        <tr>
+                            <td>G</td>
+                            <td style="text-align: left;">24-hour format of an hour without leading zeros</td>
+                            <td>0 through 23</td>
+                        </tr>
+                        <tr>
+                            <td>h</td>
+                            <td style="text-align: left;">12-hour format of an hour with leading zeros</td>
+                            <td>01 through 12</td>
+                        </tr>
+                        <tr>
+                            <td>H</td>
+                            <td style="text-align: left;">24-hour format of an hour with leading zeros</td>
+                            <td>00 through 23</td>
+                        </tr>
+                        <tr>
+                            <td>i</td>
+                            <td style="text-align: left;">Minutes with leading zeros</td>
+                            <td>00 to 59</td>
+                        </tr>
+                        <tr>
+                            <td>s</td>
+                            <td style="text-align: left;">Seconds, with leading zeros</td>
+                            <td>00 through 59</td>
+                        </tr>
+                        <tr>
+                            <td>u</td>
+                            <td style="text-align: left;">Microseconds (added in PHP 5.2.2). Note that date() will always generate 000000 since it takes an integer parameter, whereas DateTime::format() does support microseconds if DateTime was created with microseconds.</td>
+                            <td>654321</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td style="text-align: left;"><strong>Timezone</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>e</td>
+                            <td style="text-align: left;">Timezone identifier (added in PHP 5.1.0)</td>
+                            <td>UTC, GMT, Atlantic/Azores</td>
+                        </tr>
+                        <tr>
+                            <td>I</td>
+                            <td style="text-align: left;">(capital i) Whether or not the date is in daylight saving time</td>
+                            <td>1 if Daylight Saving Time, 0 otherwise.</td>
+                        </tr>
+                        <tr>
+                            <td>O</td>
+                            <td style="text-align: left;">Difference to Greenwich time (GMT) in hours</td>
+                            <td>+0200</td>
+                        </tr>
+                        <tr>
+                            <td>P</td>
+                            <td style="text-align: left;">Difference to Greenwich time (GMT) with colon between hours and minutes (added in PHP 5.1.3)</td>
+                            <td>+02:00</td>
+                        </tr>
+                        <tr>
+                            <td>T</td>
+                            <td style="text-align: left;">Timezone abbreviation</td>
+                            <td>EST, MDT …</td>
+                        </tr>
+                        <tr>
+                            <td>Z</td>
+                            <td style="text-align: left;">Timezone offset in seconds. The offset for timezones west of UTC is always negative, and for those east of UTC is always positive.</td>
+                            <td>-43200 through 50400</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td style="text-align: left;"><strong>Full Date/Time</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>c</td>
+                            <td style="text-align: left;">ISO 8601 date (added in PHP 5)</td>
+                            <td>2004-02-12T15:19:21+00:00</td>
+                        </tr>
+                        <tr>
+                            <td>r</td>
+                            <td style="text-align: left;">» RFC 2822 formatted date</td>
+                            <td>Thu, 21 Dec 2000 16:01:07 +0200</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- container-->
+    <footer class="ss_footer" role="contentinfo">
+        <div class="container">
+            <div class="pull-right">
+                <img class="img-responsive logo" src="../img/logo.png" alt="Sfc technology" />
+            </div>
+
+            <p class="ss_back_to_top">Back to Top</p>
+
+
+
+            <p class="ss_languages"><a href="../en/index.html">en</a></p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="../vendor/jquery/jquery-1.9.1.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".ss-sidebar .list-group li").addClass("list-group-item");
+            $(".ss_body img").addClass("img-thumbnail");
+            $(".ss_body table").addClass("table");
+
+            // Set the selected page based on the TOC name
+            // Mark the appropriate top nav element as the selected page
+            $("#top-nav a").each(function() {
+                if ($(this).data().tocName == $("body").data().toc)
+                    $(this).parent().addClass("active");
+            });
+
+            $(".ss_back_to_top").click(function() {
+                $('html, body').animate({
+                    scrollTop: 0
+                }, 800);
+            });
+
+            if (inIframe()) {
+                console.log("In Frame");
+                $("#top-nav").css("display", "none");
+                $(".ss-sidebar").parent().css("display", "none");
+            }
+        });
+
+        function inIframe() {
+            try {
+                return window.self !== window.top;
+            } catch (e) {
+                return true;
+            }
+        }
+    </script>
+</body>
+
+</html>

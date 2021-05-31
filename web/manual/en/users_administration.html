@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>SFC Technology Documentation</title>
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!-- favicon -->
+    <link href="../img/favicon.ico" rel="shortcut icon" />
+
+    <!-- Bootstrap -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+    <!-- Stylesheets -->
+    <link href="../manual.css" rel="stylesheet" media="screen">
+
+    <!-- META -->
+    <meta name="keywords" content="SFC Technology Documentation" />
+    <meta name="description" content="SFC Technology is an open source digital signage solution. It supports all main media types and can be interfaced to other sources of data using CSV, Databases or RSS." />
+</head>
+
+<body data-toc="users">
+
+    <nav id="top-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#ss-navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                <a href="#" class="navbar-brand">SFC Technology Documentation</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="ss-navbar">
+                <ul class="nav navbar-nav">
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="ss_body container">
+        <div class="row">
+            <div class="col-md-3">
+                <ul id="side-nav" class="nav nav-pills nav-stacked">
+                    <li><a href="index.html" data-toc-name="tour">Tour</a></li>
+                    <li><a href="users.html" data-toc-name="users">Users</a></li>
+                    <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+                    <html>
+
+                    <body>
+                        <ul>
+                            <li><a href="users.html">Introduction</a></li>
+                            <li class="active"><a href="users_administration.html">Users<span class="glyphicon glyphicon-arrow-left you-are-here-arrow"></span></a></li>
+                            <li><a href="users_user_types.html">User Types</a></li>
+                            <li><a href="users_groups.html">User Groups</a></li>
+                            <li><a href="users_permissions.html">Permissions</a></li>
+                            <li><a href="users_notifications.html">Notifications</a></li>
+                        </ul>
+                    </body>
+
+                    </html>
+                    <li><a href="displays.html" data-toc-name="displays">Displays</a></li>
+                    <li><a href="layouts.html" data-toc-name="layouts">Layouts</a></li>
+                    <li><a href="media.html" data-toc-name="media">Media</a></li>
+                    <li><a href="scheduling.html" data-toc-name="scheduling">Scheduling</a></li>
+                    <li><a href="troubleshooting.html" data-toc-name="troubleshooting">Troubleshooting</a></li>
+                </ul>
+            </div>
+            <div class="col-md-9" role="main">
+                <!--toc=users-->
+                <h1 id="user_administration">User Administration <a href="#user_administration" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h1>
+                <p>Users are administered in the CMS by clicking on Users under the Administration section on the menu. The Users grid will open for you to manage and add Users.</p>
+                <p><img src="img/users_admin_grid.png" alt="Users Admin Grid" /></p>
+                <h2 id="adding_users">Adding Users <a href="#adding_users" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>Click on the <strong>Add User</strong> button and complete the form fields as required.</p>
+                <p><img src="img/users_add_form.png" alt="Users Add Form" /></p>
+                <h3>Details</h3>
+                <p><strong>Username</strong> - create a Username for the User, to be used for <strong>login</strong> and identifying the User.</p>
+                <p><strong>Password</strong> - create a Password for the User, to be used for <strong>login</strong>.</p>
+                <p><strong>Email</strong> - include an email address for the User (used for password reset / CMS notifications).</p>
+                <p><strong>Homepage</strong> - select the first page or choice of <strong>Dashboard</strong> the User will see after login. </p>
+                <p><strong>User Type</strong> - use the drop down to select from the three <strong>User Types</strong> available.</p>
+                <p><strong>Library Quota</strong> - assign a quota to determine the <strong>maximum</strong> amount of content allowed to be uploaded to the Library. </p>
+                <p><strong>Initial User Group</strong> - select which group the <strong>User</strong> should belong to.</p>
+                <blockquote class="tip">
+                    <p>Use <strong>System Notifications</strong> as the Initial User Group for Users that do not require permission to anything within the CMS but need notification emails when there are system issues (System Administrators).</p>
+                </blockquote>
+                <h3>Reference</h3>
+                <p>Optionally complete information to be used as a reference to view and organise your Users.</p>
+                <h3>Notifications</h3>
+                <p>Choose if the User should receive Notifications by ticking the checkboxes.</p>
+                <h3>Options</h3>
+                <p>Select the options as necessary for the User.</p>
+                <blockquote class="tip">
+                    <p>SFC Technology doesn't place any limits on the number of Users that can be added.</p>
+                </blockquote>
+                <h2 id="editing_users">Editing Users <a href="#editing_users" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>Use the row menu for the User record you wish to make changes to and select <strong>Edit</strong>.</p>
+                <p><img src="img/users_edit_row_menu.png" alt="Users Edit Row Menu" /></p>
+                <p>An Edit User form will open so that changes can be made as needed.</p>
+                <p><img src="img/users_edit_form.png" alt="Users Edit Form" /></p>
+                <h2 id="force_password_change">Force Password Change <a href="#force_password_change" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>Use to ensure that <strong>new Users</strong> change the password first given to them to access the system or if a User account password has been <strong>reset</strong>. Edit the User record and click on the Options tab. Tick the box <strong>Force Password Change</strong>,
+                    Save.
+                </p>
+                <p><img src="img/users_edit_options.png" alt="Users Edit Options" /></p>
+                <p>Users will be redirected to a page to reset their password, the next time they log in.</p>
+                <h2 id="deleting_users">Deleting Users <a href="#deleting_users" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>Delete a User in the same way by using the row menu for the selected User. A confirmation form will open up and give you further options regarding the items currently owned by that User.</p>
+                <blockquote class="tip">
+                    <p>Deleting a User is irreversible and will remove all their owned items including; Media, Layouts and Schedules, even if these items are being used by other Users in the system. <strong>Reassign items</strong> to another User using the
+                        selector to make them the new owner of all the items currently owned by the User you wish to delete. Alternatively, use the <strong>Retired</strong> checkbox at the bottom of the Edit User form so that the items remain in use in
+                        the system with the User unable to log in. </p>
+                </blockquote>
+                <h2 id="my_applications">My Applications <a href="#my_applications" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>SFC Technology contains an API that allows 3rd party applications to connect and consume its data. Before using an application each User must authorise the application to act on their behalf within the CMS.</p>
+                <p>Once an application is authorised it can be viewed by clicking on the <strong>My Applications</strong> button to open a current list.</p>
+                <p><img src="img/users_my_applications_button.png" alt="Users My Applications" /></p>
+                <blockquote class="tip">
+                    <p>At the current time the CMS does not provide individual Users with a method of revoking access to an application, however, an admin can remove an application completely.</p>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+    <!-- container-->
+    <footer class="ss_footer" role="contentinfo">
+        <div class="container">
+            <div class="pull-right">
+                <img class="img-responsive logo" src="../img/logo.png" alt="Sfc technology" />
+            </div>
+
+            <p class="ss_back_to_top">Back to Top</p>
+
+
+
+            <p class="ss_languages"><a href="../en/index.html">en</a></p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="../vendor/jquery/jquery-1.9.1.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".ss-sidebar .list-group li").addClass("list-group-item");
+            $(".ss_body img").addClass("img-thumbnail");
+            $(".ss_body table").addClass("table");
+
+            // Set the selected page based on the TOC name
+            // Mark the appropriate top nav element as the selected page
+            $("#top-nav a").each(function() {
+                if ($(this).data().tocName == $("body").data().toc)
+                    $(this).parent().addClass("active");
+            });
+
+            $(".ss_back_to_top").click(function() {
+                $('html, body').animate({
+                    scrollTop: 0
+                }, 800);
+            });
+
+            if (inIframe()) {
+                console.log("In Frame");
+                $("#top-nav").css("display", "none");
+                $(".ss-sidebar").parent().css("display", "none");
+            }
+        });
+
+        function inIframe() {
+            try {
+                return window.self !== window.top;
+            } catch (e) {
+                return true;
+            }
+        }
+    </script>
+</body>
+
+</html>

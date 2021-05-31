@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>SFC Technology Documentation</title>
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!-- favicon -->
+    <link href="../img/favicon.ico" rel="shortcut icon" />
+
+    <!-- Bootstrap -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+    <!-- Stylesheets -->
+    <link href="../manual.css" rel="stylesheet" media="screen">
+
+    <!-- META -->
+    <meta name="keywords" content="SFC Technology Documentation" />
+    <meta name="description" content="SFC Technology is an open source digital signage solution. It supports all main media types and can be interfaced to other sources of data using CSV, Databases or RSS." />
+</head>
+
+<body data-toc="media">
+
+    <nav id="top-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#ss-navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                <a href="#" class="navbar-brand">SFC Technology Documentation</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="ss-navbar">
+                <ul class="nav navbar-nav">
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="ss_body container">
+        <div class="row">
+            <div class="col-md-3">
+                <ul id="side-nav" class="nav nav-pills nav-stacked">
+                    <li><a href="index.html" data-toc-name="tour">Tour</a></li>
+                    <li><a href="users.html" data-toc-name="users">Users</a></li>
+                    <li><a href="displays.html" data-toc-name="displays">Displays</a></li>
+                    <li><a href="layouts.html" data-toc-name="layouts">Layouts</a></li>
+                    <li><a href="media.html" data-toc-name="media">Media</a></li>
+                    <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+                    <html>
+
+                    <body>
+                        <ul>
+                            <li><a href="media.html">Introduction</a></li>
+                            <li class="active"><a href="media_library.html">Library<span class="glyphicon glyphicon-arrow-left you-are-here-arrow"></span></a></li>
+                            <li><a href="media_tidylibrary.html">Tidy Library</a></li>
+                            <li><a href="media_playlists.html">Playlists</a></li>
+                            <li><a href="media_datasets.html">DataSets</a></li>
+                            <li><a href="media_modules.html">Modules</a></li>
+                        </ul>
+                    </body>
+
+                    </html>
+                    <li><a href="scheduling.html" data-toc-name="scheduling">Scheduling</a></li>
+                    <li><a href="troubleshooting.html" data-toc-name="troubleshooting">Troubleshooting</a></li>
+                </ul>
+            </div>
+            <div class="col-md-9" role="main">
+                <!--toc=media-->
+                <h1 id="library">Library <a href="#library" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h1>
+                <p>The CMS Library stores all file-based media that is uploaded for use onto Layouts.</p>
+                <h2 id="uploading_media">Uploading Media <a href="#uploading_media" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>Library media can be uploaded directly to the Library using an easy to use file upload tool.</p>
+                <p>Navigate to Media under the Library section of the menu to open the Library grid. Click on the <strong>Add Media</strong> button.</p>
+                <p><img src="img/media_library_grid.png" alt="Media Library" /></p>
+                <blockquote class="tip">
+                    <p>Media can also be uploaded directly to a <strong>Widget</strong> assigned in a <strong>Layout</strong>, which will also save to the Library by default.</p>
+                </blockquote>
+                <p>Uploading is achieved in two steps.</p>
+                <ol>
+                    <li>Click <strong>Add files</strong> and select the file(s) you wish to upload.</li>
+                    <li>Click <strong>Start upload</strong> to begin the transfer of all files, alternatively click on the blue upload button next to individual files to upload individually. Once successfully uploaded, click Done.</li>
+                </ol>
+                <blockquote class="tip">
+                    <p>Files can also be added via drag and drop.</p>
+                </blockquote>
+                <p><img src="img/media_library_upload.png" alt="Media Library Upload" /></p>
+                <blockquote class="tip">
+                    <p>All media items that have been uploaded to the Library are available to include in Layouts by simply using the <a href="layouts_library_search.html">Library Search</a> tab on the <strong>Layout Designer</strong> tool bar.</p>
+                    <p><img src="img/v2_media_library_search.png" alt="Library Search Tab" /></p>
+                </blockquote>
+                <h2 id="adding_new_fonts">Adding New Fonts <a href="#adding_new_fonts" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>SFC Technology comes with a set of standard fonts provided by our text editor tool - CKEditor. New fonts can be added and uploaded to the <strong>Library</strong> in the same way. Once added the font will be available to use in the text
+                    editor.
+                </p>
+                <blockquote class="tip">
+                    <p>If the new font does not show in the text editor after upload, try clearing the browser cache. </p>
+                </blockquote>
+                <blockquote class="tip">
+                    <p><strong>Please note:</strong> Fonts have preferences built into then known as OS/2 tags. SFC Technology checks for OS/2 preferences and can use fonts with OS/2 tags 0 or 8. Fonts with other OS/2 tags may produce an error on uploading
+                        and may not display correctly.</p>
+                </blockquote>
+                <h2 id="row_menu">Row Menu <a href="#row_menu" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>Each <strong>media</strong> file has a row menu with a list of actions that can be performed against it.</p>
+                <h3>Edit</h3>
+                <p>The Edit Media form allows you to edit the name and duration of the file as well as options to <strong>Retire</strong> and <strong>Update</strong> edits to layouts that contain the current media file.</p>
+                <p><img src="img/media_edit.png" alt="Edit Media" /></p>
+                <p>It may be necessary to upload a new revision of an existing file. This can be done by using the <strong>Replace</strong> button at the bottom of the form.</p>
+                <p><img src="img/media_replace.png" alt="Replace Media" /></p>
+                <p>Upload a replacement file using the same steps as before and select whether the replacement file should be updated to all Layouts it is currently assigned to and the old version removed.</p>
+                <h3>Delete</h3>
+                <p>Media files can only be deleted from the CMS if they are not being used on any existing <strong>Layouts</strong>. The option to force a delete from any existing Layouts must be used with caution, deleting a file cannot be reversed.</p>
+                <p><img src="img/media_delete.png" alt="Delete Media" /></p>
+                <blockquote class="tip">
+                    <p>Retiring content means that it will no longer be available to assign to new Layouts but will remain in existing Layouts it is assigned to, meaning scheduled content can remain unaffected.</p>
+                </blockquote>
+                <h3>Permissions</h3>
+                <p>Assign <strong>view/edit/delete</strong> permissions for User/User Groups.</p>
+                <h3>Download</h3>
+                <p>Download a copy of the <strong>media file</strong> for ease of sharing.</p>
+                <h3>Usage Report</h3>
+                <p>This will show if the selected <strong>media file</strong> is scheduled to <strong>Displays</strong>. Use the Layout tab to see what Layouts the media file is currently included in.</p>
+                <p><img src="img/media_library_usage_report.png" alt="Library Usage Report" /></p>
+                <blockquote class="tip">
+                    <p>The Usage Report is great to make checks prior to deleting files.</p>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+    <!-- container-->
+    <footer class="ss_footer" role="contentinfo">
+        <div class="container">
+            <div class="pull-right">
+                <img class="img-responsive logo" src="../img/logo.png" alt="Sfc technology" />
+            </div>
+
+            <p class="ss_back_to_top">Back to Top</p>
+
+
+
+            <p class="ss_languages"><a href="../en/index.html">en</a></p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="../vendor/jquery/jquery-1.9.1.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".ss-sidebar .list-group li").addClass("list-group-item");
+            $(".ss_body img").addClass("img-thumbnail");
+            $(".ss_body table").addClass("table");
+
+            // Set the selected page based on the TOC name
+            // Mark the appropriate top nav element as the selected page
+            $("#top-nav a").each(function() {
+                if ($(this).data().tocName == $("body").data().toc)
+                    $(this).parent().addClass("active");
+            });
+
+            $(".ss_back_to_top").click(function() {
+                $('html, body').animate({
+                    scrollTop: 0
+                }, 800);
+            });
+
+            if (inIframe()) {
+                console.log("In Frame");
+                $("#top-nav").css("display", "none");
+                $(".ss-sidebar").parent().css("display", "none");
+            }
+        });
+
+        function inIframe() {
+            try {
+                return window.self !== window.top;
+            } catch (e) {
+                return true;
+            }
+        }
+    </script>
+</body>
+
+</html>

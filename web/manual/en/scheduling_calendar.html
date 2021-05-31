@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>SFC Technology Documentation</title>
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!-- favicon -->
+    <link href="../img/favicon.ico" rel="shortcut icon" />
+
+    <!-- Bootstrap -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+    <!-- Stylesheets -->
+    <link href="../manual.css" rel="stylesheet" media="screen">
+
+    <!-- META -->
+    <meta name="keywords" content="SFC Technology Documentation" />
+    <meta name="description" content="SFC Technology is an open source digital signage solution. It supports all main media types and can be interfaced to other sources of data using CSV, Databases or RSS." />
+</head>
+
+<body data-toc="scheduling">
+
+    <nav id="top-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#ss-navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                <a href="#" class="navbar-brand">SFC Technology Documentation</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="ss-navbar">
+                <ul class="nav navbar-nav">
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="ss_body container">
+        <div class="row">
+            <div class="col-md-3">
+                <ul id="side-nav" class="nav nav-pills nav-stacked">
+                    <li><a href="index.html" data-toc-name="tour">Tour</a></li>
+                    <li><a href="users.html" data-toc-name="users">Users</a></li>
+                    <li><a href="displays.html" data-toc-name="displays">Displays</a></li>
+                    <li><a href="layouts.html" data-toc-name="layouts">Layouts</a></li>
+                    <li><a href="media.html" data-toc-name="media">Media</a></li>
+                    <li><a href="scheduling.html" data-toc-name="scheduling">Scheduling</a></li>
+                    <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+                    <html>
+
+                    <body>
+                        <ul>
+                            <li><a href="scheduling.html">Introduction</a></li>
+                            <li class="active"><a href="scheduling_calendar.html">Schedule<span class="glyphicon glyphicon-arrow-left you-are-here-arrow"></span></a></li>
+                            <li><a href="scheduling_events.html">Events</a></li>
+                            <li><a href="scheduling_dayparting.html">Dayparting</a></li>
+                            <li><a href="scheduling_now.html">Schedule Now</a></li>
+                        </ul>
+                    </body>
+
+                    </html>
+                    <li><a href="troubleshooting.html" data-toc-name="troubleshooting">Troubleshooting</a></li>
+                </ul>
+            </div>
+            <div class="col-md-9" role="main">
+                <!--toc=scheduling-->
+                <h1 id="schedule">Schedule <a href="#schedule" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h1>
+                <p>Schedule content using the simple calendar interface by clicking on the <strong>Schedule</strong> section of the Menu. </p>
+                <h2 id="controls">Controls <a href="#controls" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>Use the control bar at the top of the calendar to select <strong>Displays</strong>, <strong>Add Events</strong>, <strong>view date periods</strong> and <strong>alternate Views</strong>.</p>
+                <p><img src="img/schedule_controls.png" alt="Schedule Controls" /></p>
+                <h3>Select Displays</h3>
+                <p>Click in this field to select Displays /Display Groups to view the associated schedules.</p>
+                <h3>Add Event</h3>
+                <p>Schedule Events by completing the form fields.</p>
+                <h3>Prev/Today/Next</h3>
+                <p>Use to navigate through the calendar.</p>
+                <blockquote class="tip">
+                    <p>Use the calendar icon, next to these buttons, to go directly to a selected date.</p>
+                </blockquote>
+                <h3>Calendar Views</h3>
+                <p>Each Calendar View will show the associated schedule for the selected Display/Display Group. Views show <strong>Events</strong> represented by Icons, with a key to explain each one, located below the calendar. </p>
+                <blockquote class="tip">
+                    <p>Click on an Event or Icon shown on a Calendar View to Edit the schedule.</p>
+                </blockquote>
+                <h3>Year</h3>
+                <p>The Year view is intended as an overview of the Events scheduled throughout the year and provides a total number of Events scheduled per month. Roll over a month and use the black arrow to show Event details.</p>
+                <p><img src="img/schedule_year_view.png" alt="Schedule Year View" /></p>
+                <blockquote class="tip">
+                    <p>Double-click to open the Month View for that particular month.</p>
+                </blockquote>
+                <h3>Month</h3>
+                <p>This View includes Icons to represent the Events that have been scheduled for that Month. Click on a particular day square to see an expanded view for that day. Double click on a day square to open the Day View for that date.</p>
+                <p><img src="img/schedule_month_view.png" alt="Schedule Month View" /></p>
+                <blockquote class="tip">
+                    <p>Hover over each Icon to display information for that particular Event.</p>
+                </blockquote>
+                <h3>Week</h3>
+                <p>This view gives a week overview of scheduled Events. Double click on a date to open the Day View.</p>
+                <p><img src="img/scheduled_week_view.png" alt="Schedule Week View" /></p>
+                <h3>Day</h3>
+                <p>The Day View shows all Events occurring within a single day.</p>
+                <p><img src="img/schedule_day_view.png" alt="Schedule Day View" /></p>
+                <h3>Agenda</h3>
+                <p>Events can span multiple days/weeks/months so it is highly useful to be able to see a precise representation of Layouts/Campaigns that will be shown on a selected Display at a point in time.</p>
+                <p><img src="img/scheduling_calendar_agenda.png" alt="Agenda View" /></p>
+                <p>The selected Displays/Display Groups will be presented as tabs with Layouts shown in tabular format which appear in the order they will cycle on the Display.</p>
+                <p>Use the slider, located above the tabs, to pinpoint the exact time of day to view. Change the date using the <strong>Prev/Today/Next</strong> buttons or by selecting a date using the calendar icon.</p>
+                <p>Click on a Layout to highlight the associated information (associations will turn blue) and view the breadcrumb, to show further Campaign and Display Group information. If nested Display Groups have been configured, these will show in
+                    the breadcrumb.</p>
+                <blockquote class="tip">
+                    <p>This can be used to view exactly why a certain Layout is being shown at a certain time.</p>
+                </blockquote>
+                <blockquote class="tip">
+                    <p>Click on the breadcrumb to view the Layout and make edits to the schedule.</p>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+    <!-- container-->
+    <footer class="ss_footer" role="contentinfo">
+        <div class="container">
+            <div class="pull-right">
+                <img class="img-responsive logo" src="../img/logo.png" alt="Sfc technology" />
+            </div>
+
+            <p class="ss_back_to_top">Back to Top</p>
+
+
+
+            <p class="ss_languages"><a href="../en/index.html">en</a></p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="../vendor/jquery/jquery-1.9.1.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".ss-sidebar .list-group li").addClass("list-group-item");
+            $(".ss_body img").addClass("img-thumbnail");
+            $(".ss_body table").addClass("table");
+
+            // Set the selected page based on the TOC name
+            // Mark the appropriate top nav element as the selected page
+            $("#top-nav a").each(function() {
+                if ($(this).data().tocName == $("body").data().toc)
+                    $(this).parent().addClass("active");
+            });
+
+            $(".ss_back_to_top").click(function() {
+                $('html, body').animate({
+                    scrollTop: 0
+                }, 800);
+            });
+
+            if (inIframe()) {
+                console.log("In Frame");
+                $("#top-nav").css("display", "none");
+                $(".ss-sidebar").parent().css("display", "none");
+            }
+        });
+
+        function inIframe() {
+            try {
+                return window.self !== window.top;
+            } catch (e) {
+                return true;
+            }
+        }
+    </script>
+</body>
+
+</html>

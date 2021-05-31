@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>SFC Technology Documentation</title>
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!-- favicon -->
+    <link href="../img/favicon.ico" rel="shortcut icon" />
+
+    <!-- Bootstrap -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+    <!-- Stylesheets -->
+    <link href="../manual.css" rel="stylesheet" media="screen">
+
+    <!-- META -->
+    <meta name="keywords" content="SFC Technology Documentation" />
+    <meta name="description" content="SFC Technology is an open source digital signage solution. It supports all main media types and can be interfaced to other sources of data using CSV, Databases or RSS." />
+</head>
+
+<body data-toc="scheduling">
+
+    <nav id="top-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#ss-navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                <a href="#" class="navbar-brand">SFC Technology Documentation</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="ss-navbar">
+                <ul class="nav navbar-nav">
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="ss_body container">
+        <div class="row">
+            <div class="col-md-3">
+                <ul id="side-nav" class="nav nav-pills nav-stacked">
+                    <li><a href="index.html" data-toc-name="tour">Tour</a></li>
+                    <li><a href="users.html" data-toc-name="users">Users</a></li>
+                    <li><a href="displays.html" data-toc-name="displays">Displays</a></li>
+                    <li><a href="layouts.html" data-toc-name="layouts">Layouts</a></li>
+                    <li><a href="media.html" data-toc-name="media">Media</a></li>
+                    <li><a href="scheduling.html" data-toc-name="scheduling">Scheduling</a></li>
+                    <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+                    <html>
+
+                    <body>
+                        <ul>
+                            <li><a href="scheduling.html">Introduction</a></li>
+                            <li><a href="scheduling_calendar.html">Schedule</a></li>
+                            <li class="active"><a href="scheduling_events.html">Events<span class="glyphicon glyphicon-arrow-left you-are-here-arrow"></span></a></li>
+                            <li><a href="scheduling_dayparting.html">Dayparting</a></li>
+                            <li><a href="scheduling_now.html">Schedule Now</a></li>
+                        </ul>
+                    </body>
+
+                    </html>
+                    <li><a href="troubleshooting.html" data-toc-name="troubleshooting">Troubleshooting</a></li>
+                </ul>
+            </div>
+            <div class="col-md-9" role="main">
+                <!--toc=scheduling-->
+                <h1 id="events">Events <a href="#events" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h1>
+                <p>Events are <strong>Layouts</strong>/<strong>Campaigns</strong>, <strong>Overlay Layouts</strong> or <strong>Commands</strong> assigned to Displays/Display Groups at specific dates and times. Events are administered from the Schedule section
+                    from the menu.</p>
+                <h2 id="add_event">Add Event <a href="#add_event" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>Click on the <strong>Add Event</strong> button on the calendar to schedule an Event.</p>
+                <p><img src="img/schedule_event_add.png" alt="Add Scheduled Event" /></p>
+                <h2 id="general">General <a href="#general" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <h3>Event Type</h3>
+                <p>Use the drop-down to select an Event from the 3 Types supported:</p>
+                <ul>
+                    <li><strong>Campaign/Layout</strong> - select designed Layouts and Campaigns.</li>
+                    <li><strong>Overlay Layout</strong> - select a specifically designed Layout to schedule as an <a href="layouts_overlay.html">Overlay Layout</a>.</li>
+                    <li><strong>Command</strong> - select from a predefined command.</li>
+                </ul>
+                <blockquote class="tip">
+                    <p>Events, with the exception of Command Events, can also be added using the <a href="scheduling_now.html">Schedule Now</a> function.</p>
+                </blockquote>
+                <h3>Display</h3>
+                <p>Click in the field to select one or more Displays/Display Groups to show the event content on.</p>
+                <h3>Dayparting</h3>
+                <p><strong>Custom</strong>/<strong>Always</strong> or <strong>User</strong> created Dayparts can be selected using the drop-down menu. </p>
+                <p>Select <strong>Custom</strong> to specify your own start/end dates/time. Click in the form field to open the date and time picker. </p>
+                <blockquote class="tip">
+                    <p>Start and end times can be free typed to get the exact timings required.</p>
+                </blockquote>
+                <h3>Layout/Campaign</h3>
+                <p>Use the drop-down menu to select the Layout/Campaign to schedule.</p>
+                <blockquote class="tip">
+                    <p>This list is dependent on the permissions for that User.</p>
+                </blockquote>
+                <h3>Preview</h3>
+                <p>Click on the Preview button to view the Layout/Campaign in another tab. </p>
+                <blockquote class="tip">
+                    <p>This is useful to use to ensure that the correct Layout/Campaign has been selected and to make checks, such as the total duration, without having to leave the schedule.</p>
+                </blockquote>
+                <h3>Display Order</h3>
+                <p>Determine the order in which the Layout/Campaign will play in rotation when scheduled at the same time as other Layouts/Campaigns. Ordering is by a simple numerical sort, lowest to highest numbers, therefore <strong>Layouts/Campaigns marked 1</strong>                    will be played before <strong>Layouts/Campaigns marked 2</strong>.</p>
+                <p>The Display Order on Overlay Layouts determines the order in which the Layout Regions are applied to the overlay and compliments the Regions own layer settings.</p>
+                <blockquote class="tip">
+                    <p>To ensure ordering of Layouts we would recommend that these are ordered within a <strong>Campaign</strong>. The Display Order could then be used to determine the order in which entire Campaigns should playout. If no Display Order is
+                        specified for Campaigns or they have the same Display order the Campaigns will play interleaved.</p>
+                    <p><strong>Scenario</strong></p>
+                    <p>Campaign A consists of Layout 1, Layout 2 Layout 3 - Display Order of 1 Campaign B consists of Layout 4, Layout 5, Layout 6 - Display Order of 1 When scheduled at the same time the Campaigns will play out as follows:</p>
+                    <p>A - Layout 1</p>
+                    <p>B - Layout 4</p>
+                    <p>A - Layout 2</p>
+                    <p>B - Layout 5</p>
+                    <p>A - Layout 3</p>
+                    <p>B - Layout 6</p>
+                    <p>A - Layout 1 and so on.</p>
+                    <p>To ensure that the Campaigns played all the contained Layouts before rotating to the next, Campaign A would need a Display Order of 1 and Campaign B would need a Display Order of 2.</p>
+                </blockquote>
+                <h3>Priority</h3>
+                <p>Set the Priority of the Event with the <strong>highest</strong> number stated playing in preference to lower numbers. This can be used to override all other non-priority Events on the schedule.</p>
+                <blockquote class="tip">
+                    <p>This functionality is useful for displaying temporary/important notices for overriding a schedule for a specific Event without having to make any changes to your existing schedule or cancelling Layouts/Campaigns that would be running
+                        at that time.</p>
+                </blockquote>
+                <h3>Run at CMS Time</h3>
+                <p>When selected, the Event will play at the time determined by the <strong>CMS</strong> rather than using the local display time.</p>
+                <blockquote class="tip">
+                    <p><strong>Scenario</strong> CMS Time = GMT Display 1 = GMT Display 2 = GMT -4</p>
+                    <p>An event scheduled for 11:00 with <strong>Run at CMS time</strong> deselected will run on display 1 at 11:00 and display 2 at 11:00. These two displays will not show the same content at the same time, because display 2 is 4 hours behind.</p>
+                    <p>With <strong>Run at CMS time</strong> selected, display 1 will run at 11:00 as before but display 2 will run at 07:00.</p>
+                </blockquote>
+                <p>Please note <strong>The Schedule Now</strong> functionality will always create events with this option selected.</p>
+                <h2 id="repeats">Repeats <a href="#repeats" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>An Event can be repeated at defined intervals (hourly, daily, weekly, monthly or yearly) until a specified time. Use the <strong>Repeats</strong> tab to create recurring events. Select the type of repeat from the drop-down and complete
+                    the form fields as required. Use <strong>Repeat every</strong> to further specify the frequency of the repeat.</p>
+                <blockquote class="tip">
+                    <p>E.g. With a <strong>Weekly</strong> Repeat you could specify to repeat each Wednesday and Friday every other week by including a 2 in the 'Repeat every' form field.</p>
+                </blockquote>
+                <blockquote class="tip">
+                    <p>(Available in version 2.0 and later) <strong>Monthly</strong> Repeats can be determined by the Event date or by the day in the month the event falls on. </p>
+                    <p>For example: an event which is scheduled on 06/03/2019 can be set to repeat on the 6th day of every month or the 1st Wednesday of each month (as 06/03/2019 falls on a Wednesday). </p>
+                </blockquote>
+                <h2 id="edit_/_delete">Edit / Delete <a href="#edit_/_delete" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>Click on any <strong>Event/Icon</strong> in the calendar to edit form fields or to remove completely from the schedule by clicking delete and confirming.</p>
+                <h2 id="duplicate">Duplicate <a href="#duplicate" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>Located at the bottom of the Edit form, the <strong>Duplicate</strong> button allows for event details to be duplicated and configured for a new event. Once clicked a pop up will appear to confirm that a new form has been loaded so that
+                    amendments can be made.</p>
+                <blockquote class="tip">
+                    <p>The new loaded form will not have a <strong>Duplicate</strong> button.</p>
+                </blockquote>
+                <p><strong>It is important to note that if at any time there are no Layouts/Campaigns Scheduled to run, the Default Layout for the display will run automatically.</strong></p>
+            </div>
+        </div>
+    </div>
+    <!-- container-->
+    <footer class="ss_footer" role="contentinfo">
+        <div class="container">
+            <div class="pull-right">
+                <img class="img-responsive logo" src="../img/logo.png" alt="Sfc technology" />
+            </div>
+
+            <p class="ss_back_to_top">Back to Top</p>
+
+
+
+            <p class="ss_languages"><a href="../en/index.html">en</a></p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="../vendor/jquery/jquery-1.9.1.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".ss-sidebar .list-group li").addClass("list-group-item");
+            $(".ss_body img").addClass("img-thumbnail");
+            $(".ss_body table").addClass("table");
+
+            // Set the selected page based on the TOC name
+            // Mark the appropriate top nav element as the selected page
+            $("#top-nav a").each(function() {
+                if ($(this).data().tocName == $("body").data().toc)
+                    $(this).parent().addClass("active");
+            });
+
+            $(".ss_back_to_top").click(function() {
+                $('html, body').animate({
+                    scrollTop: 0
+                }, 800);
+            });
+
+            if (inIframe()) {
+                console.log("In Frame");
+                $("#top-nav").css("display", "none");
+                $(".ss-sidebar").parent().css("display", "none");
+            }
+        });
+
+        function inIframe() {
+            try {
+                return window.self !== window.top;
+            } catch (e) {
+                return true;
+            }
+        }
+    </script>
+</body>
+
+</html>

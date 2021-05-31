@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>SFC Technology Documentation</title>
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!-- favicon -->
+    <link href="../img/favicon.ico" rel="shortcut icon" />
+
+    <!-- Bootstrap -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+    <!-- Stylesheets -->
+    <link href="../manual.css" rel="stylesheet" media="screen">
+
+    <!-- META -->
+    <meta name="keywords" content="SFC Technology Documentation" />
+    <meta name="description" content="SFC Technology is an open source digital signage solution. It supports all main media types and can be interfaced to other sources of data using CSV, Databases or RSS." />
+</head>
+
+<body data-toc="widgets">
+
+    <nav id="top-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#ss-navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                <a href="#" class="navbar-brand">SFC Technology Documentation</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="ss-navbar">
+                <ul class="nav navbar-nav">
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="ss_body container">
+        <div class="row">
+            <div class="col-md-3">
+                <ul id="side-nav" class="nav nav-pills nav-stacked">
+                    <li><a href="index.html" data-toc-name="tour">Tour</a></li>
+                    <li><a href="users.html" data-toc-name="users">Users</a></li>
+                    <li><a href="displays.html" data-toc-name="displays">Displays</a></li>
+                    <li><a href="layouts.html" data-toc-name="layouts">Layouts</a></li>
+                    <li><a href="media.html" data-toc-name="widgets">Media</a></li>
+                    <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+                    <html>
+
+                    <body>
+                        <ul>
+                            <li><a href="media_modules.html">Modules</a></li>
+                            <li><a href="media_module_audio.html">Audio</a></li>
+                            <li><a href="media_module_calendar.html">Calendar</a></li>
+                            <li><a href="media_module_chart.html">Chart</a></li>
+                            <li><a href="media_module_clock.html">Clock</a></li>
+                            <li><a href="media_module_currencies.html">Currencies</a></li>
+                            <li><a href="media_module_dataset_ticker.html">DataSet Ticker</a></li>
+                            <li><a href="media_module_dataset_view.html">DataSet View</a></li>
+                            <li><a href="media_module_embedded.html">Embedded</a></li>
+                            <li><a href="media_module_flash.html">Flash</a></li>
+                            <li><a href="media_module_googletraffic.html">Google Traffic</a></li>
+                            <li><a href="media_module_hls.html">HLS</a></li>
+                            <li><a href="media_module_htmlpackage.html">HTML Package</a></li>
+                            <li><a href="media_module_image.html">Image</a></li>
+                            <li><a href="media_module_localvideo.html">Local Video</a></li>
+                            <li><a href="media_module_notifications.html">Notifications</a></li>
+                            <li><a href="media_module_pdf.html">PDF</a></li>
+                            <li><a href="media_module_powerpoint.html">PowerPoint</a></li>
+                            <li><a href="media_module_shellcommand.html">Shell Command</a></li>
+                            <li><a href="media_module_stocks.html">Stocks</a></li>
+                            <li><a href="media_module_subplaylist.html">Sub Playlist</a></li>
+                            <li><a href="media_module_text.html">Text</a></li>
+                            <li><a href="media_module_ticker.html">Ticker</a></li>
+                            <li><a href="media_module_twitter.html">Twitter</a></li>
+                            <li><a href="media_module_twitter_metro.html">Twitter Metro</a></li>
+                            <li><a href="media_module_video.html">Video</a></li>
+                            <li><a href="media_module_video_in.html">Video In</a></li>
+                            <li><a href="media_module_weather.html">Weather</a></li>
+                            <li class="active"><a href="media_module_webpage.html">Web Page<span class="glyphicon glyphicon-arrow-left you-are-here-arrow"></span></a></li>
+                        </ul>
+                    </body>
+
+                    </html>
+                    <li><a href="scheduling.html" data-toc-name="scheduling">Scheduling</a></li>
+                    <li><a href="troubleshooting.html" data-toc-name="troubleshooting">Troubleshooting</a></li>
+                </ul>
+            </div>
+            <div class="col-md-9" role="main">
+                <!--toc=widgets-->
+                <h1 id="webpage">Webpage <a href="#webpage" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h1>
+                <p>Add the Webpage Widget to Layouts to show an entire Webpage embedded inside a Region. </p>
+                <blockquote class="tip">
+                    <p>There is support for <strong>scaling</strong> and <strong>offsetting</strong> the target webpage to allow for a particular section of a webpage to be defined to display.</p>
+                </blockquote>
+                <p>Click on the <strong>Webpage Widget</strong> on the toolbar, add / drag to the target <strong>Region</strong>. <img src="img/v2_media_webpage_widget.png" alt="Webpage Widget" /></p>
+                <blockquote class="tip">
+                    <p>If you are using 1.8, select <strong>Webpage</strong> from the Widget Toolbox to add to your Region Timeline and complete the form fields as explained below. </p>
+                </blockquote>
+                <h2 id="general">General <a href="#general" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <ul>
+                    <li>Provide an optional name.</li>
+                    <li>Choose to override the default duration.</li>
+                </ul>
+                <h2 id="configuration">Configuration <a href="#configuration" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p><img src="img/v2_media_webpage_configuation.png" alt="Webpage Configuration" /></p>
+                <h3>Link</h3>
+                <ul>
+                    <li>Provide the <strong>URL</strong> (including <code>http://</code>) of the webpage.</li>
+                    <li>Use the checkbox to render the webpage with a transparent background (currently not available on the Windows Player). SFC Technology will try its best to do this when checked, however, it cannot be supported on some webpages.</li>
+                </ul>
+                <blockquote class="tip">
+                    <p>After the page is rendered SFC Technology will scale to fit within the Region.</p>
+                </blockquote>
+                <blockquote class="tip">
+                    <p>Webpages are not cached by the Player, this Module requires a valid internet connection in order to function.</p>
+                </blockquote>
+                <h3>Options</h3>
+                <p>Select from 3 options to choose how the webpage should be embedded:</p>
+                <ol>
+                    <li>
+                        <h4><strong>Open Natively</strong></h4>
+                        <p>The Player will open the webpage without any alterations and will open and render in the browser as if the URL had been visited on the device outside Sfc technology.</p>
+                        <blockquote class="tip">
+                            <p><strong>Please note:</strong> There is no preview available for this option.</p>
+                        </blockquote>
+                    </li>
+                    <li>
+                        <h4><strong>Manual Position</strong></h4>
+                        <p>Embed the webpage by specifying dimensions which can be used to force the page to fit within certain pre-set dimensions.</p>
+                        <p><strong>Page Width</strong> - specify the width of the page</p>
+                        <p><strong>Page Height</strong> - specify the height of the page</p>
+                        <p><strong>Offset Top</strong> - the top position for the page to start</p>
+                        <p><strong>Offset Left</strong> - the left position for the page to start</p>
+                        <p><strong>Scale Percentage</strong> - percentage zoom to apply to the webpage</p>
+                    </li>
+                    <li>
+                        <h4><strong>Best Fit</strong></h4>
+                        <p>Specify a <strong>page width</strong> and <strong>page height</strong>.</p>
+                        <blockquote class="tip">
+                            <p><strong>Manual Position</strong> and <strong>Best Fit</strong> options will not work with websites that set the <strong>X-Frame-Options header</strong>. If you are unable to see the webpage use the Open Natively option when
+                                using Windows / Linux or Android. If X-Frame-Options is set then webOS/Tizen will not work in any mode.</p>
+                            <p>If X-Frame-Options is not set then the website should show in any of the Players, using any of the above options.</p>
+                            <p>Use the <a href="https://tools.geekflare.com/tools/x-frame-options-test">X-Frame-Options Header Checker Tool</a> to see if the header has been set.</p>
+                        </blockquote>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <!-- container-->
+    <footer class="ss_footer" role="contentinfo">
+        <div class="container">
+            <div class="pull-right">
+                <img class="img-responsive logo" src="../img/logo.png" alt="Sfc technology" />
+            </div>
+
+            <p class="ss_back_to_top">Back to Top</p>
+
+
+
+            <p class="ss_languages"><a href="../en/index.html">en</a></p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="../vendor/jquery/jquery-1.9.1.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".ss-sidebar .list-group li").addClass("list-group-item");
+            $(".ss_body img").addClass("img-thumbnail");
+            $(".ss_body table").addClass("table");
+
+            // Set the selected page based on the TOC name
+            // Mark the appropriate top nav element as the selected page
+            $("#top-nav a").each(function() {
+                if ($(this).data().tocName == $("body").data().toc)
+                    $(this).parent().addClass("active");
+            });
+
+            $(".ss_back_to_top").click(function() {
+                $('html, body').animate({
+                    scrollTop: 0
+                }, 800);
+            });
+
+            if (inIframe()) {
+                console.log("In Frame");
+                $("#top-nav").css("display", "none");
+                $(".ss-sidebar").parent().css("display", "none");
+            }
+        });
+
+        function inIframe() {
+            try {
+                return window.self !== window.top;
+            } catch (e) {
+                return true;
+            }
+        }
+    </script>
+</body>
+
+</html>

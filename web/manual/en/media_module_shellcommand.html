@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>SFC Technology Documentation</title>
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!-- favicon -->
+    <link href="../img/favicon.ico" rel="shortcut icon" />
+
+    <!-- Bootstrap -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+    <!-- Stylesheets -->
+    <link href="../manual.css" rel="stylesheet" media="screen">
+
+    <!-- META -->
+    <meta name="keywords" content="SFC Technology Documentation" />
+    <meta name="description" content="SFC Technology is an open source digital signage solution. It supports all main media types and can be interfaced to other sources of data using CSV, Databases or RSS." />
+</head>
+
+<body data-toc="widgets">
+
+    <nav id="top-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#ss-navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                <a href="#" class="navbar-brand">SFC Technology Documentation</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="ss-navbar">
+                <ul class="nav navbar-nav">
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="ss_body container">
+        <div class="row">
+            <div class="col-md-3">
+                <ul id="side-nav" class="nav nav-pills nav-stacked">
+                    <li><a href="index.html" data-toc-name="tour">Tour</a></li>
+                    <li><a href="users.html" data-toc-name="users">Users</a></li>
+                    <li><a href="displays.html" data-toc-name="displays">Displays</a></li>
+                    <li><a href="layouts.html" data-toc-name="layouts">Layouts</a></li>
+                    <li><a href="media.html" data-toc-name="widgets">Media</a></li>
+                    <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+                    <html>
+
+                    <body>
+                        <ul>
+                            <li><a href="media_modules.html">Modules</a></li>
+                            <li><a href="media_module_audio.html">Audio</a></li>
+                            <li><a href="media_module_calendar.html">Calendar</a></li>
+                            <li><a href="media_module_chart.html">Chart</a></li>
+                            <li><a href="media_module_clock.html">Clock</a></li>
+                            <li><a href="media_module_currencies.html">Currencies</a></li>
+                            <li><a href="media_module_dataset_ticker.html">DataSet Ticker</a></li>
+                            <li><a href="media_module_dataset_view.html">DataSet View</a></li>
+                            <li><a href="media_module_embedded.html">Embedded</a></li>
+                            <li><a href="media_module_flash.html">Flash</a></li>
+                            <li><a href="media_module_googletraffic.html">Google Traffic</a></li>
+                            <li><a href="media_module_hls.html">HLS</a></li>
+                            <li><a href="media_module_htmlpackage.html">HTML Package</a></li>
+                            <li><a href="media_module_image.html">Image</a></li>
+                            <li><a href="media_module_localvideo.html">Local Video</a></li>
+                            <li><a href="media_module_notifications.html">Notifications</a></li>
+                            <li><a href="media_module_pdf.html">PDF</a></li>
+                            <li><a href="media_module_powerpoint.html">PowerPoint</a></li>
+                            <li class="active"><a href="media_module_shellcommand.html">Shell Command<span class="glyphicon glyphicon-arrow-left you-are-here-arrow"></span></a></li>
+                            <li><a href="media_module_stocks.html">Stocks</a></li>
+                            <li><a href="media_module_subplaylist.html">Sub Playlist</a></li>
+                            <li><a href="media_module_text.html">Text</a></li>
+                            <li><a href="media_module_ticker.html">Ticker</a></li>
+                            <li><a href="media_module_twitter.html">Twitter</a></li>
+                            <li><a href="media_module_twitter_metro.html">Twitter Metro</a></li>
+                            <li><a href="media_module_video.html">Video</a></li>
+                            <li><a href="media_module_video_in.html">Video In</a></li>
+                            <li><a href="media_module_weather.html">Weather</a></li>
+                            <li><a href="media_module_webpage.html">Web Page</a></li>
+                        </ul>
+                    </body>
+
+                    </html>
+                    <li><a href="scheduling.html" data-toc-name="scheduling">Scheduling</a></li>
+                    <li><a href="troubleshooting.html" data-toc-name="troubleshooting">Troubleshooting</a></li>
+                </ul>
+            </div>
+            <div class="col-md-9" role="main">
+                <!--toc=widgets-->
+                <h1 id="shell_command">Shell Command <a href="#shell_command" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h1>
+                <p>The Shell Command Module is used to instruct the Display to execute a <strong>Command</strong> outside of the SFC Technology environment, using the operating system shell. </p>
+                <p><strong>Please note: This Module is not supported for webOS</strong>.</p>
+                <blockquote class="cloud"></blockquote>
+                <p>The Command is executed when a Layout containing the Shell Command Widget plays at its scheduled time.</p>
+                <p>A Shell command can be an <strong>&quot;ad hoc&quot;</strong> command string which is passed directly to the shell or a <strong>predefined</strong> <strong>command</strong> configured by an Administrator.</p>
+                <blockquote class="tip">
+                    <p>It is recommended that predefined commands should be used where possible. If you require additional commands, please contact your Administrator to create a new predefined command or provide a command string to include.</p>
+                </blockquote>
+                <p>Click on the <strong>Shell Command Widget</strong> on the toolbar, add / drag to the target <strong>Region</strong>. <img src="img/v2_media_shellcommand_widget.png" alt="Shell Command Widget" /></p>
+                <blockquote class="tip">
+                    <p>If you are using 1.8, select <strong>Shell Command</strong> from the Widget Toolbox to add to your Region Timeline.</p>
+                </blockquote>
+                <h3>General</h3>
+                <ul>
+                    <li>Provide an optional name</li>
+                    <li>Choose to override the default duration</li>
+                </ul>
+                <h3>Configuration</h3>
+                <p><img src="img/v2_media_shellcommand.png" alt="Shell Command" /></p>
+                <ul>
+                    <li>Use the drop-down menu to select a command.</li>
+                    <li>If a command string is to be used, then fields are provided for Windows or Android / Linux compatible commands.</li>
+                </ul>
+                <blockquote class="tip">
+                    <p>Linux/Android Players require <strong>root access</strong> to use Shell Commands.</p>
+                </blockquote>
+                <blockquote class="tip">
+                    <p>Shell Commands do not have a duration, they are executed once and then expire automatically.</p>
+                </blockquote>
+                <p>Add the Shell Command Widget to Layouts to execute external commands, such as ‘volume up’ for a Layout with an Audio Widget that is set to play, and ‘volume down’ when the Layout finishes.</p>
+                <blockquote class="tip">
+                    <p>For commands that are executed on a specific date/time, such as ‘reboots’, 'turn on/off' on opening/closing times for example, then please see <a href="scheduling_events.html">Events</a> in the Scheduling section and <a href="displays.html">Send Command</a>                        in the Displays section of this User Manual.</p>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+    <!-- container-->
+    <footer class="ss_footer" role="contentinfo">
+        <div class="container">
+            <div class="pull-right">
+                <img class="img-responsive logo" src="../img/logo.png" alt="Sfc technology" />
+            </div>
+
+            <p class="ss_back_to_top">Back to Top</p>
+
+
+
+            <p class="ss_languages"><a href="../en/index.html">en</a></p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="../vendor/jquery/jquery-1.9.1.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".ss-sidebar .list-group li").addClass("list-group-item");
+            $(".ss_body img").addClass("img-thumbnail");
+            $(".ss_body table").addClass("table");
+
+            // Set the selected page based on the TOC name
+            // Mark the appropriate top nav element as the selected page
+            $("#top-nav a").each(function() {
+                if ($(this).data().tocName == $("body").data().toc)
+                    $(this).parent().addClass("active");
+            });
+
+            $(".ss_back_to_top").click(function() {
+                $('html, body').animate({
+                    scrollTop: 0
+                }, 800);
+            });
+
+            if (inIframe()) {
+                console.log("In Frame");
+                $("#top-nav").css("display", "none");
+                $(".ss-sidebar").parent().css("display", "none");
+            }
+        });
+
+        function inIframe() {
+            try {
+                return window.self !== window.top;
+            } catch (e) {
+                return true;
+            }
+        }
+    </script>
+</body>
+
+</html>

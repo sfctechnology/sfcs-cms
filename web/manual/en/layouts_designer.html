@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>SFC Technology Documentation</title>
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!-- favicon -->
+    <link href="../img/favicon.ico" rel="shortcut icon" />
+
+    <!-- Bootstrap -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+    <!-- Stylesheets -->
+    <link href="../manual.css" rel="stylesheet" media="screen">
+
+    <!-- META -->
+    <meta name="keywords" content="SFC Technology Documentation" />
+    <meta name="description" content="SFC Technology is an open source digital signage solution. It supports all main media types and can be interfaced to other sources of data using CSV, Databases or RSS." />
+</head>
+
+<body data-toc="layouts">
+
+    <nav id="top-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#ss-navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                <a href="#" class="navbar-brand">SFC Technology Documentation</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="ss-navbar">
+                <ul class="nav navbar-nav">
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="ss_body container">
+        <div class="row">
+            <div class="col-md-3">
+                <ul id="side-nav" class="nav nav-pills nav-stacked">
+                    <li><a href="index.html" data-toc-name="tour">Tour</a></li>
+                    <li><a href="users.html" data-toc-name="users">Users</a></li>
+                    <li><a href="displays.html" data-toc-name="displays">Displays</a></li>
+                    <li><a href="layouts.html" data-toc-name="layouts">Layouts</a></li>
+                    <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+                    <html>
+
+                    <body>
+                        <ul>
+                            <li><a href="layouts.html">Introduction</a></li>
+                            <li class="active"><a href="layouts_designer.html">Layout Designer<span class="glyphicon glyphicon-arrow-left you-are-here-arrow"></span></a></li>
+                            <li><a href="layouts_regions.html">Regions</a></li>
+                            <li><a href="layouts_timeline.html">Layout Timeline</a></li>
+                            <li><a href="layouts_tools.html">Tools</a></li>
+                            <li><a href="layouts_widgets.html">Widgets</a></li>
+                            <li><a href="layouts_library_search.html">Library Search</a></li>
+                            <li><a href="layouts_templates.html">Templates</a></li>
+                            <li><a href="layouts_overlay.html">Overlay Layouts</a></li>
+                            <li><a href="layouts_campaigns.html">Campaigns</a></li>
+                        </ul>
+                    </body>
+
+                    </html>
+                    <li><a href="media.html" data-toc-name="media">Media</a></li>
+                    <li><a href="scheduling.html" data-toc-name="scheduling">Scheduling</a></li>
+                    <li><a href="troubleshooting.html" data-toc-name="troubleshooting">Troubleshooting</a></li>
+                </ul>
+            </div>
+            <div class="col-md-9" role="main">
+                <!--toc=layouts-->
+                <h1 id="layout_designer_(new_features_for_v2)">Layout Designer (New Features for v2) <a href="#layout_designer_(new_features_for_v2)" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h1>
+                <p>The Layout Designer is the heart of <strong>content creation</strong> in Sfc technology. Each time a new Layout is added, or an existing one needs a design change, the Layout Designer is used.</p>
+                <blockquote class="tip">
+                    <p>If you are using the <strong>1.8</strong> series CMS, please use the following link: <a href="layouts_designer_1.8.html">Layout Designer 1.8</a></p>
+                </blockquote>
+                <p>SFC Technology makes layout design simple through the use of <strong>drag and drop</strong>,<strong>interactive previewing</strong> and <strong>design flexibility</strong>. On adding a new Layout the Layout Designer will open in <strong>Read Only Mode</strong>.</p>
+                <p><img src="img/v2_layouts_designer_first_load.png" alt="Layout Designer" /></p>
+                <blockquote class="tip">
+                    <p>All newly created Layouts have a '<strong>Published</strong>' status by default. This allows for quick and easy creation to scheduling if creating from a <strong>Template</strong> or importing a designed layout. Layouts with a <strong>valid</strong>                        status can be scheduled straight away!</p>
+                </blockquote>
+                <p>To enable editing click on the <strong>Actions</strong> menu located at the bottom right of the toolbar, and click on <strong>Checkout</strong>. A confirmation form will appear, click on the <strong>Checkout</strong> button to continue.</p>
+                <blockquote class="tip">
+                    <p>Clicking on the 'Read Only Mode' pop up at the bottom of the window will also 'Checkout'.</p>
+                </blockquote>
+                <p><img src="img/v2_layouts_checkout.png" alt="Layouts checkout" /></p>
+                <p>The <strong>Layout Designer</strong> will open and confirm that the Layout has been 'checked out' ready for editing.</p>
+                <h2 id="layout_navigator">Layout Navigator <a href="#layout_navigator" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>This is located in the bottom corner of the Layout Designer window. As shown in the above image, all new Layouts, by default, have one full screen empty <a href="layouts_regions.html">Region</a>, represented as a semi-transparent overlay.
+                    The Layout Navigator is used to add, position and resize Regions and gives an overview to the overall layout design.</p>
+                <p><img src="img/v2_layouts_layout_navigator.png" alt="Layout Navigator" /></p>
+                <p>Clicking on a <strong>Region</strong> in the opened Layout Navigator window, opens the <strong>Region Options</strong> form which allows for refinement of <strong>Positioning</strong> and the application of <strong>Transitions</strong>.</p>
+                <p><img src="img/v2_layout_designer_region_options_form.png" alt="Region Options" /></p>
+                <h2 id="layout_timeline">Layout Timeline <a href="#layout_timeline" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>Located next to the Layout Navigator the Layout Timeline displays the duration of individual Widgets as well as complete layout duration which is based on the longest running region on the layout.</p>
+                <p>A status indicator is shown (cross or tick) to identify valid and invalid Layouts. <strong>Invalid layouts will be excluded from the Schedule and will not be played.</strong></p>
+                <blockquote class="tip">
+                    <p>A Layout must contain at least one Region <strong>and</strong> each Region must contain at least <strong>one</strong> media item for it to be valid and play when scheduled.</p>
+                </blockquote>
+                <p><img src="img/v2_layouts_region_timeline.png" alt="Region Timeline" /></p>
+                <h2 id="preview">Preview <a href="#preview" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>Preview your Layout, Widgets and Regions and make the necessary alterations to designs to ensure that everything plays as intended. Click on the Play icon located in the top left of the Preview window to Preview your Layout. Toggle to
+                    full screen size by clicking the icon in the top right hand corner of the Preview window.</p>
+                <p><img src="img/v2_layouts_layout_preview.png" alt="Layout Preview" /></p>
+                <p>Click on a <strong>Widget</strong> to view media in the Preview window. Use the arrows to cycle through all Widgets that have been assigned to that <strong>Region</strong>.</p>
+                <p><img src="img/v2_layouts_widget_preview.png" alt="Widget Preview" /></p>
+                <blockquote class="tip">
+                    <p>Click on the back arrow in the top right hand of the Preview window to return to the Layout Preview.</p>
+                </blockquote>
+                <h2 id="editor">Editor <a href="#editor" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>Edit aspects of your Layout and assigned Widgets. Click on assigned <strong>Widgets</strong> from the <strong>Layout Timeline</strong> window to open the edit options available for that media item.</p>
+                <p><img src="img/v2_layouts_edit_widget.png" alt="Edit Widget" /></p>
+                <p>Use the arrow in the top right hand corner of the Preview window to return to the Layout and <strong>Edit Layout</strong> form.</p>
+                <p><img src="img/v2_layouts_layout_editor.png" alt="Layout Editor" /></p>
+                <p>Widgets can be edited by clicking on assigned <strong>Widgets</strong> on the <strong>Layout Timeline</strong> window to open the options available for that media item.</p>
+                <p><img src="img/v2_layouts_edit_widget.png" alt="Edit Widget" /></p>
+                <h2 id="toolbox">Toolbox <a href="#toolbox" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>Located on the bottom left of the toolbar assign actions using <a href="layouts_tools.html">Tools</a>, add <a href="layouts_widgets.html">Widgets</a> and search for <a href="media_library_search.html">Library</a> media items to add to
+                    Layouts.
+                </p>
+                <p><img src="img/v2_layouts_toolbox.png" alt="Toolbox" /></p>
+                <h2 id="actions">Actions <a href="#actions" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>Located on the bottom right of the toolbar, select from the menu of Actions that can be performed for <strong>Published</strong> Layouts.</p>
+                <p><img src="img/v2_layouts_actions_list.png" alt="Actions List" /></p>
+                <ul>
+                    <li>
+                        <p><strong>Checkout</strong> - enable editing by putting the published Layout into a draft status.</p>
+                    </li>
+                    <li>
+                        <p><strong>Schedule Now</strong> - schedule published Layouts onto one or more Displays directly from the Layout Designer.</p>
+                    </li>
+                    <li>
+                        <p><strong>Save Template</strong> - save your published designs by creating a <a href="layouts_templates.html">Template</a> for reuse. Saving a template will store an exact copy of the Layout, including Regions, Playlists and media.</p>
+                        <blockquote class="tip">
+                            <p>Invalid Layouts cannot be published.</p>
+                        </blockquote>
+                    </li>
+                </ul>
+                <blockquote class="tip">
+                    <p>Layouts that have been 'checked out' and are in a draft status have action buttons to <strong>Publish</strong>, <strong>Undo</strong> and <strong>Delete</strong>, located on the bottom right of the toolbar. <img src="img/v2_layouts_designer_actions.png"
+                            alt="Actions" /></p>
+                </blockquote>
+                <h3>Layout Selector</h3>
+                <p>The <strong>Layout selector</strong> provides easy navigation between all Layouts the logged in User has permission to edit without having to leave the Layout Designer screen.</p>
+                <blockquote class="tip">
+                    <p>The toolbar has a memory so that when you next open SFC Technology you can pick up exactly where you left off.</p>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+    <!-- container-->
+    <footer class="ss_footer" role="contentinfo">
+        <div class="container">
+            <div class="pull-right">
+                <img class="img-responsive logo" src="../img/logo.png" alt="Sfc technology" />
+            </div>
+
+            <p class="ss_back_to_top">Back to Top</p>
+
+
+
+            <p class="ss_languages"><a href="../en/index.html">en</a></p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="../vendor/jquery/jquery-1.9.1.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".ss-sidebar .list-group li").addClass("list-group-item");
+            $(".ss_body img").addClass("img-thumbnail");
+            $(".ss_body table").addClass("table");
+
+            // Set the selected page based on the TOC name
+            // Mark the appropriate top nav element as the selected page
+            $("#top-nav a").each(function() {
+                if ($(this).data().tocName == $("body").data().toc)
+                    $(this).parent().addClass("active");
+            });
+
+            $(".ss_back_to_top").click(function() {
+                $('html, body').animate({
+                    scrollTop: 0
+                }, 800);
+            });
+
+            if (inIframe()) {
+                console.log("In Frame");
+                $("#top-nav").css("display", "none");
+                $(".ss-sidebar").parent().css("display", "none");
+            }
+        });
+
+        function inIframe() {
+            try {
+                return window.self !== window.top;
+            } catch (e) {
+                return true;
+            }
+        }
+    </script>
+</body>
+
+</html>

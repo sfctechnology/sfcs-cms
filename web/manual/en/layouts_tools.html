@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>SFC Technology Documentation</title>
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!-- favicon -->
+    <link href="../img/favicon.ico" rel="shortcut icon" />
+
+    <!-- Bootstrap -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+    <!-- Stylesheets -->
+    <link href="../manual.css" rel="stylesheet" media="screen">
+
+    <!-- META -->
+    <meta name="keywords" content="SFC Technology Documentation" />
+    <meta name="description" content="SFC Technology is an open source digital signage solution. It supports all main media types and can be interfaced to other sources of data using CSV, Databases or RSS." />
+</head>
+
+<body data-toc="layouts">
+
+    <nav id="top-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#ss-navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                <a href="#" class="navbar-brand">SFC Technology Documentation</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="ss-navbar">
+                <ul class="nav navbar-nav">
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="ss_body container">
+        <div class="row">
+            <div class="col-md-3">
+                <ul id="side-nav" class="nav nav-pills nav-stacked">
+                    <li><a href="index.html" data-toc-name="tour">Tour</a></li>
+                    <li><a href="users.html" data-toc-name="users">Users</a></li>
+                    <li><a href="displays.html" data-toc-name="displays">Displays</a></li>
+                    <li><a href="layouts.html" data-toc-name="layouts">Layouts</a></li>
+                    <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+                    <html>
+
+                    <body>
+                        <ul>
+                            <li><a href="layouts.html">Introduction</a></li>
+                            <li><a href="layouts_designer.html">Layout Designer</a></li>
+                            <li><a href="layouts_regions.html">Regions</a></li>
+                            <li><a href="layouts_timeline.html">Layout Timeline</a></li>
+                            <li class="active"><a href="layouts_tools.html">Tools<span class="glyphicon glyphicon-arrow-left you-are-here-arrow"></span></a></li>
+                            <li><a href="layouts_widgets.html">Widgets</a></li>
+                            <li><a href="layouts_library_search.html">Library Search</a></li>
+                            <li><a href="layouts_templates.html">Templates</a></li>
+                            <li><a href="layouts_overlay.html">Overlay Layouts</a></li>
+                            <li><a href="layouts_campaigns.html">Campaigns</a></li>
+                        </ul>
+                    </body>
+
+                    </html>
+                    <li><a href="media.html" data-toc-name="media">Media</a></li>
+                    <li><a href="scheduling.html" data-toc-name="scheduling">Scheduling</a></li>
+                    <li><a href="troubleshooting.html" data-toc-name="troubleshooting">Troubleshooting</a></li>
+                </ul>
+            </div>
+            <div class="col-md-9" role="main">
+                <!--toc=layouts-->
+                <h1 id="tools_(new_features_for_v2)">Tools (New Features for v2) <a href="#tools_(new_features_for_v2)" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h1>
+                <p>Located on the bottom toolbar on the <a href="layouts_designer.html">Layout Designer</a>, the <strong>Tools</strong> tab contains actions that can be applied to the components of Layouts. </p>
+                <p><img src="img/v2_layouts_tools.png" alt="Tools" /></p>
+                <h3>Region</h3>
+                <p>Regions can be simply added to Layouts by clicking on the Region button or drag and drop to the <strong>Layout Navigator</strong>. </p>
+                <h3>Audio</h3>
+                <p>Upload Audio files to the <strong>Library</strong> which can then be selected to attach to Widgets. Click on the Audio button and click to add or drag and drop to the target Widget on the Layout Timeline.</p>
+                <p><img src="img/v2_layouts_tools_attach_audio.png" alt="Attach Audio" /></p>
+                <p>Use the drop-down menu to select an audio file from the Library.</p>
+                <p>When assigning audio to a Widget you can enter <strong>Volume</strong> as well as a <strong>Loop</strong> parameter to determine whether the audio will loop for the duration of the existing Widget or just play through once. The audio will
+                    be stopped when its parent Widget finishes playing.</p>
+                <p>Once audio has been assigned to a Widget, a <strong>speaker icon</strong> will be visible for the media item in the Region Timeline.</p>
+                <blockquote class="tip">
+                    <p>Click on the speaker icon to edit the assigned audio.</p>
+                </blockquote>
+                <p><img src="img/v2_layouts_tools_assigned_audio_icon.png" alt="Audio Icon" /></p>
+                <h3>Expiry Dates</h3>
+                <p>Click on the Expiry Dates button and click to add or drag and drop to a Widget to enter <strong>Start</strong> and <strong>End</strong> dates and times.</p>
+                <p><img src="img/v2_layouts_tools_expiry_dates.png" alt="Expiry Dates" /></p>
+                <p>Widgets that have Expiry Dates assigned can be identified by the <strong>clock icon</strong> shown in the corner of the media item on the Layout Timeline. </p>
+                <p><img src="img/v2_layouts_tools_assigned_expiry_dates.png" alt="Assigned Expiry Dates" /></p>
+                <blockquote class="tip">
+                    <p>Click on this icon to make edits to expiry dates/times as necessary.</p>
+                </blockquote>
+                <blockquote class="tip">
+                    <p>Once the End date has passed the Widget will be removed from the Region. Expired Widgets will remain visible in the Layout Designer so that <strong>Start</strong> and <strong>End</strong> times can be re-adjusted if needed.</p>
+                </blockquote>
+                <p>It is important to note that the Layout will be marked invalid and not sent to Players if a Region is empty due to Widget expiry. It should also be noted that if at the time of download there was a valid Layout but the Player has since
+                    gone offline, the Layout will show with an empty Region.</p>
+                <h3>Transitions</h3>
+                <blockquote class="tip">
+                    <p>Transitions are supported for Android/webOS and Tizen Players.</p>
+                </blockquote>
+                <h3>Fade/Fly In</h3>
+                <p>Select a transition and duration to be applied when the media item starts. </p>
+                <p><img src="img/v2_layouts_tools_transition_in.png" alt="Transition In" /></p>
+                <h3>Fade/Fly Out</h3>
+                <p>Select the finish transition and duration to be applied to the media item when further Widget's are set to follow in the Layout Timeline.</p>
+                <p><img src="img/v2_layouts_tools_transition_out.png" alt="Transition Out" /></p>
+                <blockquote class="tip">
+                    <p>If there are no more Widgets to follow or the Layout is in the process of being removed then the Exit Transition will apply as configured in Region Options.</p>
+                </blockquote>
+                <h3>Permissions</h3>
+                <p>Set view, edit and delete permissions for Widgets and Regions by clicking to add or drag and drop. </p>
+                <p><img src="img/v2_layouts_tools_permissions.png" alt="Permissions" /></p>
+                <p>Please see the manual page for <a href="users_permissions.html">Permissions</a> for further information.</p>
+            </div>
+        </div>
+    </div>
+    <!-- container-->
+    <footer class="ss_footer" role="contentinfo">
+        <div class="container">
+            <div class="pull-right">
+                <img class="img-responsive logo" src="../img/logo.png" alt="Sfc technology" />
+            </div>
+
+            <p class="ss_back_to_top">Back to Top</p>
+
+
+
+            <p class="ss_languages"><a href="../en/index.html">en</a></p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="../vendor/jquery/jquery-1.9.1.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".ss-sidebar .list-group li").addClass("list-group-item");
+            $(".ss_body img").addClass("img-thumbnail");
+            $(".ss_body table").addClass("table");
+
+            // Set the selected page based on the TOC name
+            // Mark the appropriate top nav element as the selected page
+            $("#top-nav a").each(function() {
+                if ($(this).data().tocName == $("body").data().toc)
+                    $(this).parent().addClass("active");
+            });
+
+            $(".ss_back_to_top").click(function() {
+                $('html, body').animate({
+                    scrollTop: 0
+                }, 800);
+            });
+
+            if (inIframe()) {
+                console.log("In Frame");
+                $("#top-nav").css("display", "none");
+                $(".ss-sidebar").parent().css("display", "none");
+            }
+        });
+
+        function inIframe() {
+            try {
+                return window.self !== window.top;
+            } catch (e) {
+                return true;
+            }
+        }
+    </script>
+</body>
+
+</html>

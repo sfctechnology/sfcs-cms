@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>SFC Technology Documentation</title>
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!-- favicon -->
+    <link href="../img/favicon.ico" rel="shortcut icon" />
+
+    <!-- Bootstrap -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+    <!-- Stylesheets -->
+    <link href="../manual.css" rel="stylesheet" media="screen">
+
+    <!-- META -->
+    <meta name="keywords" content="SFC Technology Documentation" />
+    <meta name="description" content="SFC Technology is an open source digital signage solution. It supports all main media types and can be interfaced to other sources of data using CSV, Databases or RSS." />
+</head>
+
+<body data-toc="media">
+
+    <nav id="top-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#ss-navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                <a href="#" class="navbar-brand">SFC Technology Documentation</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="ss-navbar">
+                <ul class="nav navbar-nav">
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="ss_body container">
+        <div class="row">
+            <div class="col-md-3">
+                <ul id="side-nav" class="nav nav-pills nav-stacked">
+                    <li><a href="index.html" data-toc-name="tour">Tour</a></li>
+                    <li><a href="users.html" data-toc-name="users">Users</a></li>
+                    <li><a href="displays.html" data-toc-name="displays">Displays</a></li>
+                    <li><a href="layouts.html" data-toc-name="layouts">Layouts</a></li>
+                    <li><a href="media.html" data-toc-name="media">Media</a></li>
+                    <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+                    <html>
+
+                    <body>
+                        <ul>
+                            <li><a href="media.html">Introduction</a></li>
+                            <li><a href="media_library.html">Library</a></li>
+                            <li><a href="media_tidylibrary.html">Tidy Library</a></li>
+                            <li><a href="media_playlists.html">Playlists</a></li>
+                            <li class="active"><a href="media_datasets.html">DataSets<span class="glyphicon glyphicon-arrow-left you-are-here-arrow"></span></a></li>
+                            <li><a href="media_modules.html">Modules</a></li>
+                        </ul>
+                    </body>
+
+                    </html>
+                    <li><a href="scheduling.html" data-toc-name="scheduling">Scheduling</a></li>
+                    <li><a href="troubleshooting.html" data-toc-name="troubleshooting">Troubleshooting</a></li>
+                </ul>
+            </div>
+            <div class="col-md-9" role="main">
+                <!--toc=media-->
+                <h1 id="datasets">DataSets <a href="#datasets" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h1>
+                <p>DataSets are a feature to design and store <strong>tabular</strong> data. Once designed the data can be imported from a CSV file, entered manually, as JSON via the API or synced remotely on a Schedule. A DataSet provides a convenient way
+                    to import and display data from other systems in Sfc technology.</p>
+                <p>Examples of where DataSets could be utilised:</p>
+                <ul>
+                    <li>A drinks menu at a bar</li>
+                    <li>Tee times at a golf club</li>
+                    <li>Meeting room bookings</li>
+                </ul>
+                <p>DataSets have been designed to be versatile and reusable and come in two parts:</p>
+                <ol>
+                    <li><strong>The DataSet</strong> (Data Structure and data)</li>
+                    <li><strong>The Display</strong> (<a href="manual/en/media_module_dataset_view.html">DataSet View</a> / <a href="manual/en/media_module_dataset_ticker.html">DataSet Ticker</a> / a source of data for a custom Module)</li>
+                </ol>
+                <p>DataSets are first defined, which can then be reused across multiple DataSet Views and Layouts. Access by navigating to <strong>DataSets</strong> under the <strong>Library</strong> section on the Menu to view the DataSet grid where you
+                    can add new and manage existing DataSets.</p>
+                <p><img src="img/media_dataset_grid.png" alt="DataSet Grid" /></p>
+                <h2 id="add_dataset">Add DataSet <a href="#add_dataset" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>Designing a DataSet is a <strong>2 step</strong> process - first add the <strong>DataSet record</strong> and then configure <strong>Columns</strong>.</p>
+                <p>Click on the <strong>Add DataSet</strong> button and complete the form fields.</p>
+                <p><img src="img/media_dataset_add.png" alt="DataSet Add" /></p>
+                <p><strong>Name</strong> - Use to identify in the CMS</p>
+                <p><strong>Description</strong> - optional (what is it used for?)</p>
+                <p><strong>Code</strong> - Usually used for referencing via the API</p>
+                <p><strong>Remote?</strong> - Should this DataSet sync itself with a remote data source?</p>
+                <blockquote class="tip">
+                    <p>If you choose to make the DataSet Remote you will be presented with further tabbed headers with information that will need completing, see the <a href="media_datasets.html#Remote_Datasets">Remote DataSets</a> section of this page.</p>
+                </blockquote>
+                <h3>Columns</h3>
+                <p>Use the row menu and select <strong>View Columns</strong>, a new grid will open which will show all Columns currently created for that DataSet.</p>
+                <p><img src="img/media_add_columns_grid.png" alt="DataSets Add columns" /></p>
+                <blockquote class="tip">
+                    <p>By default, all DataSets will have <strong>Col1</strong> added which should be edited or deleted using the row menu.</p>
+                </blockquote>
+                <p>Columns are used to define the structure of the data, with each Column having a number of settings to achieve this. Click on the <strong>Add Column</strong> button and complete the fields on the form.</p>
+                <p><img src="img/media_columns_form.png" alt="DataSet Columns Form" /></p>
+                <p><strong>Heading</strong> - a heading to identify the Column.</p>
+                <p><strong>Column Type</strong> - Value (User entered), Formula (calculated) or Remote. </p>
+                <p><strong>Data Type</strong> - String, Number, Date, External Image, Library Image, the format to use for the data.</p>
+                <p><strong>Column Order</strong> - The position this Column should appear when viewing/entering Data.</p>
+                <p>Options for Filtering and Sorting are also included on this form.</p>
+                <h3>Additional Information</h3>
+                <p>Depending on the Column Type selecting additional information will be required:</p>
+                <p><strong>(Value) List Content</strong> - A comma-separated list of values that can be selected for this field.</p>
+                <p><strong>(Formula) Formula</strong> - A MySQL statement suitable for use in a ‘SELECT’ statement, or a string to format a date field <code>$dateFormat(&lt;col&gt;,&lt;format&gt;&lt;language&gt;)</code>.</p>
+                <blockquote class="tip">
+                    <p>Ensure that <code>&lt;col&gt;</code> has a date and time specified for the date format to work.</p>
+                </blockquote>
+                <blockquote class="tip">
+                    <p>If the Language has not been set, then it will default to English.</p>
+                </blockquote>
+                <p><strong>(Remote) Remote Data Path</strong> - A JSON syntax string showing how to access the Data in the Remote data source.</p>
+                <p>There is no theoretical limit to the number of columns SFC Technology can support; although a smaller DataSet is often easier to enter and display.</p>
+                <blockquote class="tip">
+                    <p>Columns can be added and removed after Data has been entered. The ordering and list content of Columns can also be changed after Data has been collected.</p>
+                </blockquote>
+                <p>SFC Technology should accept any date format that is in a correct PHP date format, the following characters are recognised and can be used:</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Format Character</th>
+                            <th style="text-align: left;">Description</th>
+                            <th>Example returned values</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td style="text-align: left;"><strong>Day</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>d</td>
+                            <td style="text-align: left;">Day of the month, 2 digits with leading zeros</td>
+                            <td>01 to 31</td>
+                        </tr>
+                        <tr>
+                            <td>D</td>
+                            <td style="text-align: left;">A textual representation of a day, three letters</td>
+                            <td>Mon through Sun</td>
+                        </tr>
+                        <tr>
+                            <td>j</td>
+                            <td style="text-align: left;">Day of the month without leading zeros</td>
+                            <td>1 to 31</td>
+                        </tr>
+                        <tr>
+                            <td>l</td>
+                            <td style="text-align: left;">(lowercase ‘L’) A full textual representation of the day of the week</td>
+                            <td>Sunday through Saturday</td>
+                        </tr>
+                        <tr>
+                            <td>N</td>
+                            <td style="text-align: left;">ISO-8601 numeric representation of the day of the week (added in PHP 5.1.0)</td>
+                            <td>1 (for Monday) through 7 (for Sunday)</td>
+                        </tr>
+                        <tr>
+                            <td>S</td>
+                            <td style="text-align: left;">English ordinal suffix for the day of the month, 2 characters</td>
+                            <td>st, nd, rd or th. Works well with j</td>
+                        </tr>
+                        <tr>
+                            <td>w</td>
+                            <td style="text-align: left;">Numeric representation of the day of the week</td>
+                            <td>0 (for Sunday) through 6 (for Saturday)</td>
+                        </tr>
+                        <tr>
+                            <td>z</td>
+                            <td style="text-align: left;">The day of the year (starting from 0)</td>
+                            <td>0 through 365</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td style="text-align: left;"><strong>Week</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>W</td>
+                            <td style="text-align: left;">ISO-8601 week number of year, weeks starting on Monday (added in PHP 4.1.0)</td>
+                            <td>42 (the 42nd week in the year)</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td style="text-align: left;"><strong>Month</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>F</td>
+                            <td style="text-align: left;">A full textual representation of a month, such as January or March</td>
+                            <td>January through December</td>
+                        </tr>
+                        <tr>
+                            <td>m</td>
+                            <td style="text-align: left;">Numeric representation of a month, with leading zeros</td>
+                            <td>01 through 12</td>
+                        </tr>
+                        <tr>
+                            <td>M</td>
+                            <td style="text-align: left;">A short textual representation of a month, three letters</td>
+                            <td>Jan through Dec</td>
+                        </tr>
+                        <tr>
+                            <td>n</td>
+                            <td style="text-align: left;">Numeric representation of a month, without leading zeros</td>
+                            <td>1 through 12</td>
+                        </tr>
+                        <tr>
+                            <td>t</td>
+                            <td style="text-align: left;">Number of days in the given month</td>
+                            <td>28 through 31</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td style="text-align: left;"><strong>Year</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>L</td>
+                            <td style="text-align: left;">Whether it’s a leap year</td>
+                            <td>1 if it is a leap year, 0 otherwise.</td>
+                        </tr>
+                        <tr>
+                            <td>o</td>
+                            <td style="text-align: left;">ISO-8601 year number. This has the same value as Y, except that if the ISO week number (W) belongs to the previous or next year, that year is used instead. (added in PHP 5.1.0)</td>
+                            <td>1999 or 2003</td>
+                        </tr>
+                        <tr>
+                            <td>Y</td>
+                            <td style="text-align: left;">A full numeric representation of a year, 4 digits</td>
+                            <td>1999 or 2003</td>
+                        </tr>
+                        <tr>
+                            <td>y</td>
+                            <td style="text-align: left;">A two digit representation of a year</td>
+                            <td>99 or 0</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h2 id="remote_datasets">Remote DataSets <a href="#remote_datasets" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>A Remote DataSet will need additional information completed; the Remote data source URL, request params, request method and authentication information.</p>
+                <p>Remote DataSets are a special type of DataSet which periodically syncs from a <strong>3rd party data source</strong> which you specify when adding/editing the DataSet. SFC Technology will call the URL specified at the time period specified
+                    and parse the data according to the instructions set on the DataSet and any Remote Columns.</p>
+                <blockquote class="tip">
+                    <p>A <strong>Remote DataSet</strong> will not sync or update until it is being used in a <strong>Layout</strong> that has been <strong>Scheduled</strong> to show on a Player.</p>
+                </blockquote>
+                <p>The remote data source must be JSON formatted.</p>
+                <p>Data is populated according to the Columns defined as Column type <strong>Remote</strong>. When specifying a Remote Column a &quot;data path&quot; is entered which is the JSON syntax path to the data for that column, with respect to the
+                    Data Root specified on the DataSet.</p>
+                <p>Consider an example JSON data source:</p>
+                <pre><code class="language-json">{
+    "base": "EUR",
+    "date": "2017-12-22",
+    "rates": {
+        "GBP": 0.88568,
+        "THB": 38.83,
+        "USD": 1.1853
+    }
+}</code></pre>
+                <p>If we wanted columns to capture the currency symbol and value, we would set our &quot;Data Root&quot; to <code>rates</code> and then have Columns for:</p>
+                <ul>
+                    <li>Symbol - data path = 0</li>
+                    <li>Value - data path = 1</li>
+                </ul>
+                <h3>Dependents</h3>
+                <p>A remote DataSet can depend on another DataSet to formulate its request. Each row in the dependent DataSet will be used to create a request using the parent DataSet's request parameters.</p>
+                <h2 id="data_row">Data Row <a href="#data_row" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>Once you have your DataSet defined with Columns you will need to add some data. This can be done in a number of ways:</p>
+                <ul>
+                    <li>Manually through the CMS user interface</li>
+                    <li>Imported via a CSV file</li>
+                    <li>Through the API</li>
+                    <li>Remotely synced</li>
+                </ul>
+                <h3>Manually</h3>
+                <p>Data can be viewed/added and edited in a DataSet using <strong>View Data</strong> on the row menu or the button on the Columns page.</p>
+                <p>The data table returned will contain a column for each of the Columns you've defined in your configuration. </p>
+                <p><img src="img/media_dataset_row.png" alt="Dataset Row" /></p>
+                <p>Add a new row by clicking on the <strong>Add Row</strong> button to open a form with fields to be completed for all non-formula Columns. A Row can be edited by clicking anywhere on the row and deleted using the blue X.</p>
+                <h3>Importing CSV</h3>
+                <p>The CMS has a DataSet CSV importer that can be used to extract data from a <strong>CSV file</strong> and put it into a DataSet. The importer can be accessed through the row menu of any DataSet, with the exception of DataSets configured
+                    for Remote data sources.</p>
+                <p>When the importer opens the Columns in the DataSet will be listed with a field next to them, indicating the Column in the Remote file that should be used as a source of data for that Column. You may also choose to overwrite the existing
+                    data and ignore the first row of the CSV file.</p>
+                <p>An example of the form is shown below:</p>
+                <p><img src="img/media_dataset_importcsv_form.png" alt="Dataset Import CSV" /></p>
+                <p>It is important to ensure that your CSV file has the correct file encoding if you are using non-ASCII characters. Non-ASCII characters are very common for languages outside of English. The file encoding most commonly used is UTF-8.</p>
+                <p>If you have edited your CSV file using Excel, you will need to make sure you select &quot;Unicode (UTF-8)&quot; from the Tools -&gt; Web Options -&gt; Encoding tab on the Save as dialogue.</p>
+                <h3>Through the API</h3>
+                <p>You can write your own application which syncs data into a DataSet using the SFC Technology API. Data can be added row by row or via importing whole JSON structures.</p>
+                <h3>Remotely</h3>
+                <p>Remote DataSets are kept in sync with a Task called <strong>Fetch Remote DataSets</strong>. This task is configured by default and runs once per minute.</p>
+                <h2 id="row_menu">Row Menu <a href="#row_menu" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>As well as the Actions that have been previously mentioned, each data set can have a number of actions performed against it, accessed using the row menu.</p>
+                <h3>Delete</h3>
+                <p>Select the Delete menu item to show the DataSet Delete form which gives the option of deleting any associated data contained. </p>
+                <blockquote class="tip">
+                    <p>DataSets can only be deleted if they are not currently being used.</p>
+                </blockquote>
+                <h3>Permissions</h3>
+                <p>The creator (owner) of the DataSet or a Super Administrator can assign View/Edit/Delete Permissions for User/User Groups.</p>
+                <blockquote class="tip">
+                    <p>Users with Edit permissions will be able to add/edit data and reorganise the structure of the DataSet. Only Users with View permissions will be able to use the DataSet in Layouts.</p>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+    <!-- container-->
+    <footer class="ss_footer" role="contentinfo">
+        <div class="container">
+            <div class="pull-right">
+                <img class="img-responsive logo" src="../img/logo.png" alt="Sfc technology" />
+            </div>
+
+            <p class="ss_back_to_top">Back to Top</p>
+
+
+
+            <p class="ss_languages"><a href="../en/index.html">en</a></p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="../vendor/jquery/jquery-1.9.1.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".ss-sidebar .list-group li").addClass("list-group-item");
+            $(".ss_body img").addClass("img-thumbnail");
+            $(".ss_body table").addClass("table");
+
+            // Set the selected page based on the TOC name
+            // Mark the appropriate top nav element as the selected page
+            $("#top-nav a").each(function() {
+                if ($(this).data().tocName == $("body").data().toc)
+                    $(this).parent().addClass("active");
+            });
+
+            $(".ss_back_to_top").click(function() {
+                $('html, body').animate({
+                    scrollTop: 0
+                }, 800);
+            });
+
+            if (inIframe()) {
+                console.log("In Frame");
+                $("#top-nav").css("display", "none");
+                $(".ss-sidebar").parent().css("display", "none");
+            }
+        });
+
+        function inIframe() {
+            try {
+                return window.self !== window.top;
+            } catch (e) {
+                return true;
+            }
+        }
+    </script>
+</body>
+
+</html>

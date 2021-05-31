@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>SFC Technology Documentation</title>
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!-- favicon -->
+    <link href="../img/favicon.ico" rel="shortcut icon" />
+
+    <!-- Bootstrap -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+    <!-- Stylesheets -->
+    <link href="../manual.css" rel="stylesheet" media="screen">
+
+    <!-- META -->
+    <meta name="keywords" content="SFC Technology Documentation" />
+    <meta name="description" content="SFC Technology is an open source digital signage solution. It supports all main media types and can be interfaced to other sources of data using CSV, Databases or RSS." />
+</head>
+
+<body data-toc="widgets">
+
+    <nav id="top-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#ss-navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                <a href="#" class="navbar-brand">SFC Technology Documentation</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="ss-navbar">
+                <ul class="nav navbar-nav">
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="ss_body container">
+        <div class="row">
+            <div class="col-md-3">
+                <ul id="side-nav" class="nav nav-pills nav-stacked">
+                    <li><a href="index.html" data-toc-name="tour">Tour</a></li>
+                    <li><a href="users.html" data-toc-name="users">Users</a></li>
+                    <li><a href="displays.html" data-toc-name="displays">Displays</a></li>
+                    <li><a href="layouts.html" data-toc-name="layouts">Layouts</a></li>
+                    <li><a href="media.html" data-toc-name="widgets">Media</a></li>
+                    <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+                    <html>
+
+                    <body>
+                        <ul>
+                            <li><a href="media_modules.html">Modules</a></li>
+                            <li><a href="media_module_audio.html">Audio</a></li>
+                            <li><a href="media_module_calendar.html">Calendar</a></li>
+                            <li><a href="media_module_chart.html">Chart</a></li>
+                            <li><a href="media_module_clock.html">Clock</a></li>
+                            <li><a href="media_module_currencies.html">Currencies</a></li>
+                            <li><a href="media_module_dataset_ticker.html">DataSet Ticker</a></li>
+                            <li><a href="media_module_dataset_view.html">DataSet View</a></li>
+                            <li><a href="media_module_embedded.html">Embedded</a></li>
+                            <li><a href="media_module_flash.html">Flash</a></li>
+                            <li><a href="media_module_googletraffic.html">Google Traffic</a></li>
+                            <li><a href="media_module_hls.html">HLS</a></li>
+                            <li><a href="media_module_htmlpackage.html">HTML Package</a></li>
+                            <li><a href="media_module_image.html">Image</a></li>
+                            <li><a href="media_module_localvideo.html">Local Video</a></li>
+                            <li><a href="media_module_notifications.html">Notifications</a></li>
+                            <li><a href="media_module_pdf.html">PDF</a></li>
+                            <li><a href="media_module_powerpoint.html">PowerPoint</a></li>
+                            <li><a href="media_module_shellcommand.html">Shell Command</a></li>
+                            <li><a href="media_module_stocks.html">Stocks</a></li>
+                            <li><a href="media_module_subplaylist.html">Sub Playlist</a></li>
+                            <li class="active"><a href="media_module_text.html">Text<span class="glyphicon glyphicon-arrow-left you-are-here-arrow"></span></a></li>
+                            <li><a href="media_module_ticker.html">Ticker</a></li>
+                            <li><a href="media_module_twitter.html">Twitter</a></li>
+                            <li><a href="media_module_twitter_metro.html">Twitter Metro</a></li>
+                            <li><a href="media_module_video.html">Video</a></li>
+                            <li><a href="media_module_video_in.html">Video In</a></li>
+                            <li><a href="media_module_weather.html">Weather</a></li>
+                            <li><a href="media_module_webpage.html">Web Page</a></li>
+                        </ul>
+                    </body>
+
+                    </html>
+                    <li><a href="scheduling.html" data-toc-name="scheduling">Scheduling</a></li>
+                    <li><a href="troubleshooting.html" data-toc-name="troubleshooting">Troubleshooting</a></li>
+                </ul>
+            </div>
+            <div class="col-md-9" role="main">
+                <!--toc=widgets-->
+                <h1 id="text">Text <a href="#text" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h1>
+                <p>Add Text directly onto a Layout by using the Text Widget. </p>
+                <p>Click on the <strong>Text Widget</strong> on the toolbar, add / drag to the target <strong>Region</strong>. <img src="img/v2_media_text_widget.png" alt="Text Widget" /></p>
+                <blockquote class="tip">
+                    <p>If you are using 1.8, select <strong>Text</strong> from the Widget Toolbox to add to your Region Timeline.</p>
+                </blockquote>
+                <h3>Text Editor</h3>
+                <p><img src="img/v2_media_text_edit.png" alt="Edit Text" /></p>
+                <p>Click in the Preview window to open the inline editor to enter text and apply formatting.</p>
+                <p>The text editor will open with the same background as selected for the Layout and will use a complimentary text colour for the chosen background colour.</p>
+                <p><img src="img/v2_media_enter_text.png" alt="Enter Text" /></p>
+                <p>The thin red border in the text editing window represents the <strong>Region</strong> size. Ensure that formatted text remains within this border.</p>
+                <p>Optionally use date/time merge tags, available from the <strong>Snippets</strong> menu. </p>
+                <h3>General</h3>
+                <ul>
+                    <li>
+                        <p>Provide an optional name.</p>
+                    </li>
+                    <li>
+                        <p>Choose to override the default duration.</p>
+                        <blockquote class="tip">
+                            <p>It is typical to have a text item as the only media item assigned to a Region, therefore the duration can be set to a low value.</p>
+                        </blockquote>
+                    </li>
+                </ul>
+                <h3>Effect</h3>
+                <ul>
+                    <li>Use the drop-down menu to select an effect to be applied to your text.</li>
+                    <li>Select a speed for the selected effect.</li>
+                    <li>Optionally add a background colour.</li>
+                    <li>Include a selector to use for marquee items.</li>
+                </ul>
+                <h3>Templates</h3>
+                <p>Click on the Template header to enter HTML directly into the box provided.</p>
+                <p><img src="img/v2_media_text.png" alt="Media Text" /></p>
+                <blockquote class="tip">
+                    <p><strong>Additional Fonts</strong> can be added to this editor by uploading files to the <strong>Library</strong>. Please be aware that fonts have 'preferences' built into them known as OS/2 tags. SFC Technology checks these OS/2 preferences,
+                        and can use fonts with OS/2 tags 0 or 8. Fonts with other tags may not display correctly or you may receive an error on upload.</p>
+                </blockquote>
+                <h2 id="available_formatting">Available Formatting <a href="#available_formatting" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>Date / time can be formatted by providing &quot;tokens&quot; that sit between square brackets [] in the template area.</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Token</th>
+                            <th>Output</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Month</td>
+                            <td>M</td>
+                            <td>1 2 ... 11 12</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>Mo</td>
+                            <td>1st 2nd ... 11th 12th</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>MM</td>
+                            <td>01 02 ... 11 12</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>MMM</td>
+                            <td>Jan Feb ... Nov Dec</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>MMMM</td>
+                            <td>January February ... November December</td>
+                        </tr>
+                        <tr>
+                            <td>Quarter</td>
+                            <td>Q</td>
+                            <td>1 2 3 4</td>
+                        </tr>
+                        <tr>
+                            <td>Day of Month</td>
+                            <td>D</td>
+                            <td>1 2 ... 30 31</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>Do</td>
+                            <td>1st 2nd ... 30th 31st</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>DD</td>
+                            <td>01 02 ... 30 31</td>
+                        </tr>
+                        <tr>
+                            <td>Day of Year</td>
+                            <td>DDD</td>
+                            <td>1 2 ... 364 365</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>DDDo</td>
+                            <td>1st 2nd ... 364th 365th</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>DDDD</td>
+                            <td>001 002 ... 364 365</td>
+                        </tr>
+                        <tr>
+                            <td>Day of Week</td>
+                            <td>d</td>
+                            <td>0 1 ... 5 6</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>do</td>
+                            <td>0th 1st ... 5th 6th</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>dd</td>
+                            <td>Su Mo ... Fr Sa</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>ddd</td>
+                            <td>Sun Mon ... Fri Sat</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>dddd</td>
+                            <td>Sunday Monday ... Friday Saturday</td>
+                        </tr>
+                        <tr>
+                            <td>Day of Week (Locale)</td>
+                            <td>e</td>
+                            <td>0 1 ... 5 6</td>
+                        </tr>
+                        <tr>
+                            <td>Day of Week (ISO)</td>
+                            <td>E</td>
+                            <td>1 2 ... 6 7</td>
+                        </tr>
+                        <tr>
+                            <td>Week of Year</td>
+                            <td>w</td>
+                            <td>1 2 ... 52 53</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>wo</td>
+                            <td>1st 2nd ... 52nd 53rd</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>ww</td>
+                            <td>01 02 ... 52 53</td>
+                        </tr>
+                        <tr>
+                            <td>Week of Year (ISO)</td>
+                            <td>W</td>
+                            <td>1 2 ... 52 53</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>Wo</td>
+                            <td>1st 2nd ... 52nd 53rd</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>WW</td>
+                            <td>01 02 ... 52 53</td>
+                        </tr>
+                        <tr>
+                            <td>Year</td>
+                            <td>YY</td>
+                            <td>70 71 ... 29 30</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>YYYY</td>
+                            <td>1970 1971 ... 2029 2030</td>
+                        </tr>
+                        <tr>
+                            <td>Week Year</td>
+                            <td>gg</td>
+                            <td>70 71 ... 29 30</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>gggg</td>
+                            <td>1970 1971 ... 2029 2030</td>
+                        </tr>
+                        <tr>
+                            <td>Week Year (ISO)</td>
+                            <td>GG</td>
+                            <td>70 71 ... 29 30</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>GGGG</td>
+                            <td>1970 1971 ... 2029 2030</td>
+                        </tr>
+                        <tr>
+                            <td>AM/PM</td>
+                            <td>A</td>
+                            <td>AM PM</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>a</td>
+                            <td>am pm</td>
+                        </tr>
+                        <tr>
+                            <td>Hour</td>
+                            <td>H</td>
+                            <td>0 1 ... 22 23</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>HH</td>
+                            <td>00 01 ... 22 23</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>h</td>
+                            <td>1 2 ... 11 12</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>hh</td>
+                            <td>01 02 ... 11 12</td>
+                        </tr>
+                        <tr>
+                            <td>Minute</td>
+                            <td>m</td>
+                            <td>0 1 ... 58 59</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>mm</td>
+                            <td>00 01 ... 58 59</td>
+                        </tr>
+                        <tr>
+                            <td>Second</td>
+                            <td>s</td>
+                            <td>0 1 ... 58 59</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>ss</td>
+                            <td>00 01 ... 58 59</td>
+                        </tr>
+                        <tr>
+                            <td>Fractional Second</td>
+                            <td>S</td>
+                            <td>0 1 ... 8 9</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>SS</td>
+                            <td>0 1 ... 98 99</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>SSS</td>
+                            <td>0 1 ... 998 999</td>
+                        </tr>
+                        <tr>
+                            <td>Timezone</td>
+                            <td>z or zz</td>
+                            <td>EST CST ... MST PST</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>Z</td>
+                            <td>-07:00 -06:00 ... +06:00 +07:00</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>ZZ</td>
+                            <td>-0700 -0600 ... +0600 +0700</td>
+                        </tr>
+                        <tr>
+                            <td>Unix Timestamp</td>
+                            <td>X</td>
+                            <td>1360013296</td>
+                        </tr>
+                        <tr>
+                            <td>Unix Millisecond Timestamp</td>
+                            <td>x</td>
+                            <td>1360013296123</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h3>CKEditor</h3>
+                <p>CKEditor is used for Text input. Complete documentation for all the buttons can be found on the <a href="http://docs.cksource.com/CKEditor_3.x/Users_Guide">CKEditor's website</a>.</p>
+            </div>
+        </div>
+    </div>
+    <!-- container-->
+    <footer class="ss_footer" role="contentinfo">
+        <div class="container">
+            <div class="pull-right">
+                <img class="img-responsive logo" src="../img/logo.png" alt="Sfc technology" />
+            </div>
+
+            <p class="ss_back_to_top">Back to Top</p>
+
+
+
+            <p class="ss_languages"><a href="../en/index.html">en</a></p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="../vendor/jquery/jquery-1.9.1.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".ss-sidebar .list-group li").addClass("list-group-item");
+            $(".ss_body img").addClass("img-thumbnail");
+            $(".ss_body table").addClass("table");
+
+            // Set the selected page based on the TOC name
+            // Mark the appropriate top nav element as the selected page
+            $("#top-nav a").each(function() {
+                if ($(this).data().tocName == $("body").data().toc)
+                    $(this).parent().addClass("active");
+            });
+
+            $(".ss_back_to_top").click(function() {
+                $('html, body').animate({
+                    scrollTop: 0
+                }, 800);
+            });
+
+            if (inIframe()) {
+                console.log("In Frame");
+                $("#top-nav").css("display", "none");
+                $(".ss-sidebar").parent().css("display", "none");
+            }
+        });
+
+        function inIframe() {
+            try {
+                return window.self !== window.top;
+            } catch (e) {
+                return true;
+            }
+        }
+    </script>
+</body>
+
+</html>

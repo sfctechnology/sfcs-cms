@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>SFC Technology Documentation</title>
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!-- favicon -->
+    <link href="../img/favicon.ico" rel="shortcut icon" />
+
+    <!-- Bootstrap -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+    <!-- Stylesheets -->
+    <link href="../manual.css" rel="stylesheet" media="screen">
+
+    <!-- META -->
+    <meta name="keywords" content="SFC Technology Documentation" />
+    <meta name="description" content="SFC Technology is an open source digital signage solution. It supports all main media types and can be interfaced to other sources of data using CSV, Databases or RSS." />
+</head>
+
+<body data-toc="widgets">
+
+    <nav id="top-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#ss-navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                <a href="#" class="navbar-brand">SFC Technology Documentation</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="ss-navbar">
+                <ul class="nav navbar-nav">
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="ss_body container">
+        <div class="row">
+            <div class="col-md-3">
+                <ul id="side-nav" class="nav nav-pills nav-stacked">
+                    <li><a href="index.html" data-toc-name="tour">Tour</a></li>
+                    <li><a href="users.html" data-toc-name="users">Users</a></li>
+                    <li><a href="displays.html" data-toc-name="displays">Displays</a></li>
+                    <li><a href="layouts.html" data-toc-name="layouts">Layouts</a></li>
+                    <li><a href="media.html" data-toc-name="widgets">Media</a></li>
+                    <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+                    <html>
+
+                    <body>
+                        <ul>
+                            <li><a href="media_modules.html">Modules</a></li>
+                            <li><a href="media_module_audio.html">Audio</a></li>
+                            <li><a href="media_module_calendar.html">Calendar</a></li>
+                            <li class="active"><a href="media_module_chart.html">Chart<span class="glyphicon glyphicon-arrow-left you-are-here-arrow"></span></a></li>
+                            <li><a href="media_module_clock.html">Clock</a></li>
+                            <li><a href="media_module_currencies.html">Currencies</a></li>
+                            <li><a href="media_module_dataset_ticker.html">DataSet Ticker</a></li>
+                            <li><a href="media_module_dataset_view.html">DataSet View</a></li>
+                            <li><a href="media_module_embedded.html">Embedded</a></li>
+                            <li><a href="media_module_flash.html">Flash</a></li>
+                            <li><a href="media_module_googletraffic.html">Google Traffic</a></li>
+                            <li><a href="media_module_hls.html">HLS</a></li>
+                            <li><a href="media_module_htmlpackage.html">HTML Package</a></li>
+                            <li><a href="media_module_image.html">Image</a></li>
+                            <li><a href="media_module_localvideo.html">Local Video</a></li>
+                            <li><a href="media_module_notifications.html">Notifications</a></li>
+                            <li><a href="media_module_pdf.html">PDF</a></li>
+                            <li><a href="media_module_powerpoint.html">PowerPoint</a></li>
+                            <li><a href="media_module_shellcommand.html">Shell Command</a></li>
+                            <li><a href="media_module_stocks.html">Stocks</a></li>
+                            <li><a href="media_module_subplaylist.html">Sub Playlist</a></li>
+                            <li><a href="media_module_text.html">Text</a></li>
+                            <li><a href="media_module_ticker.html">Ticker</a></li>
+                            <li><a href="media_module_twitter.html">Twitter</a></li>
+                            <li><a href="media_module_twitter_metro.html">Twitter Metro</a></li>
+                            <li><a href="media_module_video.html">Video</a></li>
+                            <li><a href="media_module_video_in.html">Video In</a></li>
+                            <li><a href="media_module_weather.html">Weather</a></li>
+                            <li><a href="media_module_webpage.html">Web Page</a></li>
+                        </ul>
+                    </body>
+
+                    </html>
+                    <li><a href="scheduling.html" data-toc-name="scheduling">Scheduling</a></li>
+                    <li><a href="troubleshooting.html" data-toc-name="troubleshooting">Troubleshooting</a></li>
+                </ul>
+            </div>
+            <div class="col-md-9" role="main">
+                <!--toc=widgets-->
+                <h1 id="chart">Chart <a href="#chart" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h1>
+                <p>The Chart module is used in conjunction with <strong>DataSets</strong> to display information as one of the following Chart Types:</p>
+                <ul>
+                    <li>Line</li>
+                    <li>Bar</li>
+                    <li>Pie</li>
+                    <li>Donut</li>
+                    <li>Horizontal Bar</li>
+                    <li>Radar</li>
+                </ul>
+                <p>DataSets are created and defined in the Library and can be represented in Layouts using the Chart module. For more information on DataSets and how they are configured, please see the <a href="media_datasets.html">DataSet manual page</a>.</p>
+                <p>Click on the <strong>Chart Widget</strong> on the toolbar, add / drag to the target <strong>Region</strong>. <img src="img/v2_media_chart_widget.png" alt="Chart Widget" /></p>
+                <blockquote class="tip">
+                    <p>If you are using 1.8, select <strong>Chart</strong> from the Widget Toolbox to add to your Region Timeline and complete the form fields as explained below. </p>
+                </blockquote>
+                <h2 id="add_chart">Add Chart <a href="#add_chart" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p><img src="img/v2_media_chart_add.png" alt="Chart Widget Add Form" /></p>
+                <p>Use the drop-down menu to select the DataSet to be used as the source.</p>
+                <h3>General</h3>
+                <ul>
+                    <li>Provide an optional name.</li>
+                    <li>Choose to override the default duration.</li>
+                </ul>
+                <h3>Configuration</h3>
+                <p><img src="img/v2_media_chart_configuration.png" alt="Chart Configuration" /></p>
+                <h4>Data</h4>
+                <ul>
+                    <li>Use the drop down to select the <strong>Chart type</strong> which would best present information held in the selected DataSet.</li>
+                    <li>All types of chart need an X and Y axis configured from the available columns in the associated DataSet. Configure by using the selectors.</li>
+                </ul>
+                <blockquote class="tip">
+                    <p>Include a Series Identifier if you want to show a breakdown of values rather than the sum of all values. A series identifier is not suitable for Pie/Donut charts.</p>
+                </blockquote>
+                <h4>Labels</h4>
+                <ul>
+                    <li>Include a chart title and labelling to display on the chart. </li>
+                    <li>Choose to include a <strong>Legend</strong> to further explain the data.</li>
+                </ul>
+                <h3>Appearance</h3>
+                <p><img src="img/v2_media_chart_style.png" alt="Chart Style" /></p>
+                <h4>Style</h4>
+                <p>Use the colour picker to select colouring for the <strong>background</strong> and <strong>font</strong> for the chart as well as specifying the <strong>font size</strong>.</p>
+                <h4>Colour Palette</h4>
+                <p>Use the colour picker to select the colours to use for the charts data series. If you do not select any colours the default colouring for the module will be used (these can be configured in Module Settings by your administrator)</p>
+                <h3>Order</h3>
+                <p><img src="img/v2_media_chart_order.png" alt="Chart Order" /></p>
+                <p>DataSet results can be ordered by any <strong>column</strong>. Use the advanced order clause for more complex ordering by providing a SQL command.</p>
+                <h3>Filter</h3>
+                <p>DataSet results can be filtered by any <strong>column</strong>. Include or omit DataSet results using the clause builder or use the advanced filter clause for more complex filtering.</p>
+                <h3>Caching</h3>
+                <p>Include a suitable time for the <strong>Update Interval</strong> in minutes, keeping it as high as possible. This determines how often the Module will request data from your feed. </p>
+            </div>
+        </div>
+    </div>
+    <!-- container-->
+    <footer class="ss_footer" role="contentinfo">
+        <div class="container">
+            <div class="pull-right">
+                <img class="img-responsive logo" src="../img/logo.png" alt="Sfc technology" />
+            </div>
+
+            <p class="ss_back_to_top">Back to Top</p>
+
+
+
+            <p class="ss_languages"><a href="../en/index.html">en</a></p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="../vendor/jquery/jquery-1.9.1.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".ss-sidebar .list-group li").addClass("list-group-item");
+            $(".ss_body img").addClass("img-thumbnail");
+            $(".ss_body table").addClass("table");
+
+            // Set the selected page based on the TOC name
+            // Mark the appropriate top nav element as the selected page
+            $("#top-nav a").each(function() {
+                if ($(this).data().tocName == $("body").data().toc)
+                    $(this).parent().addClass("active");
+            });
+
+            $(".ss_back_to_top").click(function() {
+                $('html, body').animate({
+                    scrollTop: 0
+                }, 800);
+            });
+
+            if (inIframe()) {
+                console.log("In Frame");
+                $("#top-nav").css("display", "none");
+                $(".ss-sidebar").parent().css("display", "none");
+            }
+        });
+
+        function inIframe() {
+            try {
+                return window.self !== window.top;
+            } catch (e) {
+                return true;
+            }
+        }
+    </script>
+</body>
+
+</html>

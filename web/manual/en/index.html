@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>SFC Technology Documentation</title>
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!-- favicon -->
+    <link href="../img/favicon.ico" rel="shortcut icon" />
+
+    <!-- Bootstrap -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+    <!-- Stylesheets -->
+    <link href="../manual.css" rel="stylesheet" media="screen">
+
+    <!-- META -->
+    <meta name="keywords" content="SFC Technology Documentation" />
+    <meta name="description" content="SFC Technology is an open source digital signage solution. It supports all main media types and can be interfaced to other sources of data using CSV, Databases or RSS." />
+</head>
+
+<body data-toc="tour">
+
+    <nav id="top-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#ss-navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                <a href="#" class="navbar-brand">SFC Technology Documentation</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="ss-navbar">
+                <ul class="nav navbar-nav">
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="ss_body container">
+        <div class="row">
+            <div class="col-md-3">
+                <ul id="side-nav" class="nav nav-pills nav-stacked">
+                    <li><a href="index.html" data-toc-name="tour">Tour</a></li>
+                    <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+                    <html>
+
+                    <body>
+                        <ul>
+                            <li class="active"><a href="index.html">Introduction<span class="glyphicon glyphicon-arrow-left you-are-here-arrow"></span></a></li>
+                            <li><a href="tour_login.html">Login</a></li>
+                            <li><a href="tour_status_dashboard.html">CMS Dashboards</a></li>
+                            <li><a href="tour_navigation.html">CMS Navigation</a></li>
+                            <li><a href="tour_grids.html">Grids</a></li>
+                            <li><a href="tour_forms.html">Forms</a></li>
+                            <li><a href="tour_guides.html">Guides</a></li>
+                        </ul>
+                    </body>
+
+                    </html>
+                    <li><a href="users.html" data-toc-name="users">Users</a></li>
+                    <li><a href="displays.html" data-toc-name="displays">Displays</a></li>
+                    <li><a href="layouts.html" data-toc-name="layouts">Layouts</a></li>
+                    <li><a href="media.html" data-toc-name="media">Media</a></li>
+                    <li><a href="scheduling.html" data-toc-name="scheduling">Scheduling</a></li>
+                    <li><a href="troubleshooting.html" data-toc-name="troubleshooting">Troubleshooting</a></li>
+                </ul>
+            </div>
+            <div class="col-md-9" role="main">
+                <!--toc=tour-->
+                <h1 id="sfc_technology_user_manual">SFC Technology User Manual <a href="#sfc_technology_user_manual" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h1>
+                <p><strong>Revision: v2</strong></p>
+                <p>Management of a solution as flexible as SFC Technology requires a powerful CMS (Content Management System) to control the core concepts. The SFC Technology CMS is packed full of features to help you get the very best out of the Sfc technology
+                    solution.
+                </p>
+                <p>This User Manual covers the core concepts and CMS features and starts with a &quot;Tour&quot; to further explain what SFC Technology can actually do...</p>
+                <h2 id="welcome_to_the_tour!">Welcome to the Tour! <a href="#welcome_to_the_tour!" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>SFC Technology is a flexible and powerful application with a core ethos in Digital Signage for all, regardless of skill or technological knowledge. </p>
+                <p>The software itself center's on 5 core concepts:</p>
+                <ol>
+                    <li>Users</li>
+                    <li>Displays</li>
+                    <li>Layouts</li>
+                    <li>Media</li>
+                    <li>Scheduling</li>
+                </ol>
+                <p>Using these 5 concepts we can sum up what SFC Technology can do in a simple sentence;</p>
+                <p><strong>&quot;SFC Technology enables a User to upload Media and arrange it in a Layout which is then Scheduled to one or more authorised Displays&quot;.</strong></p>
+                <p>SFC Technology has many more features to take advantage of which are covered within this User Manual, but to get started let's take a quick look at the main 5.</p>
+                <h3>Users</h3>
+                <p>Users are the people that have access to the CMS and are identified by a <strong>Username</strong> and <strong>Password</strong> to grant access. </p>
+                <p>SFC Technology supports 3 <strong>User types</strong>, <strong>User Groups</strong> as well as multi-level <strong>Permissions</strong> to all parts and items stored within the CMS.</p>
+                <blockquote class="tip">
+                    <p>For a corporate environment SFC Technology can also integrate with SAML identity providers such as Active Directory via ADFS. </p>
+                </blockquote>
+                <h3>Displays</h3>
+                <p>Displays represent the hardware connected to the TV/Projector/Tablet that is displaying the <strong>Scheduled</strong> end content. Each Display is uniquely identified in the CMS so that every Display can have its own content, Layout designs
+                    and Schedules set with uniquely identified reporting statistics available.</p>
+                <h3>Layouts</h3>
+                <p>Layouts are the complete design that is seen on the screen. Layouts are made up of <strong>Regions</strong> which allows you to split the screen/position how you choose, with each Region containing its own <strong>Playlist/Timeline</strong>                    to which <strong>Media Widgets</strong> are assigned. A Layout will remain on screen until all Regions have finished playing their assigned content through once, then an entirely fresh Scheduled Layout can be loaded that has different
+                    positioning/sizing of Regions and different Playlists/Timelines. </p>
+                <p>This flexibility drives the dynamic nature of a SFC Technology display screen.</p>
+                <h3>Media</h3>
+                <p>Media content is at the core of the SFC Technology solution and has many different types which can be generally split into two categories:</p>
+                <p><strong>File-based media</strong> - uploaded and stored in the Library, for example, image and video files.</p>
+                <p><strong>Layout based media</strong> - does not have an associated file and is configured directly on a Layout; RSS feeds and free Text</p>
+                <p>SFC Technology uses powerful <strong>Widgets</strong> which allow you to show your content as well as integrating dynamic third-party information from a variety of sources.</p>
+                <h3>Scheduling</h3>
+                <p>Scheduling is highly flexible and supports Schedules to single <strong>Displays</strong> as well as to <strong>Display Groups</strong>. Each Display will check for new Scheduled content periodically, and download Scheduled Items in advance
+                    of playback. <strong>Default Layouts</strong> are shown on Displays when nothing else is Scheduled.</p>
+            </div>
+        </div>
+    </div>
+    <!-- container-->
+    <footer class="ss_footer" role="contentinfo">
+        <div class="container">
+            <div class="pull-right">
+                <img class="img-responsive logo" src="../img/logo.png" alt="Sfc technology" />
+            </div>
+
+            <p class="ss_back_to_top">Back to Top</p>
+
+
+
+            <p class="ss_languages"><a href="../en/index.html">en</a></p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="../vendor/jquery/jquery-1.9.1.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".ss-sidebar .list-group li").addClass("list-group-item");
+            $(".ss_body img").addClass("img-thumbnail");
+            $(".ss_body table").addClass("table");
+
+            // Set the selected page based on the TOC name
+            // Mark the appropriate top nav element as the selected page
+            $("#top-nav a").each(function() {
+                if ($(this).data().tocName == $("body").data().toc)
+                    $(this).parent().addClass("active");
+            });
+
+            $(".ss_back_to_top").click(function() {
+                $('html, body').animate({
+                    scrollTop: 0
+                }, 800);
+            });
+
+            if (inIframe()) {
+                console.log("In Frame");
+                $("#top-nav").css("display", "none");
+                $(".ss-sidebar").parent().css("display", "none");
+            }
+        });
+
+        function inIframe() {
+            try {
+                return window.self !== window.top;
+            } catch (e) {
+                return true;
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>SFC Technology Documentation</title>
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!-- favicon -->
+    <link href="../img/favicon.ico" rel="shortcut icon" />
+
+    <!-- Bootstrap -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+    <!-- Stylesheets -->
+    <link href="../manual.css" rel="stylesheet" media="screen">
+
+    <!-- META -->
+    <meta name="keywords" content="SFC Technology Documentation" />
+    <meta name="description" content="SFC Technology is an open source digital signage solution. It supports all main media types and can be interfaced to other sources of data using CSV, Databases or RSS." />
+</head>
+
+<body data-toc="displays">
+
+    <nav id="top-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#ss-navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                <a href="#" class="navbar-brand">SFC Technology Documentation</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="ss-navbar">
+                <ul class="nav navbar-nav">
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="ss_body container">
+        <div class="row">
+            <div class="col-md-3">
+                <ul id="side-nav" class="nav nav-pills nav-stacked">
+                    <li><a href="index.html" data-toc-name="tour">Tour</a></li>
+                    <li><a href="users.html" data-toc-name="users">Users</a></li>
+                    <li><a href="displays.html" data-toc-name="displays">Displays</a></li>
+                    <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+                    <html>
+
+                    <body>
+                        <ul>
+                            <li><a href="displays.html">Displays</a></li>
+                            <li><a href="displays_settings.html">Display Settings</a></li>
+                            <li class="active"><a href="displays_groups.html">Display Groups<span class="glyphicon glyphicon-arrow-left you-are-here-arrow"></span></a></li>
+                            <li><a href="displays_fileassociations.html">File/Layout Assignments</a></li>
+                            <li><a href="displays_metrics.html">Reporting</a></li>
+                        </ul>
+                    </body>
+
+                    </html>
+                    <li><a href="layouts.html" data-toc-name="layouts">Layouts</a></li>
+                    <li><a href="media.html" data-toc-name="media">Media</a></li>
+                    <li><a href="scheduling.html" data-toc-name="scheduling">Scheduling</a></li>
+                    <li><a href="troubleshooting.html" data-toc-name="troubleshooting">Troubleshooting</a></li>
+                </ul>
+            </div>
+            <div class="col-md-9" role="main">
+                <!--toc=displays-->
+                <h1 id="display_groups">Display Groups <a href="#display_groups" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h1>
+                <p>For ease of <strong>Scheduling</strong> and <strong>Media Assignment</strong> create Display Groups and assign Displays to one or multiple Display Groups. </p>
+                <p>Display Groups are administered in the CMS by clicking on Display Settings under the Displays section on the Menu. The Display Group grid will open to Add and manage Display Groups.</p>
+                <p><img src="img/displays_groups_grid.png" alt="Display Groups Grid" /></p>
+                <h2 id="add/edit">Add/Edit <a href="#add/edit" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>Click on the <strong>Add Display Group</strong> button to create a new Display Group or use the row menu to <strong>Edit</strong> an existing Display Group.</p>
+                <p><img src="img/displays_groups_add.png" alt="Display Groups Add" /></p>
+                <h2 id="members">Members <a href="#members" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>The membership of a Display Group is either a <strong>Manual Assignment</strong> or controlled by filter criteria using <strong>Dynamic Groups</strong>. </p>
+                <h3>Dynamic Groups</h3>
+                <p>When ticked an additional field will appear to allow for entry of one or more regular expressions to use to select which Displays belong to that Display Group.</p>
+                <p>Filter criteria for Dynamic Groups is in the format of regular expressions, but can also be simple string comparisons. The expressions should be separated by a comma and can be negated with a <code>-</code> prefix.</p>
+                <blockquote class="tip">
+                    <p>For example, all Displays containing &quot;a&quot; but not &quot;b&quot; would be <code>a,-b</code>.</p>
+                </blockquote>
+                <p><img src="img/displays_group_dynamic.png" alt="Display Group Dynamic Criteria" /></p>
+                <h3>Manual Assignment</h3>
+                <p>Use the row menu for the selected Display Group and click on <strong>Members</strong>. Tick/untick Displays or Nested Groups to add/remove membership from the Display Group.</p>
+                <p><img src="img/displays_groups_memberships.png" alt="Display Group Memberships" /></p>
+                <p>The form shows <strong>Displays</strong> and <strong>Display Groups</strong> for nesting as well as a <strong>Relationship Tree</strong> making it easier to see the relationships of Displays.</p>
+                <h2 id="nested_groups">Nested Groups <a href="#nested_groups" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>Display Groups can be nested to create complex structures and allow for targeted Scheduling.</p>
+                <blockquote class="tip">
+                    <p>Example Group Structure</p>
+                    <ul>
+                        <li>Site 1</li>
+                        <li>Site 1 - Building A</li>
+                        <li>Site 1 - Building A - Level 1</li>
+                        <li>Site 1 - Building A - Level 2</li>
+                        <li>Site 1 - Building B</li>
+                    </ul>
+                    <p>The Display membership is set on the lowest level Groups and those groups then belong to the next level up, which in turn belong to the highest level parent &quot;Site 1&quot;. The CMS will not allow a circular reference to be created
+                        - this is an assignment that creates a loop (i.e. Site 1 has Site 1 - Building A, and Site 1 - Building A has Site 1.)</p>
+                </blockquote>
+                <p><img src="img/displays_group_members.png" alt="Display Group Members" /></p>
+                <p><strong>Schedules</strong>, <strong>Media</strong> and <strong>Layout Assignments</strong> applied to the Display Group will apply to all its members and will appear for selection when Scheduling.</p>
+            </div>
+        </div>
+    </div>
+    <!-- container-->
+    <footer class="ss_footer" role="contentinfo">
+        <div class="container">
+            <div class="pull-right">
+                <img class="img-responsive logo" src="../img/logo.png" alt="Sfc technology" />
+            </div>
+
+            <p class="ss_back_to_top">Back to Top</p>
+
+
+
+            <p class="ss_languages"><a href="../en/index.html">en</a></p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="../vendor/jquery/jquery-1.9.1.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".ss-sidebar .list-group li").addClass("list-group-item");
+            $(".ss_body img").addClass("img-thumbnail");
+            $(".ss_body table").addClass("table");
+
+            // Set the selected page based on the TOC name
+            // Mark the appropriate top nav element as the selected page
+            $("#top-nav a").each(function() {
+                if ($(this).data().tocName == $("body").data().toc)
+                    $(this).parent().addClass("active");
+            });
+
+            $(".ss_back_to_top").click(function() {
+                $('html, body').animate({
+                    scrollTop: 0
+                }, 800);
+            });
+
+            if (inIframe()) {
+                console.log("In Frame");
+                $("#top-nav").css("display", "none");
+                $(".ss-sidebar").parent().css("display", "none");
+            }
+        });
+
+        function inIframe() {
+            try {
+                return window.self !== window.top;
+            } catch (e) {
+                return true;
+            }
+        }
+    </script>
+</body>
+
+</html>

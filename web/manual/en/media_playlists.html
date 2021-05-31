@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>SFC Technology Documentation</title>
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!-- favicon -->
+    <link href="../img/favicon.ico" rel="shortcut icon" />
+
+    <!-- Bootstrap -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+    <!-- Stylesheets -->
+    <link href="../manual.css" rel="stylesheet" media="screen">
+
+    <!-- META -->
+    <meta name="keywords" content="SFC Technology Documentation" />
+    <meta name="description" content="SFC Technology is an open source digital signage solution. It supports all main media types and can be interfaced to other sources of data using CSV, Databases or RSS." />
+</head>
+
+<body data-toc="media">
+
+    <nav id="top-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#ss-navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                <a href="#" class="navbar-brand">SFC Technology Documentation</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="ss-navbar">
+                <ul class="nav navbar-nav">
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="ss_body container">
+        <div class="row">
+            <div class="col-md-3">
+                <ul id="side-nav" class="nav nav-pills nav-stacked">
+                    <li><a href="index.html" data-toc-name="tour">Tour</a></li>
+                    <li><a href="users.html" data-toc-name="users">Users</a></li>
+                    <li><a href="displays.html" data-toc-name="displays">Displays</a></li>
+                    <li><a href="layouts.html" data-toc-name="layouts">Layouts</a></li>
+                    <li><a href="media.html" data-toc-name="media">Media</a></li>
+                    <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+                    <html>
+
+                    <body>
+                        <ul>
+                            <li><a href="media.html">Introduction</a></li>
+                            <li><a href="media_library.html">Library</a></li>
+                            <li><a href="media_tidylibrary.html">Tidy Library</a></li>
+                            <li class="active"><a href="media_playlists.html">Playlists<span class="glyphicon glyphicon-arrow-left you-are-here-arrow"></span></a></li>
+                            <li><a href="media_datasets.html">DataSets</a></li>
+                            <li><a href="media_modules.html">Modules</a></li>
+                        </ul>
+                    </body>
+
+                    </html>
+                    <li><a href="scheduling.html" data-toc-name="scheduling">Scheduling</a></li>
+                    <li><a href="troubleshooting.html" data-toc-name="troubleshooting">Troubleshooting</a></li>
+                </ul>
+            </div>
+            <div class="col-md-9" role="main">
+                <!--toc=media-->
+                <h1 id="playlists_(new_features_for_v2)">Playlists (New Features for v2) <a href="#playlists_(new_features_for_v2)" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h1>
+                <p>Playlists allow for the creation of reusable playlists which can be easily added to Layouts and come in two parts:</p>
+                <ol>
+                    <li><strong>The Playlist</strong> (contains the media content and configuration)</li>
+                    <li><strong>The Sub-Playlist Widget</strong> (allows for defined Playlists to be added to Layouts)</li>
+                </ol>
+                <p>Playlists are first defined, which can then be reused across multiple Regions and Layouts. Access by navigating to <strong>Playlists</strong> under the <strong>Library</strong> section of the menu to view the Playlists grid where you can
+                    add new and manage existing Playlists.</p>
+                <p>Click on the <strong>Add Playlist</strong> button and complete the form fields:</p>
+                <p><img src="img/v2_media_playlists_add.png" alt="Add Playlist" /></p>
+                <p>If you require media assignments to be managed automatically then tick the <strong>Dynamic</strong> check box and set the filter criteria to use for Library media on the <strong>Filter</strong> tab.</p>
+                <p><img src="img/v2_media_playlists_filter_tab.png" alt="Playlist Filter Tab" /></p>
+                <blockquote class="tip">
+                    <p>You can prepopulate your playlist with media from the Library using the <strong>Filter</strong> tab, but leaving the Dynamic checkbox unticked to make it a one-time assignment.</p>
+                </blockquote>
+                <p>Once added use the row menu for your created Playlist and click on <strong>Timeline</strong>.</p>
+                <p><img src="img/v2_media_playlists_row_menu.png" alt="Playlist Row Menu" /></p>
+                <p>Click on a <strong>Widget</strong> or drag and drop to add to the playlist. </p>
+                <p><img src="img/v2_media_playlists_timeline.png" alt="Playlists Timeline" /></p>
+                <blockquote class="tip">
+                    <p>Use the <a href="layouts_library_search.html">Library Search</a> tab to add media already uploaded to the Library.</p>
+                </blockquote>
+                <p>Once added configure using the <strong>Edit</strong> options available.</p>
+                <p><img src="img/v2_media_playlists_edit_widget.png" alt="Playlist Edit Widget" /></p>
+                <blockquote class="tip">
+                    <p>For further information on the <strong>Edit options</strong> available please refer to the relevant manual page for the chosen Widget.</p>
+                </blockquote>
+                <p>Change the playlist Timeline order by clicking on an item and dragging it to the desired positioning. As changes are autosaved use the Undo button, located on the bottom right of the toolbar to revert any changes made.</p>
+                <p><img src="img/v2_media_playlists_timeline_order.png" alt="Timeline Ordering" /></p>
+                <blockquote class="tip">
+                    <p>Use the <a href="layouts_tools.html">Tools</a> tab to apply <strong>Actions</strong> such as <strong>Audio</strong>/<strong>Permissions</strong> and <strong>Expiry Dates</strong> to the items added to the timeline.</p>
+                </blockquote>
+                <p>Easily make copies of Playlists by using the <strong>Copy</strong> button from the row menu.</p>
+                <p><img src="img/v2_media_playlists_copy.png" alt="Copy Playlists" /></p>
+                <p>Use the tick box to make <strong>new copies</strong> of all media assigned to the original playlist so that you can make adjustments as needed to create a new Playlist.</p>
+                <p><img src="img/v2_media_playlists_copy_media.png" alt="Copy Media" /></p>
+                <p>Include pre-defined Playlists by adding the <a href="media_module_subplaylist.html">Sub-Playlist Widget</a> to Layouts.</p>
+            </div>
+        </div>
+    </div>
+    <!-- container-->
+    <footer class="ss_footer" role="contentinfo">
+        <div class="container">
+            <div class="pull-right">
+                <img class="img-responsive logo" src="../img/logo.png" alt="Sfc technology" />
+            </div>
+
+            <p class="ss_back_to_top">Back to Top</p>
+
+
+
+            <p class="ss_languages"><a href="../en/index.html">en</a></p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="../vendor/jquery/jquery-1.9.1.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".ss-sidebar .list-group li").addClass("list-group-item");
+            $(".ss_body img").addClass("img-thumbnail");
+            $(".ss_body table").addClass("table");
+
+            // Set the selected page based on the TOC name
+            // Mark the appropriate top nav element as the selected page
+            $("#top-nav a").each(function() {
+                if ($(this).data().tocName == $("body").data().toc)
+                    $(this).parent().addClass("active");
+            });
+
+            $(".ss_back_to_top").click(function() {
+                $('html, body').animate({
+                    scrollTop: 0
+                }, 800);
+            });
+
+            if (inIframe()) {
+                console.log("In Frame");
+                $("#top-nav").css("display", "none");
+                $(".ss-sidebar").parent().css("display", "none");
+            }
+        });
+
+        function inIframe() {
+            try {
+                return window.self !== window.top;
+            } catch (e) {
+                return true;
+            }
+        }
+    </script>
+</body>
+
+</html>

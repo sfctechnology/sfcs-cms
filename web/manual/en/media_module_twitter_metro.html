@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>SFC Technology Documentation</title>
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!-- favicon -->
+    <link href="../img/favicon.ico" rel="shortcut icon" />
+
+    <!-- Bootstrap -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+    <!-- Stylesheets -->
+    <link href="../manual.css" rel="stylesheet" media="screen">
+
+    <!-- META -->
+    <meta name="keywords" content="SFC Technology Documentation" />
+    <meta name="description" content="SFC Technology is an open source digital signage solution. It supports all main media types and can be interfaced to other sources of data using CSV, Databases or RSS." />
+</head>
+
+<body data-toc="widgets">
+
+    <nav id="top-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#ss-navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                <a href="#" class="navbar-brand">SFC Technology Documentation</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="ss-navbar">
+                <ul class="nav navbar-nav">
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="ss_body container">
+        <div class="row">
+            <div class="col-md-3">
+                <ul id="side-nav" class="nav nav-pills nav-stacked">
+                    <li><a href="index.html" data-toc-name="tour">Tour</a></li>
+                    <li><a href="users.html" data-toc-name="users">Users</a></li>
+                    <li><a href="displays.html" data-toc-name="displays">Displays</a></li>
+                    <li><a href="layouts.html" data-toc-name="layouts">Layouts</a></li>
+                    <li><a href="media.html" data-toc-name="widgets">Media</a></li>
+                    <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+                    <html>
+
+                    <body>
+                        <ul>
+                            <li><a href="media_modules.html">Modules</a></li>
+                            <li><a href="media_module_audio.html">Audio</a></li>
+                            <li><a href="media_module_calendar.html">Calendar</a></li>
+                            <li><a href="media_module_chart.html">Chart</a></li>
+                            <li><a href="media_module_clock.html">Clock</a></li>
+                            <li><a href="media_module_currencies.html">Currencies</a></li>
+                            <li><a href="media_module_dataset_ticker.html">DataSet Ticker</a></li>
+                            <li><a href="media_module_dataset_view.html">DataSet View</a></li>
+                            <li><a href="media_module_embedded.html">Embedded</a></li>
+                            <li><a href="media_module_flash.html">Flash</a></li>
+                            <li><a href="media_module_googletraffic.html">Google Traffic</a></li>
+                            <li><a href="media_module_hls.html">HLS</a></li>
+                            <li><a href="media_module_htmlpackage.html">HTML Package</a></li>
+                            <li><a href="media_module_image.html">Image</a></li>
+                            <li><a href="media_module_localvideo.html">Local Video</a></li>
+                            <li><a href="media_module_notifications.html">Notifications</a></li>
+                            <li><a href="media_module_pdf.html">PDF</a></li>
+                            <li><a href="media_module_powerpoint.html">PowerPoint</a></li>
+                            <li><a href="media_module_shellcommand.html">Shell Command</a></li>
+                            <li><a href="media_module_stocks.html">Stocks</a></li>
+                            <li><a href="media_module_subplaylist.html">Sub Playlist</a></li>
+                            <li><a href="media_module_text.html">Text</a></li>
+                            <li><a href="media_module_ticker.html">Ticker</a></li>
+                            <li><a href="media_module_twitter.html">Twitter</a></li>
+                            <li class="active"><a href="media_module_twitter_metro.html">Twitter Metro<span class="glyphicon glyphicon-arrow-left you-are-here-arrow"></span></a></li>
+                            <li><a href="media_module_video.html">Video</a></li>
+                            <li><a href="media_module_video_in.html">Video In</a></li>
+                            <li><a href="media_module_weather.html">Weather</a></li>
+                            <li><a href="media_module_webpage.html">Web Page</a></li>
+                        </ul>
+                    </body>
+
+                    </html>
+                    <li><a href="scheduling.html" data-toc-name="scheduling">Scheduling</a></li>
+                    <li><a href="troubleshooting.html" data-toc-name="troubleshooting">Troubleshooting</a></li>
+                </ul>
+            </div>
+            <div class="col-md-9" role="main">
+                <!--toc=widgets-->
+                <h1 id="twitter_metro">Twitter Metro <a href="#twitter_metro" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h1>
+                <p>The Twitter Metro Module provides access to the <a href="https://dev.twitter.com/rest/public/search">Twitter Search API</a>. Add the Twitter Metro Widget to Layouts to display metro tiles of Twitter feeds.</p>
+                <h2 id="installation">Installation <a href="#installation" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>Please ensure that the installation steps <strong>Connecting to Twitter</strong> have been taken as detailed on the <a href="media_module_twitter.html#Installation">Twitter Module</a> page.</p>
+                <h3>Twitter Metro Module Installation</h3>
+                <ul>
+                    <li>Select the Modules page under the Administration section and install the Twitter Metro Module.</li>
+                    <li>Once installed click on the row menu for the Twitter Metro Module and click <strong>Edit</strong>.</li>
+                    <li>Enter the generated <strong>API key</strong> and <strong>API secret</strong>, you can use the same generated key/secret as before.</li>
+                    <li>Optionally adjust the Cache Period.</li>
+                </ul>
+                <h2 id="add_twitter_metro_widget">Add Twitter Metro Widget <a href="#add_twitter_metro_widget" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>Click on the <strong>Twitter Metro Widget</strong> on the toolbar, add / drag to the target <strong>Region</strong>. <img src="img/v2_media_twittermetro_widget.png" alt="Twitter Metro Widget" /></p>
+                <blockquote class="tip">
+                    <p>If you are using 1.8, select <strong>Twitter Metro</strong> from the Widget Toolbox to add to your Region Timeline and complete the form fields as explained below. </p>
+                </blockquote>
+                <blockquote class="tip">
+                    <p>The Twitter Metro Widget will automatically size portrait/landscape based on the size of the Region that it is added to. It will resize as if it were an image for best consistency across all display resolutions.</p>
+                </blockquote>
+                <h3>General</h3>
+                <ul>
+                    <li>Provide an optional name.</li>
+                    <li>Choose to override the default duration.</li>
+                </ul>
+                <h3>Configuration</h3>
+                <p>Complete the form options as required, refer to the <a href="media_module_twitter.html#Add_Twitter_Widget">Twitter</a> page.</p>
+                <h3>Appearance</h3>
+                <p>Use the <strong>Appearance</strong> tab to edit the <strong>Main</strong> template, <strong>Colours</strong> to be applied and the <strong>Effect</strong> to be used to transition between Tweets.</p>
+                <p><img src="img/v2_media_twitter_metro_appearance.png" alt="Twitter Metro Appearance" /></p>
+                <h4>Main</h4>
+                <ul>
+                    <li>Optionally add a background colour.</li>
+                    <li>Provide a <strong>No Tweets</strong> message to display when there are no Tweets to return, based on the search query.</li>
+                    <li>Apply a date format to be used for returned results, in PHP date format 9refer to the <a href="media_module_twitter.html#Add_Twitter_Widget">Twitter</a> page. </li>
+                </ul>
+                <h4>Colours</h4>
+                <ul>
+                    <li>Use the drop-down menu to specify a colour pallet to be applied to the metro tiles.</li>
+                    <li>Tick to <strong>Override the template</strong> and specify your own colour pallets to use for the metro tiles</li>
+                </ul>
+                <p><img src="img/v2_media_twitter_metro_colours.png" alt="Metro Colours" /></p>
+                <ul>
+                    <li>Click in the colour bars to re-select using the colour picker, remove by clicking <code>-</code> or add using <code>+</code></li>
+                    <li>Ensure that you <strong>Save</strong> your changes.</li>
+                </ul>
+                <h4>Effect</h4>
+                <ul>
+                    <li>Select an optional effect/speed to be used to transition between Tweets, to be applied to each tile.</li>
+                </ul>
+                <h3>Caching</h3>
+                <p>Include a suitable time for the Update Interval in minutes, keeping it as high as possible. This determines how often the Module will request data from your feed.</p>
+            </div>
+        </div>
+    </div>
+    <!-- container-->
+    <footer class="ss_footer" role="contentinfo">
+        <div class="container">
+            <div class="pull-right">
+                <img class="img-responsive logo" src="../img/logo.png" alt="Sfc technology" />
+            </div>
+
+            <p class="ss_back_to_top">Back to Top</p>
+
+
+
+            <p class="ss_languages"><a href="../en/index.html">en</a></p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="../vendor/jquery/jquery-1.9.1.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".ss-sidebar .list-group li").addClass("list-group-item");
+            $(".ss_body img").addClass("img-thumbnail");
+            $(".ss_body table").addClass("table");
+
+            // Set the selected page based on the TOC name
+            // Mark the appropriate top nav element as the selected page
+            $("#top-nav a").each(function() {
+                if ($(this).data().tocName == $("body").data().toc)
+                    $(this).parent().addClass("active");
+            });
+
+            $(".ss_back_to_top").click(function() {
+                $('html, body').animate({
+                    scrollTop: 0
+                }, 800);
+            });
+
+            if (inIframe()) {
+                console.log("In Frame");
+                $("#top-nav").css("display", "none");
+                $(".ss-sidebar").parent().css("display", "none");
+            }
+        });
+
+        function inIframe() {
+            try {
+                return window.self !== window.top;
+            } catch (e) {
+                return true;
+            }
+        }
+    </script>
+</body>
+
+</html>

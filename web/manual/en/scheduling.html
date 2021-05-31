@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>SFC Technology Documentation</title>
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!-- favicon -->
+    <link href="../img/favicon.ico" rel="shortcut icon" />
+
+    <!-- Bootstrap -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+    <!-- Stylesheets -->
+    <link href="../manual.css" rel="stylesheet" media="screen">
+
+    <!-- META -->
+    <meta name="keywords" content="SFC Technology Documentation" />
+    <meta name="description" content="SFC Technology is an open source digital signage solution. It supports all main media types and can be interfaced to other sources of data using CSV, Databases or RSS." />
+</head>
+
+<body data-toc="scheduling">
+
+    <nav id="top-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#ss-navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                <a href="#" class="navbar-brand">SFC Technology Documentation</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="ss-navbar">
+                <ul class="nav navbar-nav">
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="ss_body container">
+        <div class="row">
+            <div class="col-md-3">
+                <ul id="side-nav" class="nav nav-pills nav-stacked">
+                    <li><a href="index.html" data-toc-name="tour">Tour</a></li>
+                    <li><a href="users.html" data-toc-name="users">Users</a></li>
+                    <li><a href="displays.html" data-toc-name="displays">Displays</a></li>
+                    <li><a href="layouts.html" data-toc-name="layouts">Layouts</a></li>
+                    <li><a href="media.html" data-toc-name="media">Media</a></li>
+                    <li><a href="scheduling.html" data-toc-name="scheduling">Scheduling</a></li>
+                    <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+                    <html>
+
+                    <body>
+                        <ul>
+                            <li class="active"><a href="scheduling.html">Introduction<span class="glyphicon glyphicon-arrow-left you-are-here-arrow"></span></a></li>
+                            <li><a href="scheduling_calendar.html">Schedule</a></li>
+                            <li><a href="scheduling_events.html">Events</a></li>
+                            <li><a href="scheduling_dayparting.html">Dayparting</a></li>
+                            <li><a href="scheduling_now.html">Schedule Now</a></li>
+                        </ul>
+                    </body>
+
+                    </html>
+                    <li><a href="troubleshooting.html" data-toc-name="troubleshooting">Troubleshooting</a></li>
+                </ul>
+            </div>
+            <div class="col-md-9" role="main">
+                <!--toc=scheduling-->
+                <h1 id="scheduling">Scheduling <a href="#scheduling" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h1>
+                <p>SFC Technology has a sophisticated scheduling system which allows for the simple creation of complex schedules for <strong>Events</strong> across Displays/Display Groups. </p>
+                <h2 id="events">Events <a href="#events" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>Events are administered from the <strong>Schedule</strong> section of the menu and managed from the calendar interface.</p>
+                <p><img src="img/schedule_intro_.png" alt="Schedule" /></p>
+                <p>The CMS supports scheduling for 3 event types:</p>
+                <ol>
+                    <li>
+                        <h4><strong>Campaign/Layout Event</strong></h4>
+                        <p>Schedule 1 or multiple Events to Displays. </p>
+                    </li>
+                    <li>
+                        <h4><strong>Overlay Layout Event</strong></h4>
+                        <p>Specially created Layouts are scheduled at the same time as existing Layouts to create an <strong>overlay</strong> of content to be displayed. </p>
+                    </li>
+                    <li>
+                        <h4><strong>Command Event</strong></h4>
+                        <p>A Scheduled Command can be executed by the Player at a specific point in time and therefore this type of event does not need a <code>toDt</code>.</p>
+                    </li>
+                </ol>
+                <p>Commands available to schedule are pre-configured by an Administrator. Available Commands can be selected using the <strong>Command</strong> drop-down menu on the <strong>Schedule Event</strong> form. If you require additional commands
+                    please contact your Administrator.</p>
+                <blockquote class="tip">
+                    <p>Display Order and Priority are irrelevant when it comes to executing the Command, but may be set in the CMS for organisational purposes.</p>
+                </blockquote>
+                <h2 id="schedule_events">Schedule Events <a href="#schedule_events" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>Events are scheduled into <strong>Dayparts</strong> which are selected to schedule within the selected period:</p>
+                <h3>Custom Daypart</h3>
+                <p>Create your own To/From dates and times.</p>
+                <h3>Always Daypart</h3>
+                <p>Select to have the event run constantly.</p>
+                <blockquote class="tip">
+                    <p>Create your own defined <a href="scheduling_dayparting.html">Dayparts</a> for ease of scheduling.</p>
+                </blockquote>
+                <h2 id="priority">Priority <a href="#priority" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>Use Event Priority to determine whether the event should be included in the schedule for the Player or not. A 'Priority Event' is determined by a number, with 0 considered the lowest Priority.</p>
+                <blockquote class="tip">
+                    <p>If a Player has a schedule containing Events which are all Priority 0, then all of the Events will be shown in rotation together. </p>
+                    <p>If 1 of the Events has a Priority of 1, then this will be the only Event shown. </p>
+                    <p>If there are some Events with Priority 0, some with Priority 1 and some with Priority 2 only the Priority 2 Events will be shown, in a rotation for that Scheduled period (as the highest Priority)</p>
+                </blockquote>
+                <blockquote class="tip">
+                    <p>A good example to use Priority would be in a way to alter the Schedule at a specific time, for example, a normal rotation during the day with a Priority Event at lunchtime which shows specific ‘lunch’ information (i.e. Lunchtime specials
+                        on a cafe menu).</p>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+    <!-- container-->
+    <footer class="ss_footer" role="contentinfo">
+        <div class="container">
+            <div class="pull-right">
+                <img class="img-responsive logo" src="../img/logo.png" alt="Sfc technology" />
+            </div>
+
+            <p class="ss_back_to_top">Back to Top</p>
+
+
+
+            <p class="ss_languages"><a href="../en/index.html">en</a></p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="../vendor/jquery/jquery-1.9.1.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".ss-sidebar .list-group li").addClass("list-group-item");
+            $(".ss_body img").addClass("img-thumbnail");
+            $(".ss_body table").addClass("table");
+
+            // Set the selected page based on the TOC name
+            // Mark the appropriate top nav element as the selected page
+            $("#top-nav a").each(function() {
+                if ($(this).data().tocName == $("body").data().toc)
+                    $(this).parent().addClass("active");
+            });
+
+            $(".ss_back_to_top").click(function() {
+                $('html, body').animate({
+                    scrollTop: 0
+                }, 800);
+            });
+
+            if (inIframe()) {
+                console.log("In Frame");
+                $("#top-nav").css("display", "none");
+                $(".ss-sidebar").parent().css("display", "none");
+            }
+        });
+
+        function inIframe() {
+            try {
+                return window.self !== window.top;
+            } catch (e) {
+                return true;
+            }
+        }
+    </script>
+</body>
+
+</html>

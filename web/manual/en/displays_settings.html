@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>SFC Technology Documentation</title>
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!-- favicon -->
+    <link href="../img/favicon.ico" rel="shortcut icon" />
+
+    <!-- Bootstrap -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+    <!-- Stylesheets -->
+    <link href="../manual.css" rel="stylesheet" media="screen">
+
+    <!-- META -->
+    <meta name="keywords" content="SFC Technology Documentation" />
+    <meta name="description" content="SFC Technology is an open source digital signage solution. It supports all main media types and can be interfaced to other sources of data using CSV, Databases or RSS." />
+</head>
+
+<body data-toc="displays">
+
+    <nav id="top-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#ss-navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                <a href="#" class="navbar-brand">SFC Technology Documentation</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="ss-navbar">
+                <ul class="nav navbar-nav">
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="ss_body container">
+        <div class="row">
+            <div class="col-md-3">
+                <ul id="side-nav" class="nav nav-pills nav-stacked">
+                    <li><a href="index.html" data-toc-name="tour">Tour</a></li>
+                    <li><a href="users.html" data-toc-name="users">Users</a></li>
+                    <li><a href="displays.html" data-toc-name="displays">Displays</a></li>
+                    <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+                    <html>
+
+                    <body>
+                        <ul>
+                            <li><a href="displays.html">Displays</a></li>
+                            <li class="active"><a href="displays_settings.html">Display Settings<span class="glyphicon glyphicon-arrow-left you-are-here-arrow"></span></a></li>
+                            <li><a href="displays_groups.html">Display Groups</a></li>
+                            <li><a href="displays_fileassociations.html">File/Layout Assignments</a></li>
+                            <li><a href="displays_metrics.html">Reporting</a></li>
+                        </ul>
+                    </body>
+
+                    </html>
+                    <li><a href="layouts.html" data-toc-name="layouts">Layouts</a></li>
+                    <li><a href="media.html" data-toc-name="media">Media</a></li>
+                    <li><a href="scheduling.html" data-toc-name="scheduling">Scheduling</a></li>
+                    <li><a href="troubleshooting.html" data-toc-name="troubleshooting">Troubleshooting</a></li>
+                </ul>
+            </div>
+            <div class="col-md-9" role="main">
+                <!--toc=displays-->
+                <h1 id="display_settings">Display Settings <a href="#display_settings" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h1>
+                <p>Display Clients are configured automatically from the CMS once they are connected, this is managed using Display Profiles.</p>
+                <h2 id="display_profiles">Display Profiles <a href="#display_profiles" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>Each Display has a default Display Profile which can be customised by an Administrator to suit required preferences or new Display Profiles can be created and assigned directly to a Display.</p>
+                <h2 id="available_profiles">Available profiles <a href="#available_profiles" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>A list of available profiles can be viewed from Display Settings under the Display section on the menu.</p>
+                <p><img src="img/displays_settings_profiles.png" alt="Display Settings Profiles" /></p>
+                <p>Each profile has a <strong>Name</strong>, <strong>Type</strong> and a flag indicating if it is the <strong>default</strong> or not. Default profiles are automatically assigned to Displays of the corresponding type.</p>
+                <h2 id="editing_profiles">Editing Profiles <a href="#editing_profiles" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>Use the row menu for the Profile you wish to view and click on <strong>Edit</strong>. Use the Edit Profile form to adjust available settings:</p>
+                <p><img src="img/displays_settings_edit.png" alt="Displays Settings Edit" /></p>
+                <p>Each setting is explained under each form field for each of the tabs.</p>
+                <blockquote class="tip">
+                    <p>Using the row menu click on <strong>Copy</strong> to make another version of a Profile. Make adjustments as needed to quickly and simply create new Profiles.</p>
+                </blockquote>
+                <h3>Collect Interval</h3>
+                <p>Using the drop-down menu select how often you would like the Player to check for new content. This means that once a Player has communicated with the CMS, it will check again for any changes by the time set here.</p>
+                <blockquote class="tip">
+                    <p><strong>Scenario:</strong></p>
+                    <p>A Player has a collect interval set for 24 hours, it will check for any changes, action pending changes and then wait for the next 24-hour collection. If a change is made between this period of time, the Player will not be aware of
+                        it until it is time to check again.</p>
+                </blockquote>
+                <p>If a Display Profile for a Player is changed, the Player will only be aware of the change after it has connected according to its prior connection interval. </p>
+                <blockquote class="tip">
+                    <p><strong>Scenario:</strong></p>
+                    <p>A Player with a collect interval set for 24 hours made a check at 12 pm, it will not check again until 12 pm the following day for any changes that have been made. Once the 24 hour interval has passed, it will update the new changes
+                        and from this point will collect changes based on the new Profile.</p>
+                </blockquote>
+                <p>The CMS can be configured to talk to an XMR instance if player actions are required, please contact your Administrator.</p>
+                <h2 id="add_a_profile">Add a Profile <a href="#add_a_profile" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>Click on the Add Profile button, and include a name and select <strong>Client type</strong>, Save.</p>
+                <p>The Edit Profile form will open so that you can complete the necessary form fields for this Profile.</p>
+                <h2 id="deleting_profiles">Deleting Profiles <a href="#deleting_profiles" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>Display profiles can be deleted by using the row menu options for a selected Profile. </p>
+                <p>Please ensure that there is <strong>one default</strong> remaining for each Type.</p>
+                <h2 id="setting_on_the_display">Setting on the Display <a href="#setting_on_the_display" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>A default profile will automatically apply to all Displays of the same Type. A Display can be overridden with a Profile other than default by selecting the required Profile on the Display Edit form and using the <strong>Advanced</strong>                    tab.</p>
+                <p><img src="img/displays_edit_advanced.png" alt="Displays Edit Profile Advanced" /></p>
+            </div>
+        </div>
+    </div>
+    <!-- container-->
+    <footer class="ss_footer" role="contentinfo">
+        <div class="container">
+            <div class="pull-right">
+                <img class="img-responsive logo" src="../img/logo.png" alt="Sfc technology" />
+            </div>
+
+            <p class="ss_back_to_top">Back to Top</p>
+
+
+
+            <p class="ss_languages"><a href="../en/index.html">en</a></p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="../vendor/jquery/jquery-1.9.1.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".ss-sidebar .list-group li").addClass("list-group-item");
+            $(".ss_body img").addClass("img-thumbnail");
+            $(".ss_body table").addClass("table");
+
+            // Set the selected page based on the TOC name
+            // Mark the appropriate top nav element as the selected page
+            $("#top-nav a").each(function() {
+                if ($(this).data().tocName == $("body").data().toc)
+                    $(this).parent().addClass("active");
+            });
+
+            $(".ss_back_to_top").click(function() {
+                $('html, body').animate({
+                    scrollTop: 0
+                }, 800);
+            });
+
+            if (inIframe()) {
+                console.log("In Frame");
+                $("#top-nav").css("display", "none");
+                $(".ss-sidebar").parent().css("display", "none");
+            }
+        });
+
+        function inIframe() {
+            try {
+                return window.self !== window.top;
+            } catch (e) {
+                return true;
+            }
+        }
+    </script>
+</body>
+
+</html>

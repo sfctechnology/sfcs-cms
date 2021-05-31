@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>SFC Technology Documentation</title>
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!-- favicon -->
+    <link href="../img/favicon.ico" rel="shortcut icon" />
+
+    <!-- Bootstrap -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+    <!-- Stylesheets -->
+    <link href="../manual.css" rel="stylesheet" media="screen">
+
+    <!-- META -->
+    <meta name="keywords" content="SFC Technology Documentation" />
+    <meta name="description" content="SFC Technology is an open source digital signage solution. It supports all main media types and can be interfaced to other sources of data using CSV, Databases or RSS." />
+</head>
+
+<body data-toc="layouts">
+
+    <nav id="top-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#ss-navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                <a href="#" class="navbar-brand">SFC Technology Documentation</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="ss-navbar">
+                <ul class="nav navbar-nav">
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="ss_body container">
+        <div class="row">
+            <div class="col-md-3">
+                <ul id="side-nav" class="nav nav-pills nav-stacked">
+                    <li><a href="index.html" data-toc-name="tour">Tour</a></li>
+                    <li><a href="users.html" data-toc-name="users">Users</a></li>
+                    <li><a href="displays.html" data-toc-name="displays">Displays</a></li>
+                    <li><a href="layouts.html" data-toc-name="layouts">Layouts</a></li>
+                    <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+                    <html>
+
+                    <body>
+                        <ul>
+                            <li class="active"><a href="layouts.html">Introduction<span class="glyphicon glyphicon-arrow-left you-are-here-arrow"></span></a></li>
+                            <li><a href="layouts_designer.html">Layout Designer</a></li>
+                            <li><a href="layouts_regions.html">Regions</a></li>
+                            <li><a href="layouts_timeline.html">Layout Timeline</a></li>
+                            <li><a href="layouts_tools.html">Tools</a></li>
+                            <li><a href="layouts_widgets.html">Widgets</a></li>
+                            <li><a href="layouts_library_search.html">Library Search</a></li>
+                            <li><a href="layouts_templates.html">Templates</a></li>
+                            <li><a href="layouts_overlay.html">Overlay Layouts</a></li>
+                            <li><a href="layouts_campaigns.html">Campaigns</a></li>
+                        </ul>
+                    </body>
+
+                    </html>
+                    <li><a href="media.html" data-toc-name="media">Media</a></li>
+                    <li><a href="scheduling.html" data-toc-name="scheduling">Scheduling</a></li>
+                    <li><a href="troubleshooting.html" data-toc-name="troubleshooting">Troubleshooting</a></li>
+                </ul>
+            </div>
+            <div class="col-md-9" role="main">
+                <!--toc=layouts-->
+                <h1 id="layouts">Layouts <a href="#layouts" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h1>
+                <p>A Layout is a complete screen design including content and background, which is then scheduled to a Display or multiple displays in a Display Group. A Layout is made up of 1 or more Regions which hold content and contain a timeline of
+                    Media to show. Media is assigned to the Layout Timeline using Widgets which provide the actions for the selected Module. </p>
+                <blockquote class="tip">
+                    <p>Take a look at the <a href="media_modules.html">Modules</a> page to see the variety of content available by simply adding a Widget to a Layout.</p>
+                </blockquote>
+                <p>SFC Technology has no limit to the number of Layouts you can have in the system or the number a User can have.</p>
+                <p>Layouts are administered from the Design section of the menu. Click on <strong>Layouts</strong> to open the Layouts grid to view all existing Layouts and to create new from the <strong>Add Layout</strong> button.</p>
+                <p><img src="img/layouts_grid.png" alt="Layout Grid" /></p>
+                <h2 id="add_layout">Add Layout <a href="#add_layout" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>Click on the action button to open the Add Layout form to complete the appropriate fields.</p>
+                <p><img src="img/layouts_add.png" alt="Add Layout" /></p>
+                <blockquote class="tip">
+                    <p><strong>When should a User create a new Layout? When should a User add to an existing Layout?</strong> Layouts provide vast flexibility in the system, but can also cause confusion. The recommended usage for a layout is to only contain
+                        the design and media required for a set of related content that should be scheduled at the same time.</p>
+                    <p><strong>Scenario</strong>: You have a video showing a fire safety demonstration and a video showing an advert for an upcoming production - it would be natural to have separate Layouts for these.</p>
+                </blockquote>
+                <h3>Tags</h3>
+                <p>Layouts can be tagged which allows for ordering and makes it easier to find and view a large number of Layouts if grouped by a certain Tag. This is particularly useful with a growing number of Layouts.</p>
+                <h3>Templates</h3>
+                <p>Create Layouts and save your design to use as a <a href="layouts_templates.html">Template</a>, great for maintaining a corporate image or style.</p>
+                <h3>Resolution</h3>
+                <p>Layouts are designed for an intended display resolution and will function best when shown on a Player with a matching resolution. If they are shown on a display that has a different resolution it will dynamically resize which may result
+                    in unused screen space. </p>
+                <blockquote class="tip">
+                    <p>Sending a Player a Layout that has been designed with a 4:3 resolution which is connected to a 16:9 TV screen would result in two empty bars either side of your content. </p>
+                </blockquote>
+                <p><strong>If you require an alternative resolution to the available options listed, contact your Administrator</strong></p>
+                <h2 id="row_menu">Row menu <a href="#row_menu" class="header-link"><span class="glyphicon glyphicon-link"></span></a></h2>
+                <p>Use the row menu for a selected Layout to access more options:</p>
+                <p><img src="img/v2_layouts_row_menu.png" alt="Layouts Row Menu" /></p>
+                <h3>Design</h3>
+                <p>Click to open in a <strong>Read Only Mode</strong>, which is viewed in the Layout Designer window. <strong>Checkout</strong> the Layout to enable editing.</p>
+                <blockquote class="tip">
+                    <p>If you are using 1.8, clicking on <strong>Design</strong> will return you to the Layout Designer screen to edit.</p>
+                </blockquote>
+                <h3>Checkout</h3>
+                <p>Checkout from the row menu to put the Layout into a <strong>draft</strong> mode so that changes can be made later. Once edited, the Layout can be <strong>Published</strong> to make changes permanent and send the edited Layout to Displays.
+                    <strong>Discard</strong> will revert the Layout back to the original published state.</p>
+                <blockquote class="tip">
+                    <p>Take your time with any edits you need to make as using <strong>Checkout</strong> ensures that no changes are made to your published version or shown on scheduled <strong>Displays</strong> until you choose to do so. <strong>Publish</strong>                        confirms changes that have been made and will overwrite your published version. <strong>Discard</strong> will delete the draft with the published version remaining untouched.</p>
+                </blockquote>
+                <h3>Preview Layout</h3>
+                <p>The <strong>Layout</strong> will play from start to finish which allows you to see how your layout will play. Make important adjustments to ensure that layout designs play as intended before scheduling to Displays. </p>
+                <blockquote class="tip">
+                    <p>Before the Layout can start all <strong>Media</strong> must be downloaded to your browser and verified so you may experience a slight delay whilst this is in process.</p>
+                </blockquote>
+                <h3>Schedule Now</h3>
+                <p>To save time, <strong>Layouts</strong> can be scheduled for a specified amount of time, which can be very useful for important notices / promotions.</p>
+                <blockquote class="tip">
+                    <p>Layouts must have a <strong>Published</strong> status before being scheduled.</p>
+                </blockquote>
+                <h3>Assign to Campaign</h3>
+                <p>Select Layouts to include in created Campaigns.</p>
+                <h3>Edit</h3>
+                <p>Make changes to the naming and Tags used for the <strong>Layout</strong> as well as making changes to the background image/colour.</p>
+                <h3>Copy</h3>
+                <p>Create copies of designed layouts. Choose to include all contained <strong>Media</strong> items, to use as a base for creating new layouts to save time.</p>
+                <h3>Retire</h3>
+                <p>Retire a Layout so it does not affect existing <strong>Schedules</strong>. A retired Layout will be hidden from new Scheduling options but will remain unaffected in existing Schedules and continue to show on Displays.</p>
+                <h3>Delete</h3>
+                <p>Remove a Layout and all its associated media completely from all existing Schedules. <strong>Please note:</strong> This action is irreversible!</p>
+                <h3>Export</h3>
+                <p>Export the Layout including all associated Widgets/Media/DataSet structures to a ZIP file, so it can be easily shared.</p>
+                <h3>Permissions</h3>
+                <p>Assign Permissions for <strong>Users/User Groups</strong> to define who should have access to <strong>View</strong>, <strong>Edit</strong> and <strong>Delete</strong> the Layout.</p>
+                <blockquote class="tip">
+                    <p>Did you know…<strong>.Layouts</strong> and <strong>Library files</strong> can be <a href="displays_fileassociations.html">Assigned</a> directly to a <strong>Display</strong> or <strong>Display Group</strong> so that they are always
+                        available in the local library of the Player. Useful for pre-loading a Layout ahead of time ready to be scheduled.</p>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+    <!-- container-->
+    <footer class="ss_footer" role="contentinfo">
+        <div class="container">
+            <div class="pull-right">
+                <img class="img-responsive logo" src="../img/logo.png" alt="Sfc technology" />
+            </div>
+
+            <p class="ss_back_to_top">Back to Top</p>
+
+
+
+            <p class="ss_languages"><a href="../en/index.html">en</a></p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="../vendor/jquery/jquery-1.9.1.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".ss-sidebar .list-group li").addClass("list-group-item");
+            $(".ss_body img").addClass("img-thumbnail");
+            $(".ss_body table").addClass("table");
+
+            // Set the selected page based on the TOC name
+            // Mark the appropriate top nav element as the selected page
+            $("#top-nav a").each(function() {
+                if ($(this).data().tocName == $("body").data().toc)
+                    $(this).parent().addClass("active");
+            });
+
+            $(".ss_back_to_top").click(function() {
+                $('html, body').animate({
+                    scrollTop: 0
+                }, 800);
+            });
+
+            if (inIframe()) {
+                console.log("In Frame");
+                $("#top-nav").css("display", "none");
+                $(".ss-sidebar").parent().css("display", "none");
+            }
+        });
+
+        function inIframe() {
+            try {
+                return window.self !== window.top;
+            } catch (e) {
+                return true;
+            }
+        }
+    </script>
+</body>
+
+</html>
