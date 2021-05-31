@@ -1,1 +1,698 @@
-var LOG_LEVEL,VERSION="1.8.3",ID_COUNTER=0;function dsInit(e,i,a){LOG_LEVEL=10,$(".preview-log").css("display","none"),$(".preview-info").css("display","none"),$(".preview-end").css("display","none"),document.onkeypress=keyHandler,playLog(0,"info","Xibo HTML Preview v"+VERSION+" Starting Up",!0),new Layout(e,i,{addedFiles:[],preloader:html5Preloader(),addFiles:function(e){this.addedFiles.includes(e)||(this.preloader.addFiles(e),this.addedFiles.push(e))}},a)}function nextId(){return ID_COUNTER>500&&(ID_COUNTER=0),ID_COUNTER+=1}function playLog(e,i,a,t){if(e<=LOG_LEVEL){var o=timestamp()+" "+i.toUpperCase()+": "+a;e>0&&console.log(o),t&&$(".preview-log").html(o)}}function timestamp(){var e="",i=new Date,a=i.getDate(),t=i.getMonth()+1,o=i.getFullYear(),n=i.getHours(),d=i.getMinutes(),r=i.getSeconds();return d<10&&(d="0"+d),r<10&&(r="0"+r),(e+=a+"/"+t+"/"+o+" ")+(n+":")+d+":"+r}function keyHandler(e){var i="charCode"in e?e.charCode:e.keyCode;if("l"==String.fromCharCode(i)){var a=$(".preview-log");"none"==a.css("display")?a.css("display","block"):a.css("display","none")}}function Layout(e,i,a,t){var o=this;o.id=e,o.parseXlf=function(e){playLog(10,"debug","Parsing Layout "+o.id,!1),o.containerName="L"+o.id+"-"+nextId(),o.regionMaxZIndex=0;var n=$("#screen_"+o.id);n.append('<div id="'+o.containerName+'"></div>'),!1===t&&n.append('<a style="position:absolute;top:0;left:0;width:100%;height:100%;" target="_blank" href="'+n.parent().parent().attr("data-url")+'"></a>');var d=$("#"+o.containerName);if(d.css("display","none"),d.css("outline","red solid thin"),o.sw=n.width(),o.sh=n.height(),playLog(7,"debug","Screen is ("+o.sw+"x"+o.sh+") pixels"),o.layoutNode=e,o.xw=$(o.layoutNode).filter(":first").attr("width"),o.xh=$(o.layoutNode).filter(":first").attr("height"),o.zIndex=$(o.layoutNode).filter(":first").attr("zindex"),playLog(7,"debug","Layout is ("+o.xw+"x"+o.xh+") pixels"),o.scaleFactor=Math.min(o.sw/o.xw,o.sh/o.xh),o.sWidth=Math.round(o.xw*o.scaleFactor),o.sHeight=Math.round(o.xh*o.scaleFactor),o.offsetX=Math.abs(o.sw-o.sWidth)/2,o.offsetY=Math.abs(o.sh-o.sHeight)/2,playLog(7,"debug","Scale Factor is "+o.scaleFactor),playLog(7,"debug","Render will be ("+o.sWidth+"x"+o.sHeight+") pixels"),playLog(7,"debug","Offset will be ("+o.offsetX+","+o.offsetY+") pixels"),d.css("width",o.sWidth+"px"),d.css("height",o.sHeight+"px"),d.css("position","absolute"),d.css("left",o.offsetX+"px"),d.css("top",o.offsetY+"px"),null!=o.zIndex&&d.css("z-index",o.zIndex),o.bgColour=$(o.layoutNode).filter(":first").attr("bgcolor"),o.bgImage=$(o.layoutNode).filter(":first").attr("background"),""!=o.bgImage&&null!=o.bgImage){o.bgId=o.bgImage.substring(0,o.bgImage.indexOf("."));var r=i.layoutBackgroundDownloadUrl.replace(":id",o.id)+"?preview=1";a.addFiles(r+"&width="+o.sWidth+"&height="+o.sHeight+"&dynamic&proportional=0"),d.css("background","url('"+r+"&width="+o.sWidth+"&height="+o.sHeight+"&dynamic&proportional=0')"),d.css("background-repeat","no-repeat"),d.css("background-size",o.sWidth+"px "+o.sHeight+"px"),d.css("background-position","0px 0px")}d.css("background-color",o.bgColour),$(o.layoutNode).find("region").each((function(){playLog(4,"debug","Creating region "+$(this).attr("id"),!1),o.regionObjects.push(new Region(o,$(this).attr("id"),this,i,a))})),playLog(4,"debug","Layout "+o.id+" has "+o.regionObjects.length+" regions"),o.ready=!0,a.addFiles(i.loaderUrl),t?a.preloader.on("finish",o.run):o.run()},o.run=function(){if(playLog(4,"debug","Running Layout ID "+o.id,!1),o.ready){$("#"+o.containerName).css("display","block"),$("#splash_"+o.id).css("display","none");for(var e=0;e<o.regionObjects.length;e++)playLog(4,"debug","Running region "+o.regionObjects[e].id,!1),o.regionObjects[e].run()}else playLog(4,"error","Attempted to run Layout ID "+o.id+" before it was ready.",!1)},o.end=function(){for(var e=0;e<o.regionObjects.length;e++)o.regionObjects[e].end()},o.destroy=function(){},o.regionExpired=function(){playLog(5,"debug","A region expired. Checking if all regions have expired.",!1),o.allExpired=!0;for(var e=0;e<o.regionObjects.length;e++)playLog(4,"debug","Region "+o.regionObjects[e].id+" expired? "+o.regionObjects[e].complete,!1),o.regionObjects[e].complete||(o.allExpired=!1);o.allExpired&&(playLog(4,"debug","All regions have expired",!1),o.end())},o.regionEnded=function(){playLog(5,"debug","A region ended. Checking if all regions have ended.",!1),o.allEnded=!0;for(var e=0;e<o.regionObjects.length;e++)playLog(4,"debug","Region "+o.regionObjects[e].id+": "+o.regionObjects[e].ended,!1),o.regionObjects[e].ended||(o.allEnded=!1);o.allEnded&&(playLog(4,"debug","All regions have ended",!1),o.stopAllMedia(),$("#end_"+o.id).css("display","block"))},o.stopAllMedia=function(){playLog(3,"debug","Stop all media!");for(var e=0;e<o.regionObjects.length;e++)for(var i=o.regionObjects[e],a=0;a<i.mediaObjects.length;a++)i.mediaObjects[a].stop()},o.ready=!1,o.id=e,o.regionObjects=[],o.allExpired=!1,playLog(3,"debug","Loading Layout "+o.id,!0),$.ajax({type:"GET",url:i.getXlfUrl,success:o.parseXlf})}function Region(e,i,a,t,o){var n=this;n.layout=e,n.id=i,n.xml=a,n.mediaObjects=[],n.currentMedia=-1,n.complete=!1,n.containerName="R-"+n.id+"-"+nextId(),n.ending=!1,n.ended=!1,n.oneMedia=!1,n.oldMedia=void 0,n.curMedia=void 0,n.totalMediaObjects=$(n.xml).find("media").length,n.finished=function(){n.complete=!0,n.layout.regionExpired()},n.exitTransition=function(){$("#"+n.containerName).css("display","none"),n.exitTransitionComplete()},n.end=function(){playLog(8,"debug","Region "+n.id+" has ended!"),n.ending=!0,n.exitTransition()},n.exitTransitionComplete=function(){n.ended=!0,n.layout.regionEnded()},n.transitionNodes=function(e,i){var a="1"==i.options.loop||"1"==i.region.options.loop&&1==i.region.totalMediaObjects;e&&e.pause(),(e!=i||a)&&(a&&e==i&&e.reset(),e&&e.stop(),n.ended||(i.run(),$("#"+i.containerName).css("display","block")))},n.nextMedia=function(){n.ended||(n.curMedia?(playLog(8,"debug","nextMedia -> Old: "+n.curMedia.id),n.oldMedia=n.curMedia):n.oldMedia=void 0,n.currentMedia=n.currentMedia+1,n.currentMedia>=n.mediaObjects.length&&(n.finished(),n.currentMedia=0),playLog(8,"debug","nextMedia -> Next up is media "+(n.currentMedia+1)+" of "+n.mediaObjects.length),n.curMedia=n.mediaObjects[n.currentMedia],null!=n.curMedia&&playLog(8,"debug","nextMedia -> New: "+n.curMedia.id),n.transitionNodes(n.oldMedia,n.curMedia))},n.run=function(){n.nextMedia()},n.options=[],$(n.xml).children("options").children().each((function(){playLog(9,"debug","Option "+this.nodeName.toLowerCase()+" -> "+$(this).text(),!1),n.options[this.nodeName.toLowerCase()]=$(this).text()})),n.sWidth=$(a).attr("width")*n.layout.scaleFactor,n.sHeight=$(a).attr("height")*n.layout.scaleFactor,n.offsetX=$(a).attr("left")*n.layout.scaleFactor,n.offsetY=$(a).attr("top")*n.layout.scaleFactor,n.zIndex=$(a).attr("zindex"),$("#"+n.layout.containerName).append('<div id="'+n.containerName+'"></div>'),$("#"+n.containerName).css("width",n.sWidth+"px"),$("#"+n.containerName).css("height",n.sHeight+"px"),$("#"+n.containerName).css("position","absolute"),$("#"+n.containerName).css("left",n.offsetX+"px"),$("#"+n.containerName).css("top",n.offsetY+"px"),null!=n.zIndex&&($("#"+n.containerName).css("z-index",n.zIndex),parseInt(n.zIndex)>n.layout.regionMaxZIndex&&(n.layout.regionMaxZIndex=parseInt(n.zIndex))),playLog(4,"debug","Created region "+n.id,!1),playLog(7,"debug","Render will be ("+n.sWidth+"x"+n.sHeight+") pixels"),playLog(7,"debug","Offset will be ("+n.offsetX+","+n.offsetY+") pixels"),$(n.xml).find("media").each((function(){playLog(5,"debug","Creating media "+$(this).attr("id"),!1),n.mediaObjects.push(new media(n,$(this).attr("id"),this,t,o))})),0==$(n.xml).find("media").length&&($self=$("#"+n.containerName),messageSize=n.sWidth>n.sHeight?n.sHeight:n.sWidth,$self.css("background-color","rgba(255, 0, 0, 0.25)"),$self.append('<div class="empty-message" id="empty_'+n.containerName+'"></div>'),$message=$("#empty_"+n.containerName),$message.append('<span class="empty-icon fa fa-exclamation-triangle" style="font-size:'+messageSize/4+'px"></span>'),$message.append('<span class="empty-icon">'+emptyRegionMessage+"</span>")),playLog(4,"debug","Region "+n.id+" has "+n.mediaObjects.length+" media items")}function media(e,i,a,t,o){var n=this;n.region=e,n.xml=a,n.id=i,n.containerName="M-"+n.id+"-"+nextId(),n.iframeName=n.containerName+"-iframe",n.mediaType=$(n.xml).attr("type"),n.render=$(n.xml).attr("render"),n.attachedAudio=!1,null==n.render&&(n.render="module"),n.run=function(){null!=n.iframe&&$("#"+n.containerName).empty().append(n.iframe),playLog(5,"debug","Running media "+n.id+" for "+n.duration+" seconds"),"video"==n.mediaType&&$("#"+n.containerName+"-vid").get(0).play(),"audio"==n.mediaType&&$("#"+n.containerName+"-aud").get(0).play(),n.attachedAudio&&$("#"+n.containerName+"-attached-aud").get(0).play(),0==n.duration?"video"==n.mediaType?($("#"+n.containerName+"-vid").bind("ended",n.region.nextMedia),$("#"+n.containerName+"-vid").bind("error",n.region.nextMedia),$("#"+n.containerName+"-vid").bind("click",n.region.nextMedia)):"audio"==n.mediaType?($("#"+n.containerName+"-aud").bind("ended",n.region.nextMedia),$("#"+n.containerName+"-aud").bind("error",n.region.nextMedia),$("#"+n.containerName+"-aud").bind("click",n.region.nextMedia)):(n.duration=3,setTimeout(n.region.nextMedia,1e3*n.duration)):setTimeout(n.region.nextMedia,1e3*n.duration)},n.reset=function(){playLog(5,"debug","Reset media "+n.id),"video"==n.mediaType&&($("#"+n.containerName+"-vid").get(0).currentTime=0),"audio"==n.mediaType&&($("#"+n.containerName+"-aud").get(0).currentTime=0),n.attachedAudio&&($("#"+n.containerName+"-attached-aud").get(0).currentTime=0)},n.pause=function(){"video"==n.mediaType&&$("#"+n.containerName+"-vid").get(0).pause(),"audio"==n.mediaType&&$("#"+n.containerName+"-aud").get(0).pause(),n.attachedAudio&&$("#"+n.containerName+"-attached-aud").get(0).pause()},n.stop=function(){playLog(5,"debug","Stop media "+n.id),$("#"+n.containerName).css("display","none")},n.duration=$(n.xml).attr("duration"),n.lkid=$(n.xml).attr("lkid"),n.options=[],$(n.xml).find("options").children().each((function(){playLog(9,"debug","Option "+this.nodeName.toLowerCase()+" -> "+$(this).text(),!1),n.options[this.nodeName.toLowerCase()]=$(this).text()})),"1"===n.options.showfullscreen?(n.divWidth=n.region.layout.sWidth,n.divHeight=n.region.layout.sHeight):(n.divWidth=n.region.sWidth,n.divHeight=n.region.sHeight),$("#"+n.region.containerName).append('<div id="'+n.containerName+'"></div>');var d=$("#"+n.containerName);d.css("display","none"),d.css("width",n.divWidth+"px"),d.css("height",n.divHeight+"px"),d.css("position","absolute"),d.css("background-size","contain"),d.css("background-repeat","no-repeat"),d.css("background-position","center"),"1"===n.options.showfullscreen&&(d.css("left",-n.region.offsetX+"px"),d.css("top",-n.region.offsetY+"px"),d.css("z-index",n.region.layout.regionMaxZIndex+1));var r=t.getResourceUrl.replace(":regionId",n.region.id).replace(":id",n.id)+"?preview=true&raw=true&scale_override="+n.region.layout.scaleFactor,s="1"==n.options.loop||"1"==n.region.options.loop&&1==n.region.totalMediaObjects;if("html"==n.render||"ticker"==n.mediaType){if(n.iframe=$('<iframe scrolling="no" id="'+n.iframeName+'" src="'+r+"&width="+n.divWidth+"&height="+n.divHeight+'" width="'+n.divWidth+'px" height="'+n.divHeight+'px" style="border:0;"></iframe>'),"1"==n.options.durationisperitem||"1"==n.options.durationisperpage){var l=new RegExp("\x3c!-- NUMITEMS=(.*?) --\x3e");jQuery.ajax({url:r+"&width="+n.divWidth+"&height="+n.divHeight,success:function(e){var i=l.exec(e);null!=i&&(n.duration=parseInt(n.duration)*parseInt(i[1]))},async:!1})}}else if("image"==n.mediaType)if(o.addFiles(r),d.css("background-image","url('"+r+"')"),"stretch"==n.options.scaletype)d.css("background-size","cover");else{var c=""==n.options.align?"center":n.options.align,g=""==n.options.valign||"middle"==n.options.valign?"center":n.options.valign;d.css("background-position",c+" "+g)}else if("text"==n.mediaType||"datasetview"==n.mediaType||"webpage"==n.mediaType||"embedded"==n.mediaType)n.iframe=$('<iframe scrolling="no" id="'+n.iframeName+'" src="'+r+"&width="+n.divWidth+"&height="+n.divHeight+'" width="'+n.divWidth+'px" height="'+n.divHeight+'px" style="border:0;"></iframe>');else if("video"==n.mediaType)o.addFiles(r),n.iframe=$('<video id="'+n.containerName+'-vid" preload="auto" '+(1==n.options.mute?"muted":"")+" "+(s?"loop":"")+'><source src="'+r+'">Unsupported Video</video>'),"stretch"==n.options.scaletype&&n.iframe.css("object-fit","fill");else if("audio"==n.mediaType)o.addFiles(r),d.append('<audio id="'+n.containerName+'-aud" preload="auto" '+(s?"loop":"")+" "+(1==n.options.mute?"muted":"")+'><source src="'+r+'">Unsupported Audio</audio>');else if("flash"==n.mediaType){var p='<OBJECT classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0" WIDTH="100%" HEIGHT="100%" id="Yourfilename" ALIGN="">';p=p+'<PARAM NAME=movie VALUE="'+r+'"> <PARAM NAME=quality VALUE=high> <param name="wmode" value="transparent"> <EMBED src="'+r+'" quality="high" wmode="transparent" WIDTH="100%" HEIGHT="100%" NAME="Yourfilename" ALIGN="" TYPE="application/x-shockwave-flash" PLUGINSPAGE="http://www.macromedia.com/go/getflashplayer"></EMBED> </OBJECT>',o.addFiles(r),n.iframe=$(p)}else d.css("outline","red solid thin");if($(n.xml).find("audio").length>0){var u=$(n.xml).find("audio"),h=u.find("uri"),m=h.attr("mediaid"),f=t.libraryDownloadUrl.replace(":id",m);if(null!=o.preloader.filesLoadedMap[f]&&o.addFiles(f),null!=h.attr("volume")){var y=h.attr("volume")/100;u.get(0).volume=y}u.prop("loop","1"==h.get(0).getAttribute("loop")),u.attr("id",n.containerName+"-attached-aud"),u.append('<source src="'+f+'">Unsupported Audio'),d.append(u),n.attachedAudio=!0}playLog(5,"debug","Created media "+n.id)}
+/*
+ * Xibo - Digital Signage - http://www.xibo.org.uk
+ * Copyright (C) 2014-17 Spring Signage Ltd
+ *
+ * This file is part of Xibo.
+ *
+ * Xibo is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version. 
+ *
+ * Xibo is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with Xibo.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+
+/* Int: Current logging level */
+var LOG_LEVEL;
+
+/* String: Client Version */
+var VERSION = "1.8.3";
+
+/* Int: Counter to ensure unique IDs */
+var ID_COUNTER = 0;
+function dsInit(layoutid, options, layoutPreview) {
+    LOG_LEVEL = 10;
+    /* Hide the info and log divs */
+    $(".preview-log").css("display", "none");
+    $(".preview-info").css("display", "none");
+    $(".preview-end").css("display", "none");
+
+    /* Setup a keypress handler for local commands */
+    document.onkeypress = keyHandler;
+
+    playLog(0, "info", "Xibo HTML Preview v" + VERSION + " Starting Up", true);
+    var preload = {
+        addedFiles: [],
+        preloader: html5Preloader(),
+        addFiles: function (url) { // Wrapped add files method, checking if the files were added already and save a list
+            if(!this.addedFiles.includes(url)) {
+                this.preloader.addFiles(url);
+                this.addedFiles.push(url);
+            }
+        }
+    };
+
+    new Layout(layoutid, options, preload, layoutPreview);
+}
+
+/* Generate a unique ID for region DIVs, media nodes etc */
+function nextId() {
+    if (ID_COUNTER > 500) {
+        ID_COUNTER = 0;
+    }
+    
+    ID_COUNTER = ID_COUNTER + 1;
+    return ID_COUNTER;
+}
+
+/* OnScreen Log */
+function playLog(logLevel, logClass, logMessage, logToScreen) {
+    if (logLevel <= LOG_LEVEL)
+    {
+        var msg = timestamp() + " " + logClass.toUpperCase() + ": " + logMessage;
+        if (logLevel > 0)
+        {
+            console.log(msg);
+        }
+        
+        if (logToScreen) {
+            //document.getElementById("log").innerHTML = msg;
+            $('.preview-log').html(msg);
+        }
+    }
+}
+
+/* Timestamp Function for Logs */
+function timestamp() {
+    var str = "";
+
+    var currentTime = new Date();
+    var day = currentTime.getDate();
+    var month = currentTime.getMonth() + 1;
+    var year = currentTime.getFullYear();
+    var hours = currentTime.getHours();
+    var minutes = currentTime.getMinutes();
+    var seconds = currentTime.getSeconds();
+
+    if (minutes < 10) {
+        minutes = "0" + minutes
+    }
+    if (seconds < 10) {
+        seconds = "0" + seconds
+    }
+    str += day + "/" + month + "/" + year + " ";
+    str += hours + ":" + minutes + ":" + seconds;
+    return str;
+}
+
+/* Function to handle key presses */
+function keyHandler(event) {
+    var chCode = ('charCode' in event) ? event.charCode : event.keyCode;
+    var letter = String.fromCharCode(chCode);
+
+    if (letter == 'l') {
+        var log = $(".preview-log");
+        if (log.css("display") == 'none') {
+            log.css("display", "block");
+        }
+        else {
+            log.css("display", "none");
+        }
+    }
+    /*else if (letter == 'i') {
+        if ($("#info_"+self.id).css("display") == 'none') {
+            sw = $("#screen_"+self.id).width();
+            sh = $("#screen_"+self.id).height();
+            
+            x = Math.round((sw - 500) / 2);
+            y = Math.round((sh - 400) / 2);
+            
+            if (x > 0) {
+                $("#info_"+self.id).css("left", x);
+            }
+            
+            if (y > 0) {
+                $("#info_"+self.id).css("top", y);
+            }
+            
+            $("#info_"+self.id).css("display", "block");
+        }
+        else {
+            $("#info_"+self.id).css("display", "none");
+        }
+    }*/
+}
+
+function Layout(id, options, preload, layoutPreview) {
+    /* Layout Object */
+    /* Parses a layout and when run runs it in containerName */
+
+    var self = this;
+    self.id = id;
+    self.parseXlf = function(data) {
+        playLog(10, "debug", "Parsing Layout " + self.id, false);
+        self.containerName = "L" + self.id + "-" + nextId();
+        
+        // Set max z-index var
+        self.regionMaxZIndex = 0;
+        
+        /* Create a hidden div to show the layout in */
+        var screen = $('#screen_' + self.id) ;
+        screen.append('<div id="' + self.containerName  + '"></div>');
+        if (layoutPreview === false){
+          screen.append('<a style="position:absolute;top:0;left:0;width:100%;height:100%;" target="_blank" href="'+ screen.parent().parent().attr('data-url') + '"></a>');
+        }
+
+        var layout = $("#" + self.containerName);
+        layout.css("display", "none");
+        layout.css("outline", "red solid thin");
+        
+        /* Calculate the screen size */
+        self.sw = screen.width();
+        self.sh = screen.height();
+        playLog(7, "debug", "Screen is (" + self.sw + "x" + self.sh + ") pixels");
+        
+        /* Find the Layout node in the XLF */
+        self.layoutNode = data;
+        
+        /* Get Layout Size */
+        self.xw = $(self.layoutNode).filter(":first").attr('width');
+        self.xh = $(self.layoutNode).filter(":first").attr('height');
+        self.zIndex = $(self.layoutNode).filter(":first").attr('zindex');
+        playLog(7, "debug", "Layout is (" + self.xw + "x" + self.xh + ") pixels");
+        
+        /* Calculate Scale Factor */
+        self.scaleFactor = Math.min((self.sw/self.xw), (self.sh/self.xh));
+        self.sWidth = Math.round(self.xw * self.scaleFactor);
+        self.sHeight = Math.round(self.xh * self.scaleFactor);
+        self.offsetX = Math.abs(self.sw - self.sWidth) / 2;
+        self.offsetY = Math.abs(self.sh - self.sHeight) / 2;
+        playLog(7, "debug", "Scale Factor is " + self.scaleFactor);
+        playLog(7, "debug", "Render will be (" + self.sWidth + "x" + self.sHeight + ") pixels");
+        playLog(7, "debug", "Offset will be (" + self.offsetX + "," + self.offsetY + ") pixels");
+        
+        /* Scale the Layout Container */
+        layout.css("width", self.sWidth + "px");
+        layout.css("height", self.sHeight + "px");
+        layout.css("position", "absolute");
+        layout.css("left", self.offsetX + "px");
+        layout.css("top", self.offsetY + "px");
+
+        if (self.zIndex != null)
+            layout.css("z-index", self.zIndex);
+        
+        /* Set the layout background */
+        self.bgColour = $(self.layoutNode).filter(":first").attr('bgcolor');
+        self.bgImage = $(self.layoutNode).filter(":first").attr('background');
+        
+        if (!(self.bgImage == "" || self.bgImage == undefined)) {
+            /* Extract the image ID from the filename */
+            self.bgId = self.bgImage.substring(0, self.bgImage.indexOf('.'));
+
+            var tmpUrl = options.layoutBackgroundDownloadUrl.replace(":id", self.id) + '?preview=1';
+            
+            preload.addFiles(tmpUrl + "&width=" + self.sWidth + "&height=" + self.sHeight + "&dynamic&proportional=0");
+            layout.css("background", "url('" + tmpUrl + "&width=" + self.sWidth + "&height=" + self.sHeight + "&dynamic&proportional=0')");
+            layout.css("background-repeat", "no-repeat");
+            layout.css("background-size", self.sWidth + "px " + self.sHeight + "px");
+            layout.css("background-position", "0px 0px");
+        }
+
+        // Set the background color
+        layout.css("background-color", self.bgColour);
+        
+        $(self.layoutNode).find("region").each(function() {
+            playLog(4, "debug", "Creating region " + $(this).attr('id'), false);
+
+            self.regionObjects.push(new Region(self, $(this).attr('id'), this, options, preload));
+        });
+
+        playLog(4, "debug", "Layout " + self.id + " has " + self.regionObjects.length + " regions");
+        self.ready = true;
+        preload.addFiles(options.loaderUrl);
+
+        if (layoutPreview){
+            // previewing only one layout in the layout preview page
+            preload.preloader.on('finish', self.run);
+        } else {
+            // previewing a set of layouts in the campaign preview page
+            self.run();
+        }
+    };
+
+    self.run = function() {
+        playLog(4, "debug", "Running Layout ID " + self.id, false);
+        if (self.ready) {
+            $("#" + self.containerName).css("display", "block");
+            $("#splash_" + self.id).css("display", "none");
+
+            for (var i = 0; i < self.regionObjects.length; i++) {
+                playLog(4, "debug", "Running region " + self.regionObjects[i].id, false);
+                self.regionObjects[i].run();
+            }
+        }
+        else {
+            playLog(4, "error", "Attempted to run Layout ID " + self.id + " before it was ready.", false);
+        }
+    };
+    
+    self.end = function() {
+        /* Ask the layout to gracefully stop running now */
+        for (var i = 0; i < self.regionObjects.length; i++) {
+            self.regionObjects[i].end();
+        }
+    };
+    
+    self.destroy = function() {
+        /* Forcibly remove the layout and destroy this object
+           Layout Object may not be reused after this */
+    };
+
+    self.regionExpired = function() {
+        /* One of the regions on the layout expired
+           Check if all the regions have expired, and if they did
+           end the layout */
+        playLog(5, "debug", "A region expired. Checking if all regions have expired.", false);
+        
+        self.allExpired = true;
+        
+        for (var i = 0; i < self.regionObjects.length; i++) {
+            playLog(4, "debug", "Region " + self.regionObjects[i].id + ": " + self.regionObjects[i].complete, false);
+            if (! self.regionObjects[i].complete) {
+                self.allExpired = false;
+            }
+        }
+        
+        if (self.allExpired) {
+            playLog(4, "debug", "All regions have expired", false);
+            self.end();
+        }
+    };
+    
+    self.regionEnded = function() {
+        /* One of the regions completed it's exit transition
+           Check al the regions have completed exit transitions.
+           If they did, bring on the next layout */
+           
+        playLog(5, "debug", "A region ended. Checking if all regions have ended.", false);
+        
+        self.allEnded = true;
+        
+        for (var i = 0; i < self.regionObjects.length; i++) {
+            playLog(4, "debug", "Region " + self.regionObjects[i].id + ": " + self.regionObjects[i].ended, false);
+            if (! self.regionObjects[i].ended) {
+                self.allEnded = false;
+            }
+        }
+        
+        if (self.allEnded) {
+            playLog(4, "debug", "All regions have ended", false);
+
+            self.stopAllMedia();
+
+            $("#end_" +  self.id).css("display", "block");
+            //$("#" + self.containerName).remove();
+        }
+
+    };
+    
+    self.stopAllMedia = function() {
+        playLog(3, "debug", "Stop all media!");
+
+        for(var i = 0;i < self.regionObjects.length;i++) {
+            var region = self.regionObjects[i];
+            for(var j = 0;j < region.mediaObjects.length;j++) {
+                var media = region.mediaObjects[j];
+                media.stop();
+            }
+        }
+    };
+    
+    self.ready = false;
+    self.id = id;
+    self.regionObjects = [];
+    self.allExpired = false;
+    
+    playLog(3, "debug", "Loading Layout " + self.id , true);
+    $.ajax({
+        "type": "GET",
+        "url": options.getXlfUrl,
+        "success": self.parseXlf
+    }); 
+}
+
+function Region(parent, id, xml, options, preload) {
+    var self = this;
+    self.layout = parent;
+    self.id = id;
+    self.xml = xml;
+    self.mediaObjects = [];
+    self.currentMedia = -1;
+    self.complete = false;
+    self.containerName = "R-" + self.id + "-" + nextId();
+    self.ending = false;
+    self.ended = false;
+    self.oneMedia = false;
+    self.oldMedia = undefined;
+    self.curMedia = undefined;
+    
+    self.finished = function() {
+        self.complete = true;
+        self.layout.regionExpired()
+    };
+    
+    self.exitTransition = function() {
+        /* TODO: Actually implement region exit transitions */
+        $("#" + self.containerName).css("display", "none");
+        self.exitTransitionComplete();
+    };
+    
+    self.end = function() {
+        self.ending = true;
+        /* The Layout has finished running */
+        /* Do any region exit transition then clean up */
+        self.exitTransition();
+    };
+    
+    self.exitTransitionComplete = function() {
+        self.ended = true;
+        self.layout.regionEnded();
+    };
+    
+    self.transitionNodes = function(oldMedia, newMedia) {
+        /* TODO: Actually support the transition */
+        
+        if (oldMedia == newMedia) {
+            return;
+        }
+        
+        if (oldMedia) {
+            oldMedia.stop();
+        }
+
+        // If the region has finished, don't run/show media
+        if(self.ended) {
+            return;
+        }
+        
+        newMedia.run();
+        
+        $("#" + newMedia.containerName).css("display", "block");
+    };
+    
+    self.nextMedia = function() {
+        /* The current media has finished running */
+        /* Show the next item */
+        
+        if (self.ended) {
+            return;
+        }
+        
+        if (self.curMedia) {
+            playLog(8, "debug", "nextMedia -> Old: " + self.curMedia.id);
+            self.oldMedia = self.curMedia;
+        }
+        else {
+            self.oldMedia = undefined;
+        }
+        
+        self.currentMedia = self.currentMedia + 1;
+
+        if (self.currentMedia >= self.mediaObjects.length) {
+            self.finished();
+            self.currentMedia = 0;
+        }
+        
+        playLog(8, "debug", "nextMedia -> Next up is media " + (self.currentMedia + 1) + " of " + self.mediaObjects.length);
+        
+        self.curMedia = self.mediaObjects[self.currentMedia];
+        
+        if (self.curMedia != undefined)
+            playLog(8, "debug", "nextMedia -> New: " + self.curMedia.id);
+        
+        /* Do the transition */
+        self.transitionNodes(self.oldMedia, self.curMedia);
+    };
+    
+    self.run = function() {
+        self.nextMedia();
+    };
+    
+    self.sWidth = $(xml).attr("width") * self.layout.scaleFactor;
+    self.sHeight = $(xml).attr("height") * self.layout.scaleFactor;
+    self.offsetX = $(xml).attr("left") * self.layout.scaleFactor;
+    self.offsetY = $(xml).attr("top") * self.layout.scaleFactor;
+    self.zIndex = $(xml).attr("zindex");
+
+    $("#" + self.layout.containerName).append('<div id="' + self.containerName + '"></div>');
+    
+    /* Scale the Layout Container */
+    $("#" + self.containerName).css("width", self.sWidth + "px");
+    $("#" + self.containerName).css("height", self.sHeight + "px");
+    $("#" + self.containerName).css("position", "absolute");
+    $("#" + self.containerName).css("left", self.offsetX + "px");
+    $("#" + self.containerName).css("top", self.offsetY + "px");
+
+    if (self.zIndex != null) {
+        $("#" + self.containerName).css("z-index", self.zIndex);
+
+        // Set new layout max z-index value
+        if(parseInt(self.zIndex) > self.layout.regionMaxZIndex) {
+            self.layout.regionMaxZIndex = parseInt(self.zIndex);
+        }
+    }
+
+    playLog(4, "debug", "Created region " + self.id, false);
+    playLog(7, "debug", "Render will be (" + self.sWidth + "x" + self.sHeight + ") pixels");
+    playLog(7, "debug", "Offset will be (" + self.offsetX + "," + self.offsetY + ") pixels");
+    
+    $(self.xml).find("media").each(function() { 
+        playLog(5, "debug", "Creating media " + $(this).attr('id'), false);
+                                                self.mediaObjects.push(new media(self, $(this).attr('id'), this, options, preload));
+                                              });
+    
+    // If the regions does not have any media change its background to transparent red
+    if ($(self.xml).find("media").length == 0) {
+        $self = $("#" + self.containerName);
+        
+        messageSize = (self.sWidth > self.sHeight ) ? self.sHeight : self.sWidth;
+        
+        $self.css("background-color", 'rgba(255, 0, 0, 0.25)');
+        $self.append('<div class="empty-message" id="empty_' + self.containerName + '"></div>');
+        
+        $message = $("#empty_" + self.containerName);
+        $message.append('<span class="empty-icon fa fa-exclamation-triangle" style="font-size:' + messageSize/4 + 'px"></span>');
+        $message.append('<span class="empty-icon">' + emptyRegionMessage + '</span>');
+    }     
+                                              
+    playLog(4, "debug", "Region " + self.id + " has " + self.mediaObjects.length + " media items");
+}
+
+function media(parent, id, xml, options, preload) {
+    var self = this;
+    self.region = parent;
+    self.xml = xml;
+    self.id = id;
+    self.containerName = "M-" + self.id + "-" + nextId();
+    self.iframeName = self.containerName + "-iframe";
+    self.mediaType = $(self.xml).attr('type');
+    self.render = $(self.xml).attr('render');
+    self.attachedAudio = false;
+
+    if (self.render == undefined)
+        self.render = "module";
+    
+    self.run = function() {
+
+        if(self.iframe != undefined) {
+            $("#" + self.containerName).empty().append(self.iframe);
+        }
+
+        playLog(5, "debug", "Running media " + self.id + " for " + self.duration + " seconds");
+               
+        if (self.mediaType == "video") {
+            $("#" + self.containerName + "-vid").get(0).play();
+        }
+        
+        if(self.mediaType == "audio") {
+            $("#" + self.containerName + "-aud").get(0).play();
+        }
+
+        if(self.attachedAudio) {
+            $("#" + self.containerName + "-attached-aud").get(0).play();
+        }
+        
+        if (self.duration == 0) {
+            if (self.mediaType == "video") {
+                $("#" + self.containerName + "-vid").bind('ended', self.region.nextMedia);
+                $("#" + self.containerName + "-vid").bind('error', self.region.nextMedia);
+                $("#" + self.containerName + "-vid").bind('click', self.region.nextMedia);
+            } else if(self.mediaType == "audio") {
+                $("#" + self.containerName + "-aud").bind('ended', self.region.nextMedia);
+                $("#" + self.containerName + "-aud").bind('error', self.region.nextMedia);
+                $("#" + self.containerName + "-aud").bind('click', self.region.nextMedia);
+            }
+            else {
+                self.duration = 3;
+                setTimeout(self.region.nextMedia, self.duration * 1000);
+            }
+        }
+        else {
+            setTimeout(self.region.nextMedia, self.duration * 1000);
+        }
+    };
+    
+    self.stop = function() {
+        playLog(5, "debug", "Stop media " + self.id);
+
+        // Hide container
+        $("#" + self.containerName).css("display", "none");
+
+        // Stop video
+        if(self.mediaType == "video") {
+            $("#" + self.containerName + "-vid").get(0).pause();
+            $("#" + self.containerName + "-vid").get(0).currentTime = 0;
+        }
+
+        // Stop audio
+        if(self.mediaType == "audio") {
+            $("#" + self.containerName + "-aud").get(0).pause();
+            $("#" + self.containerName + "-aud").get(0).currentTime = 0;
+        }
+
+        // Stop attached audio
+        if(self.attachedAudio) {
+            $("#" + self.containerName + "-attached-aud").get(0).pause();
+            $("#" + self.containerName + "-attached-aud").get(0).currentTime = 0;
+        }
+    };
+    
+    /* Build Media Options */
+    self.duration = $(self.xml).attr('duration');
+    self.lkid = $(self.xml).attr('lkid');
+    self.options = [];
+    
+    $(self.xml).find('options').children().each(function() {
+        playLog(9, "debug", "Option " + this.nodeName.toLowerCase() + " -> " + $(this).text(), false);
+        self.options[this.nodeName.toLowerCase()] = $(this).text();
+    });
+    
+    // Show in fullscreen?
+    if(self.options.showfullscreen === "1") {
+        // Set dimensions as the layout ones
+        self.divWidth = self.region.layout.sWidth;
+        self.divHeight = self.region.layout.sHeight;
+    } else {
+        // Set dimensions as the region ones
+        self.divWidth = self.region.sWidth;
+        self.divHeight = self.region.sHeight;
+    }
+
+    $("#" + self.region.containerName).append('<div id="' + self.containerName + '"></div>');
+
+    /* Scale the Content Container */
+    var media = $("#" + self.containerName);
+    media.css("display", "none");
+    media.css("width", self.divWidth + "px");
+    media.css("height", self.divHeight + "px");
+    media.css("position", "absolute");
+    media.css("background-size", "contain");
+    media.css("background-repeat", "no-repeat");
+    media.css("background-position", "center");
+
+    // If fullscreen, set position offset to origin ( negative of the region offset ) and set z-index over other elements
+    if(self.options.showfullscreen === "1") {
+        media.css("left", -self.region.offsetX + "px");
+        media.css("top", -self.region.offsetY + "px");
+        media.css("z-index", self.region.layout.regionMaxZIndex + 1);
+    }
+
+    var tmpUrl = options.getResourceUrl.replace(":regionId", self.region.id).replace(":id", self.id) + '?preview=true&raw=true&scale_override=' + self.region.layout.scaleFactor;
+    
+    if (self.render == "html" || self.mediaType == "ticker") {
+        self.iframe = $('<iframe scrolling="no" id="' + self.iframeName + '" src="' + tmpUrl + '&width=' + self.divWidth + '&height=' + self.divHeight + '" width="' + self.divWidth + 'px" height="' + self.divHeight + 'px" style="border:0;"></iframe>');
+        /* Check if the ticker duration is based on the number of items in the feed */
+        if(self.options['durationisperitem'] == '1' || self.options['durationisperpage'] == '1') {
+            var regex =  new RegExp("<!-- NUMITEMS=(.*?) -->"); 
+            jQuery.ajax({
+                url: tmpUrl + '&width=' + self.divWidth + '&height=' + self.divHeight,
+                success: function(html) {
+                  var res = regex.exec(html);
+                  if (res != null) {
+                    /* The ticker is duration per item, so multiply the duration
+                       by the number of items from the feed */
+                    self.duration = parseInt(self.duration) * parseInt(res[1]);
+                  }
+                },
+                async:false
+            });
+        }
+    }
+    else if (self.mediaType == "image") {
+        preload.addFiles(tmpUrl);
+        media.css("background-image", "url('" + tmpUrl + "')");
+        if (self.options['scaletype'] == 'stretch')
+            media.css("background-size", "cover");
+        else {
+            // Center scale type, do we have align or valign?
+            var align = (self.options['align'] == "") ? "center" : self.options['align'];
+            var valign = (self.options['valign'] == "" || self.options['valign'] == "middle") ? "center" : self.options['valign'];
+            media.css("background-position", align + " " + valign);
+        }
+    }
+    else if (self.mediaType == "text" || self.mediaType == "datasetview" || self.mediaType == "webpage" || self.mediaType == "embedded") {
+        self.iframe = $('<iframe scrolling="no" id="' + self.iframeName + '" src="' + tmpUrl + '&width=' + self.divWidth + '&height=' + self.divHeight + '" width="' + self.divWidth + 'px" height="' + self.divHeight + 'px" style="border:0;"></iframe>');
+    }
+    else if (self.mediaType == "video") {
+        preload.addFiles(tmpUrl);
+        self.iframe = $('<video id="' + self.containerName + '-vid" preload="auto" ' + ((self.options["mute"] == 1) ? 'muted' : '') + ' ' + ((self.options["loop"] == 1) ? 'loop' : '') + '><source src="' + tmpUrl + '">Unsupported Video</video>');
+        
+        // Stretch video?
+        if(self.options['scaletype'] == 'stretch') {
+            self.iframe.css("object-fit", "fill");
+        }
+    }
+     else if(self.mediaType == "audio") {
+        preload.addFiles(tmpUrl);
+        media.append('<audio id="' + self.containerName + '-aud" preload="auto" ' + ((self.options["loop"] == 1) ? 'loop' : '') + ' ' + ((self.options["mute"] == 1) ? 'muted' : '') + '><source src="' + tmpUrl + '">Unsupported Audio</audio>');
+    }
+    else if (self.mediaType == "flash") {
+        var embedCode = '<OBJECT classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0" WIDTH="100%" HEIGHT="100%" id="Yourfilename" ALIGN="">';
+        embedCode = embedCode + '<PARAM NAME=movie VALUE="' + tmpUrl + '"> <PARAM NAME=quality VALUE=high> <param name="wmode" value="transparent"> <EMBED src="' + tmpUrl + '" quality="high" wmode="transparent" WIDTH="100%" HEIGHT="100%" NAME="Yourfilename" ALIGN="" TYPE="application/x-shockwave-flash" PLUGINSPAGE="http://www.macromedia.com/go/getflashplayer"></EMBED> </OBJECT>';
+        preload.addFiles(tmpUrl);
+        self.iframe = $(embedCode);
+    }
+    else {
+        media.css("outline", "red solid thin");
+    }
+    
+    // Attached audio
+    if($(self.xml).find('audio').length > 0) {
+        var $audioObj = $(self.xml).find('audio');
+        var $audioUri = $audioObj.find('uri');
+        var mediaId = $audioUri.attr('mediaid');
+
+        // Get media url and preload
+        var tmpUrl2 = options.libraryDownloadUrl.replace(":id", mediaId);
+
+        //preload.getFile(tmpUrl2);
+        if(preload.preloader.filesLoadedMap[tmpUrl2] != undefined) {
+            preload.addFiles(tmpUrl2);
+        }
+
+        // Set volume if defined
+        if($audioUri.attr('volume') != undefined) {
+            var volume = $audioUri.attr('volume') / 100;
+            $audioObj.get(0).volume = volume;
+        }
+        
+        // Loop
+        $audioObj.prop('loop', $audioUri.get(0).getAttribute('loop') == "1");
+        $audioObj.attr('id', self.containerName + '-attached-aud');
+        //$audioUri.remove();
+        $audioObj.append('<source src="' + tmpUrl2 + '">Unsupported Audio');
+
+        media.append($audioObj);
+        self.attachedAudio = true;
+    }
+    
+    playLog(5, "debug", "Created media " + self.id)
+}
+

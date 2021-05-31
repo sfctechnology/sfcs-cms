@@ -944,7 +944,7 @@ class Schedule extends Base
         $schedule->recurrenceDetail = $this->getSanitizer()->getInt('recurrenceDetail');
         $recurrenceRepeatsOn = $this->getSanitizer()->getIntArray('recurrenceRepeatsOn');
         $schedule->recurrenceRepeatsOn = (empty($recurrenceRepeatsOn)) ? null : implode(',', $recurrenceRepeatsOn);
-        $schedule->recurrenceMonthlyRepeatsOn = $this->getSanitizer()->getInt('recurrenceMonthlyRepeatsOn', 0);
+        $schedule->recurrenceMonthlyRepeatsOn = $this->getSanitizer()->getInt('recurrenceMonthlyRepeatsOn');
 
         foreach ($this->getSanitizer()->getIntArray('displayGroupIds') as $displayGroupId) {
             $schedule->assignDisplayGroup($this->displayGroupFactory->getById($displayGroupId));
@@ -997,9 +997,6 @@ class Schedule extends Base
 
         // Ready to do the add
         $schedule->setDisplayFactory($this->displayFactory);
-        if ($schedule->campaignId != null) {
-            $schedule->setCampaignFactory($this->campaignFactory);
-        }
         $schedule->save();
 
         $this->getLog()->debug('Add Schedule Reminder');
@@ -1373,7 +1370,7 @@ class Schedule extends Base
         $schedule->recurrenceDetail = $this->getSanitizer()->getInt('recurrenceDetail');
         $recurrenceRepeatsOn = $this->getSanitizer()->getIntArray('recurrenceRepeatsOn');
         $schedule->recurrenceRepeatsOn = (empty($recurrenceRepeatsOn)) ? null : implode(',', $recurrenceRepeatsOn);
-        $schedule->recurrenceMonthlyRepeatsOn = $this->getSanitizer()->getInt('recurrenceMonthlyRepeatsOn', 0);
+        $schedule->recurrenceMonthlyRepeatsOn = $this->getSanitizer()->getInt('recurrenceMonthlyRepeatsOn');
         $schedule->displayGroups = [];
         $schedule->shareOfVoice = ($schedule->eventTypeId == 4) ? $this->getSanitizer()->getInt('shareOfVoice') : null;
         $schedule->isGeoAware = $this->getSanitizer()->getCheckbox('isGeoAware');
@@ -1446,14 +1443,11 @@ class Schedule extends Base
             $this->getLog()->debug('Processed start is: FromDt=' . $fromDt->toRssString());
         } else {
             // This is an always day part, which cannot be recurring, make sure we clear the recurring type if it has been set
-            $schedule->recurrenceType = null;
+            $schedule->recurrenceType = '';
         }
 
         // Ready to do the add
         $schedule->setDisplayFactory($this->displayFactory);
-        if ($schedule->campaignId != null) {
-            $schedule->setCampaignFactory($this->campaignFactory);
-        }
         $schedule->save();
 
         // Get form reminders
@@ -1683,21 +1677,13 @@ class Schedule extends Base
             }
         }
 
-        $isLayoutSpecific = -1;
-        if ($from == 'Campaign') {
-            $isLayoutSpecific = 0;
-        } else if ($from == 'Layout') {
-            $isLayoutSpecific = 1;
-        }
-
         $this->getState()->template = 'schedule-form-now';
         $this->getState()->setData([
-            'eventTypeId' => (($from == 'Campaign') ? \Xibo\Entity\Schedule::$CAMPAIGN_EVENT : \Xibo\Entity\Schedule::$LAYOUT_EVENT),
-            'campaignId' => (($from == 'Campaign' || $from == 'Layout') ? $id : 0),
+            'campaignId' => (($from == 'Campaign') ? $id : 0),
             'displayGroupId' => (($from == 'DisplayGroup') ? $id : 0),
             'displays' => $displays,
             'displayGroups' => $groups,
-            'campaigns' => $this->campaignFactory->query(null, ['isLayoutSpecific' => $isLayoutSpecific]),
+            'campaigns' => $this->campaignFactory->query(null, ['isLayoutSpecific' => -1]),
             'alwaysDayPart' => $this->dayPartFactory->getAlwaysDayPart(),
             'customDayPart' => $this->dayPartFactory->getCustomDayPart(),
             'help' => $this->getHelp()->link('Schedule', 'ScheduleNow')

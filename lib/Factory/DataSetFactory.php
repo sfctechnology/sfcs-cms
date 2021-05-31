@@ -118,13 +118,12 @@ class DataSetFactory extends BaseFactory
     /**
      * Get DataSets by ID
      * @param $dataSetId
-     * @param int $disableUserCheck
      * @return DataSet
      * @throws NotFoundException
      */
-    public function getById($dataSetId, $disableUserCheck = 1)
+    public function getById($dataSetId)
     {
-        $dataSets = $this->query(null, ['disableUserCheck' => $disableUserCheck, 'dataSetId' => $dataSetId]);
+        $dataSets = $this->query(null, ['disableUserCheck' => 1, 'dataSetId' => $dataSetId]);
 
         if (count($dataSets) <= 0)
             throw new NotFoundException();
@@ -436,9 +435,6 @@ class DataSetFactory extends BaseFactory
                         // use the md5
                         $md5 = md5($request->getBody());
 
-                        // Rewind so we can use it again
-                        $request->getBody()->rewind();
-
                         if ($cacheControlKeyValue === $md5) {
                             $this->getLog()->debug('Skipping due to MD5');
                             continue;
@@ -455,21 +451,12 @@ class DataSetFactory extends BaseFactory
                     $this->pool->saveDeferred($cacheControlKey);
                 }
 
+                // TODO: we should probably do some checking to ensure we have JSON back
                 if ($dataSet->sourceId === 1) {
-                    // Make sure we have JSON in the response
-                    $body = $request->getBody()->getContents();
-
-                    try {
-                        $json = \GuzzleHttp\json_decode($body);
-                    } catch (\GuzzleHttp\Exception\InvalidArgumentException $invalidArgumentException) {
-                        $this->getLog()->debug('JSON decode error: ' . $invalidArgumentException->getMessage());
-                        throw new InvalidArgumentException(__('Unable to get Data for %s because the response was not valid JSON.', $dataSet->dataSet), 'url');
-                    }
-
-                    $result->entries[] = $json;
+                    $result->entries[] = json_decode($request->getBody());
                     $result->number = $result->number + 1;
                 } else {
-                    $csv = $request->getBody()->getContents();
+                    $csv = $request->getBody();
                     $array = array_map("str_getcsv", explode("\n", $csv));
 
                     if ($dataSet->ignoreFirstRow == 1) {
@@ -624,8 +611,6 @@ class DataSetFactory extends BaseFactory
      * @return array|\stdClass The Data hold in the configured dataRoot
      */
     private function getDataRootFromResult($dataRoot, $result) {
-        $this->getLog()->debug('Getting ' . $dataRoot . 'from result.');
-
         if (empty($dataRoot)) {
             return $result;
         }

@@ -208,12 +208,7 @@ class Tag extends Base
             /* @var \Xibo\Entity\Tag $tag */
 
             if ($this->isApi()) {
-                $tag->excludeProperty('layouts');
-                $tag->excludeProperty('playlists');
-                $tag->excludeProperty('campaigns');
-                $tag->excludeProperty('medias');
-                $tag->excludeProperty('displayGroups');
-                continue;
+                break;
             }
 
             $tag->includeProperty('buttons');
@@ -324,7 +319,7 @@ class Tag extends Base
             $tag->options = null;
         }
 
-        $tag->save();
+        $tag->save(['validate' => true]);
 
         // Return
         $this->getState()->hydrate([
@@ -456,7 +451,7 @@ class Tag extends Base
             }
         }
 
-        $tag->save();
+        $tag->save(['validate' => true]);
 
         // Return
         $this->getState()->hydrate([

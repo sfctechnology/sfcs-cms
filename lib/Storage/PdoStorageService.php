@@ -184,16 +184,6 @@ class PdoStorageService implements StorageServiceInterface
                 $this->close($connection);
                 return $this->exists($sql, $params, $connection, false);
             }
-        } catch (\ErrorException $exception) {
-            // Super odd we'd get one of these
-            // we're trying to catch "Error while sending QUERY packet."
-            if (!$reconnect) {
-                throw $exception;
-            }
-
-            // Try again
-            $this->close($connection);
-            return $this->exists($sql, $params, $connection, false);
         }
     }
 
@@ -231,16 +221,6 @@ class PdoStorageService implements StorageServiceInterface
                 $this->close($connection);
                 return $this->insert($sql, $params, $connection, false);
             }
-        } catch (\ErrorException $exception) {
-            // Super odd we'd get one of these
-            // we're trying to catch "Error while sending QUERY packet."
-            if (!$reconnect) {
-                throw $exception;
-            }
-
-            // Try again
-            $this->close($connection);
-            return $this->insert($sql, $params, $connection, false);
         }
     }
 
@@ -280,16 +260,6 @@ class PdoStorageService implements StorageServiceInterface
                 $this->close($connection);
                 return $this->update($sql, $params, $connection, false);
             }
-        } catch (\ErrorException $exception) {
-            // Super odd we'd get one of these
-            // we're trying to catch "Error while sending QUERY packet."
-            if (!$reconnect) {
-                throw $exception;
-            }
-
-            // Try again
-            $this->close($connection);
-            return $this->update($sql, $params, $connection, false);
         }
 	}
 
@@ -324,16 +294,6 @@ class PdoStorageService implements StorageServiceInterface
                 $this->close($connection);
                 return $this->select($sql, $params, $connection, false);
             }
-        } catch (\ErrorException $exception) {
-            // Super odd we'd get one of these
-            // we're trying to catch "Error while sending QUERY packet."
-            if (!$reconnect) {
-                throw $exception;
-            }
-
-            // Try again
-            $this->close($connection);
-            return $this->select($sql, $params, $connection, false);
         }
 	}
 
@@ -365,18 +325,8 @@ class PdoStorageService implements StorageServiceInterface
                 throw $PDOException;
             } else {
                 $this->close($connection);
-                $this->isolated($sql, $params, $connection, false);
+                return $this->isolated($sql, $params, $connection, false);
             }
-        } catch (\ErrorException $exception) {
-            // Super odd we'd get one of these
-            // we're trying to catch "Error while sending QUERY packet."
-            if (!$reconnect) {
-                throw $exception;
-            }
-
-            // Try again
-            $this->close($connection);
-            $this->isolated($sql, $params, $connection, false);
         }
     }
 

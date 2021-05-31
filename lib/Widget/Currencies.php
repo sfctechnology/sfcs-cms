@@ -382,7 +382,7 @@ class Currencies extends AlphaVantageBase
         }
 
         // Parse items out into an array
-        $items = array_map('trim', explode(',', $items));
+        $items = explode(',', $items);
         
         // Get current item template
         $itemTemplate = null;
@@ -403,6 +403,20 @@ class Currencies extends AlphaVantageBase
         $data = [];
         $priorDay = [];
 
+        // Do we need to get the data for percentage change?
+        if ($percentageChangeRequested && !$reverseConversion) {
+            try {
+                // Get the prior day
+                $priorDay = $this->getPriorDay($base, $items);
+
+                $this->getLog()->debug('Percentage change requested, prior day is ' . var_export($priorDay, true));
+
+            } catch (XiboException $requestException) {
+                $this->getLog()->error('Problem getting percentage change currency information. E = ' . $requestException->getMessage());
+                $this->getLog()->debug($requestException->getTraceAsString());
+            }
+        }
+
         // Each item we want is a call to the results API
         try {
             foreach ($items as $currency) {
@@ -412,6 +426,12 @@ class Currencies extends AlphaVantageBase
                 // Do we need to reverse the from/to currency for this comparison?
                 if ($reverseConversion) {
                     $result = $this->getCurrencyExchangeRate($currency, $base);
+
+                    // We need to get the prior day for this pair only (reversed)
+                    $priorDay = $this->getPriorDay($currency, $base);
+
+                    $this->getLog()->debug('Percentage change requested, prior day is ' . var_export($priorDay, true));
+
                 } else {
                     $result = $this->getCurrencyExchangeRate($base, $currency);
                 }
@@ -436,20 +456,8 @@ class Currencies extends AlphaVantageBase
                 $parsedResult['Currency'] = $parsedResult['FromCurrency'] . '/' . $parsedResult['ToCurrency'];
 
                 // work out the change when compared to the previous day
-                if ($percentageChangeRequested) {
-                    // We need to get the prior day for this pair only (reversed)
-                    $priorDay = $reverseConversion
-                        ? $this->getPriorDay($currency, $base)
-                        : $this->getPriorDay($base, $currency);
-
-                    $this->getLog()->debug('Percentage change requested, prior day is '
-                        . var_export($priorDay['Time Series FX (Daily)'], true));
-
-                    $priorDay = count($priorDay['Time Series FX (Daily)']) < 2
-                        ? ['1. open' => 1]
-                        : array_values($priorDay['Time Series FX (Daily)'])[1];
-
-                    $parsedResult['YesterdayTradePriceOnly'] = $priorDay['1. open'];
+                if ($percentageChangeRequested && isset($priorDay[$parsedResult['ToName']]) && is_numeric($priorDay[$parsedResult['ToName']])) {
+                    $parsedResult['YesterdayTradePriceOnly'] = $priorDay[$parsedResult['ToName']];
                     $parsedResult['Change'] = $parsedResult['RawLastTradePriceOnly'] - $parsedResult['YesterdayTradePriceOnly'];
                 } else {
                     $parsedResult['YesterdayTradePriceOnly'] = 0;

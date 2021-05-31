@@ -20,9 +20,7 @@
         let buttonText = form.find('#setFullScreenButton').html();
 
         // Replace button text tags
-        if(buttonText) {
-            form.find('#setFullScreenButton').html(buttonText.replace('[width]', layout.width).replace('[height]', layout.height));
-        }
+        form.find('#setFullScreenButton').html(buttonText.replace('[width]', layout.width).replace('[height]', layout.height));
 
         // Handle click action
         form.find('#setFullScreenButton').click(() => {

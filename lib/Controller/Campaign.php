@@ -181,8 +181,7 @@ class Campaign extends Base
             'tags' => $this->getSanitizer()->getString('tags'),
             'hasLayouts' => $this->getSanitizer()->getInt('hasLayouts'),
             'isLayoutSpecific' => $this->getSanitizer()->getInt('isLayoutSpecific'),
-            'retired' => $this->getSanitizer()->getInt('retired'),
-            'layoutId' => $this->getSanitizer()->getInt('layoutId')
+            'retired' => $this->getSanitizer()->getInt('retired')
         ];
 
         $options = [

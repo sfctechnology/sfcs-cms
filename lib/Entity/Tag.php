@@ -411,7 +411,7 @@ class Tag implements \JsonSerializable
     {
         // Default options
         $options = array_merge([
-            'validate' => true
+            'validate' => false
         ], $options);
 
         if ($options['validate']) {
@@ -767,6 +767,11 @@ class Tag implements \JsonSerializable
                     'tags');
             }
         }
+
+        if(isset($this->value) && !isset($this->options)) {
+            throw new InvalidArgumentException(sprintf(__('Provided Tag %s, does not have defined option values', $this->tag)), 'tags');
+        }
+
     }
 
     /**

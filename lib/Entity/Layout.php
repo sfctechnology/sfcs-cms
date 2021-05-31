@@ -1,7 +1,7 @@
 <?php
-/**
- * Copyright (C) 2021 Xibo Signage Ltd
- *
+/*
+ * Xibo - Digital Signage - http://www.xibo.org.uk
+ * Copyright (C) 2015 Spring Signage Ltd
  *
  * This file is part of Xibo.
  *
@@ -23,7 +23,6 @@ namespace Xibo\Entity;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Xibo\Event\LayoutBuildEvent;
 use Xibo\Event\LayoutBuildRegionEvent;
-use Xibo\Exception\AccessDeniedException;
 use Xibo\Exception\DuplicateEntityException;
 use Xibo\Exception\InvalidArgumentException;
 use Xibo\Exception\NotFoundException;
@@ -617,8 +616,7 @@ class Layout implements \JsonSerializable
             'setBuildRequired' => true,
             'validate' => true,
             'notify' => true,
-            'audit' => true,
-            'import' => false
+            'audit' => true
         ], $options);
 
         if ($options['validate'])
@@ -644,7 +642,7 @@ class Layout implements \JsonSerializable
         } else if (($this->hash() != $this->hash && $options['saveLayout']) || $options['setBuildRequired']) {
             $this->update($options);
 
-            if ($options['audit'] && count($this->getChangedProperties()) > 0) {
+            if ($options['audit']) {
                 $change = $this->getChangedProperties();
                 $change['campaignId'][] = $this->campaignId;
 
@@ -675,16 +673,15 @@ class Layout implements \JsonSerializable
         if ($options['saveTags']) {
             $this->getLog()->debug('Saving tags on ' . $this);
 
-            // if we are saving new Layout after import, we need to go through all Tags on the Layout
-            // double check if any of them match Tags added from imported Playlists or Media
-            // otherwise we would end up with duplicated Tags
-            if ($options['import']) {
-                $importedTags = $this->tags;
-                $this->tags = [];
-                foreach ($importedTags as $importedTag) {
-                    $this->tags[] = $this->tagFactory->tagFromString(
-                        $importedTag->tag . (!empty($importedTag->value) ? '|' . $importedTag->value : '')
-                    );
+            // Save the tags
+            if (is_array($this->tags)) {
+                foreach ($this->tags as $tag) {
+                    /* @var Tag $tag */
+
+                    $this->getLog()->debug('Assigning tag ' . $tag->tag);
+
+                    $tag->assignLayout($this->layoutId);
+                    $tag->save();
                 }
             }
 
@@ -695,18 +692,6 @@ class Layout implements \JsonSerializable
                     $this->getLog()->debug('Unassigning tag ' . $tag->tag);
 
                     $tag->unassignLayout($this->layoutId);
-                    $tag->save();
-                }
-            }
-
-            // Save the tags
-            if (is_array($this->tags)) {
-                foreach ($this->tags as $tag) {
-                    /* @var Tag $tag */
-
-                    $this->getLog()->debug('Assigning tag ' . $tag->tag);
-
-                    $tag->assignLayout($this->layoutId);
                     $tag->save();
                 }
             }
@@ -1131,10 +1116,7 @@ class Layout implements \JsonSerializable
                 // Is this Widget one that does not have a duration of its own?
                 // Assuming we have at least 1 region with a set duration, then we ought to
                 // Reset to the minimum duration
-                if ($widget->useDuration == 0
-                    && $countWidgets <= 1
-                    && $regionLoop == 0
-                    && $widget->type != 'video'
+                if ($widget->useDuration == 0 && $countWidgets <= 1 && $regionLoop == 0 && $widget->type != 'video'
                     && $layoutCountRegionsWithDuration >= 1
                 ) {
                     // Make sure this Widget expires immediately so that the other Regions can be the leaders when
@@ -1161,8 +1143,7 @@ class Layout implements \JsonSerializable
                 $mediaNode->setAttribute('render', ($renderAs == '') ? 'native' : $renderAs);
 
                 // Set the duration according to whether we are using widget duration or not
-                $isEndDetectVideoWidget = ($widget->type === 'video' && $widget->useDuration === 0);
-                $mediaNode->setAttribute('duration', ($isEndDetectVideoWidget ? 0 : $widgetDuration));
+                $mediaNode->setAttribute('duration', $widgetDuration);
                 $mediaNode->setAttribute('useDuration', $widget->useDuration);
 
                 // Set a from/to date
@@ -1293,9 +1274,6 @@ class Layout implements \JsonSerializable
                     $mediaNode->setAttribute('fileId', $media->mediaId);
                 }
 
-                // Tracker whether or not we have an updateInterval configured.
-                $hasUpdatedInterval = false;
-
                 foreach ($widget->widgetOptions as $option) {
 
                     if (trim($option->value) === '')
@@ -1315,20 +1293,6 @@ class Layout implements \JsonSerializable
                         $optionNode = $document->createElement($option->option, $option->value);
                         $optionsNode->appendChild($optionNode);
                     }
-
-                    if ($option->option === 'updateInterval') {
-                        $hasUpdatedInterval = true;
-                    }
-                }
-
-                // If we do not have an update interval, should we set a default one?
-                // https://github.com/xibosignage/xibo/issues/2319
-                if (!$hasUpdatedInterval && $module->getModule()->regionSpecific == 1) {
-                    // For the moment we will assume that all update intervals are the same as the cache duration
-                    // remembering that the cache duration is in seconds and the updateInterval in minutes.
-                    $optionsNode->appendChild(
-                        $document->createElement('updateInterval', $module->getCacheDuration() / 60)
-                    );
                 }
 
                 // Handle associated audio
@@ -1372,7 +1336,7 @@ class Layout implements \JsonSerializable
 
         foreach ($this->tags as $tag) {
             /* @var Tag $tag */
-            $tagNode = $document->createElement('tag', $tag->tag . (!empty($tag->value) ? '|' . $tag->value : ''));
+            $tagNode = $document->createElement('tag', $tag->tag);
             $tagsNode->appendChild($tagNode);
         }
 
@@ -1401,9 +1365,6 @@ class Layout implements \JsonSerializable
         $options = array_merge([
             'includeData' => false
         ], $options);
-
-        /** @var User $user */
-        $user = $options['user'];
 
         // Load the complete layout
         $this->load();
@@ -1436,11 +1397,7 @@ class Layout implements \JsonSerializable
         $libraryLocation = $this->config->getSetting('LIBRARY_LOCATION');
         $mappings = [];
 
-        foreach ($this->mediaFactory->getByLayoutId($this->layoutId, 1, 1) as $media) {
-                if (!$user->checkViewable($media)) {
-                    throw new AccessDeniedException();
-                }
-
+        foreach ($this->mediaFactory->getByLayoutId($this->layoutId, 1) as $media) {
             /* @var Media $media */
             $zip->addFile($libraryLocation . $media->storedAs, 'library/' . $media->fileName);
 
@@ -1457,7 +1414,7 @@ class Layout implements \JsonSerializable
 
         // Add the background image
         if ($this->backgroundImageId != 0) {
-            $media = $this->mediaFactory->getById($this->backgroundImageId, 0);
+            $media = $this->mediaFactory->getById($this->backgroundImageId);
             $zip->addFile($libraryLocation . $media->storedAs, 'library/' . $media->fileName);
 
             $mappings[] = [
@@ -1528,7 +1485,7 @@ class Layout implements \JsonSerializable
                         continue;
 
                     // Export the structure for this dataSet
-                    $dataSet = $dataSetFactory->getById($dataSetId, 0);
+                    $dataSet = $dataSetFactory->getById($dataSetId);
                     $dataSet->load();
 
                     // Are we also looking to export the data?
@@ -1545,13 +1502,8 @@ class Layout implements \JsonSerializable
                 foreach ($playlistIds as $playlistId) {
                     $count = 1;
                     $playlist = $this->playlistFactory->getById($playlistId);
-
-                    // include Widgets only for non dynamic Playlists #2392
-                    $playlist->load(['loadWidgets' => ($playlist->isDynamic) ? false : true]);
-                    if ($playlist->isDynamic === 0) {
-                        $playlist->expandWidgets(0, false);
-                    }
-
+                    $playlist->load();
+                    $playlist->expandWidgets(0, false);
                     $playlistDefinitions[$playlist->playlistId] = $playlist;
 
                     // this is a recursive function, we are adding Playlist definitions, Playlist mappings and DataSets existing on the nested Playlist.
@@ -1597,13 +1549,12 @@ class Layout implements \JsonSerializable
             'notify' => true,
             'collectNow' => true,
             'exceptionOnError' => false,
-            'exceptionOnEmptyRegion' => true,
-            'publishing' => false
+            'exceptionOnEmptyRegion' => true
         ], $options);
 
         $path = $this->getCachePath();
 
-        if ($this->status == 3 || !file_exists($path) || ($options['publishing'] && $this->status == 5) ) {
+        if ($this->status == 3 || !file_exists($path)) {
 
             $this->getLog()->debug('XLF needs building for Layout ' . $this->layoutId);
 
@@ -1666,12 +1617,12 @@ class Layout implements \JsonSerializable
                     throw new InvalidArgumentException(__('There is an error with this Layout: %s',
                         implode(',', $this->getStatusMessage())), 'status');
                 }
-            }
 
-            // If we have an empty region and we've not exceptioned, then we need to record that in our status
-            if ($this->hasEmptyRegion()) {
-                $this->status = ModuleWidget::$STATUS_INVALID;
-                $this->pushStatusMessage(__('Empty Region'));
+                // If we have an empty region and we've not exceptioned, then we need to record that in our status
+                if ($this->hasEmptyRegion()) {
+                    $this->status = ModuleWidget::$STATUS_INVALID;
+                    $this->pushStatusMessage(__('Empty Region'));
+                }
             }
 
             $this->save([
@@ -1789,7 +1740,7 @@ class Layout implements \JsonSerializable
             'saveLayout' => true,
             'saveRegions' => false,
             'saveTags' => false,
-            'setBuildRequired' => false,
+            'setBuildRequired' => true,
             'validate' => false,
             'audit' => true,
             'notify' => false
@@ -1798,7 +1749,6 @@ class Layout implements \JsonSerializable
         // Nullify my parentId (I no longer have a parent)
         $this->parentId = null;
 
-        $this->status = 5;
         // Add a layout history
         $this->addLayoutHistory();
 

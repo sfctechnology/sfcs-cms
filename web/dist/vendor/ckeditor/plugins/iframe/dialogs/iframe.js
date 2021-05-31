@@ -1,2 +1,218 @@
-/*! For license information please see iframe.js.LICENSE.txt */
-!function(){var e={scrolling:{true:"yes",false:"no"},frameborder:{true:"1",false:"0"}};function t(t){var i=this instanceof CKEDITOR.ui.dialog.checkbox;if(t.hasAttribute(this.id)){var a=t.getAttribute(this.id);i?this.setValue(e[this.id].true==a.toLowerCase()):this.setValue(a)}}function i(t){var i=""===this.getValue(),a=this instanceof CKEDITOR.ui.dialog.checkbox,l=this.getValue();i?t.removeAttribute(this.att||this.id):a?t.setAttribute(this.id,e[this.id][l]):t.setAttribute(this.att||this.id,l)}CKEDITOR.dialog.add("iframe",(function(e){var a=e.lang.iframe,l=e.lang.common,n=e.plugins.dialogadvtab;return{title:a.title,minWidth:350,minHeight:260,onShow:function(){this.fakeImage=this.iframeNode=null;var t=this.getSelectedElement();if(t&&t.data("cke-real-element-type")&&"iframe"==t.data("cke-real-element-type")){this.fakeImage=t;var i=e.restoreRealElement(t);this.iframeNode=i,this.setupContent(i)}},onOk:function(){var t;t=this.fakeImage?this.iframeNode:new CKEDITOR.dom.element("iframe");var i={},a={};this.commitContent(t,i,a);var l=e.createFakeElement(t,"cke_iframe","iframe",!0);l.setAttributes(a),l.setStyles(i),this.fakeImage?(l.replace(this.fakeImage),e.getSelection().selectElement(l)):e.insertElement(l)},contents:[{id:"info",label:l.generalTab,accessKey:"I",elements:[{type:"vbox",padding:0,children:[{id:"src",type:"text",label:l.url,required:!0,validate:CKEDITOR.dialog.validate.notEmpty(a.noUrl),setup:t,commit:i}]},{type:"hbox",children:[{id:"width",type:"text",requiredContent:"iframe[width]",style:"width:100%",labelLayout:"vertical",label:l.width,validate:CKEDITOR.dialog.validate.htmlLength(l.invalidHtmlLength.replace("%1",l.width)),setup:t,commit:i},{id:"height",type:"text",requiredContent:"iframe[height]",style:"width:100%",labelLayout:"vertical",label:l.height,validate:CKEDITOR.dialog.validate.htmlLength(l.invalidHtmlLength.replace("%1",l.height)),setup:t,commit:i},{id:"align",type:"select",requiredContent:"iframe[align]",default:"",items:[[l.notSet,""],[l.alignLeft,"left"],[l.alignRight,"right"],[l.alignTop,"top"],[l.alignMiddle,"middle"],[l.alignBottom,"bottom"]],style:"width:100%",labelLayout:"vertical",label:l.align,setup:function(e,i){if(t.apply(this,arguments),i){var a=i.getAttribute("align");this.setValue(a&&a.toLowerCase()||"")}},commit:function(e,t,a){i.apply(this,arguments),this.getValue()&&(a.align=this.getValue())}}]},{type:"hbox",widths:["50%","50%"],children:[{id:"scrolling",type:"checkbox",requiredContent:"iframe[scrolling]",label:a.scrolling,setup:t,commit:i},{id:"frameborder",type:"checkbox",requiredContent:"iframe[frameborder]",label:a.border,setup:t,commit:i}]},{type:"hbox",widths:["50%","50%"],children:[{id:"name",type:"text",requiredContent:"iframe[name]",label:l.name,setup:t,commit:i},{id:"title",type:"text",requiredContent:"iframe[title]",label:l.advisoryTitle,setup:t,commit:i}]},{id:"longdesc",type:"text",requiredContent:"iframe[longdesc]",label:l.longDescr,setup:t,commit:i}]},n&&n.createAdvancedTab(e,{id:1,classes:1,styles:1},"iframe")]}}))}();
+﻿/**
+ * @license Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.html or http://ckeditor.com/license
+ */
+
+(function() {
+	// Map 'true' and 'false' values to match W3C's specifications
+	// http://www.w3.org/TR/REC-html40/present/frames.html#h-16.5
+	var checkboxValues = {
+		scrolling: { 'true': 'yes', 'false': 'no' },
+		frameborder: { 'true': '1', 'false': '0' }
+	};
+
+	function loadValue( iframeNode ) {
+		var isCheckbox = this instanceof CKEDITOR.ui.dialog.checkbox;
+		if ( iframeNode.hasAttribute( this.id ) ) {
+			var value = iframeNode.getAttribute( this.id );
+			if ( isCheckbox )
+				this.setValue( checkboxValues[ this.id ][ 'true' ] == value.toLowerCase() );
+			else
+				this.setValue( value );
+		}
+	}
+
+	function commitValue( iframeNode ) {
+		var isRemove = this.getValue() === '',
+			isCheckbox = this instanceof CKEDITOR.ui.dialog.checkbox,
+			value = this.getValue();
+		if ( isRemove )
+			iframeNode.removeAttribute( this.att || this.id );
+		else if ( isCheckbox )
+			iframeNode.setAttribute( this.id, checkboxValues[ this.id ][ value ] );
+		else
+			iframeNode.setAttribute( this.att || this.id, value );
+	}
+
+	CKEDITOR.dialog.add( 'iframe', function( editor ) {
+		var iframeLang = editor.lang.iframe,
+			commonLang = editor.lang.common,
+			dialogadvtab = editor.plugins.dialogadvtab;
+		return {
+			title: iframeLang.title,
+			minWidth: 350,
+			minHeight: 260,
+			onShow: function() {
+				// Clear previously saved elements.
+				this.fakeImage = this.iframeNode = null;
+
+				var fakeImage = this.getSelectedElement();
+				if ( fakeImage && fakeImage.data( 'cke-real-element-type' ) && fakeImage.data( 'cke-real-element-type' ) == 'iframe' ) {
+					this.fakeImage = fakeImage;
+
+					var iframeNode = editor.restoreRealElement( fakeImage );
+					this.iframeNode = iframeNode;
+
+					this.setupContent( iframeNode );
+				}
+			},
+			onOk: function() {
+				var iframeNode;
+				if ( !this.fakeImage )
+					iframeNode = new CKEDITOR.dom.element( 'iframe' );
+				else
+					iframeNode = this.iframeNode;
+
+				// A subset of the specified attributes/styles
+				// should also be applied on the fake element to
+				// have better visual effect. (#5240)
+				var extraStyles = {},
+					extraAttributes = {};
+				this.commitContent( iframeNode, extraStyles, extraAttributes );
+
+				// Refresh the fake image.
+				var newFakeImage = editor.createFakeElement( iframeNode, 'cke_iframe', 'iframe', true );
+				newFakeImage.setAttributes( extraAttributes );
+				newFakeImage.setStyles( extraStyles );
+				if ( this.fakeImage ) {
+					newFakeImage.replace( this.fakeImage );
+					editor.getSelection().selectElement( newFakeImage );
+				} else
+					editor.insertElement( newFakeImage );
+			},
+			contents: [
+				{
+				id: 'info',
+				label: commonLang.generalTab,
+				accessKey: 'I',
+				elements: [
+					{
+					type: 'vbox',
+					padding: 0,
+					children: [
+						{
+						id: 'src',
+						type: 'text',
+						label: commonLang.url,
+						required: true,
+						validate: CKEDITOR.dialog.validate.notEmpty( iframeLang.noUrl ),
+						setup: loadValue,
+						commit: commitValue
+					}
+					]
+				},
+					{
+					type: 'hbox',
+					children: [
+						{
+						id: 'width',
+						type: 'text',
+						requiredContent: 'iframe[width]',
+						style: 'width:100%',
+						labelLayout: 'vertical',
+						label: commonLang.width,
+						validate: CKEDITOR.dialog.validate.htmlLength( commonLang.invalidHtmlLength.replace( '%1', commonLang.width ) ),
+						setup: loadValue,
+						commit: commitValue
+					},
+						{
+						id: 'height',
+						type: 'text',
+						requiredContent: 'iframe[height]',
+						style: 'width:100%',
+						labelLayout: 'vertical',
+						label: commonLang.height,
+						validate: CKEDITOR.dialog.validate.htmlLength( commonLang.invalidHtmlLength.replace( '%1', commonLang.height ) ),
+						setup: loadValue,
+						commit: commitValue
+					},
+						{
+						id: 'align',
+						type: 'select',
+						requiredContent: 'iframe[align]',
+						'default': '',
+						items: [
+							[ commonLang.notSet, '' ],
+							[ commonLang.alignLeft, 'left' ],
+							[ commonLang.alignRight, 'right' ],
+							[ commonLang.alignTop, 'top' ],
+							[ commonLang.alignMiddle, 'middle' ],
+							[ commonLang.alignBottom, 'bottom' ]
+							],
+						style: 'width:100%',
+						labelLayout: 'vertical',
+						label: commonLang.align,
+						setup: function( iframeNode, fakeImage ) {
+							loadValue.apply( this, arguments );
+							if ( fakeImage ) {
+								var fakeImageAlign = fakeImage.getAttribute( 'align' );
+								this.setValue( fakeImageAlign && fakeImageAlign.toLowerCase() || '' );
+							}
+						},
+						commit: function( iframeNode, extraStyles, extraAttributes ) {
+							commitValue.apply( this, arguments );
+							if ( this.getValue() )
+								extraAttributes.align = this.getValue();
+						}
+					}
+					]
+				},
+					{
+					type: 'hbox',
+					widths: [ '50%', '50%' ],
+					children: [
+						{
+						id: 'scrolling',
+						type: 'checkbox',
+						requiredContent: 'iframe[scrolling]',
+						label: iframeLang.scrolling,
+						setup: loadValue,
+						commit: commitValue
+					},
+						{
+						id: 'frameborder',
+						type: 'checkbox',
+						requiredContent: 'iframe[frameborder]',
+						label: iframeLang.border,
+						setup: loadValue,
+						commit: commitValue
+					}
+					]
+				},
+					{
+					type: 'hbox',
+					widths: [ '50%', '50%' ],
+					children: [
+						{
+						id: 'name',
+						type: 'text',
+						requiredContent: 'iframe[name]',
+						label: commonLang.name,
+						setup: loadValue,
+						commit: commitValue
+					},
+						{
+						id: 'title',
+						type: 'text',
+						requiredContent: 'iframe[title]',
+						label: commonLang.advisoryTitle,
+						setup: loadValue,
+						commit: commitValue
+					}
+					]
+				},
+					{
+					id: 'longdesc',
+					type: 'text',
+					requiredContent: 'iframe[longdesc]',
+					label: commonLang.longDescr,
+					setup: loadValue,
+					commit: commitValue
+				}
+				]
+			},
+				dialogadvtab && dialogadvtab.createAdvancedTab( editor, { id:1,classes:1,styles:1 }, 'iframe' )
+				]
+		};
+	});
+})();

@@ -25,7 +25,6 @@ namespace Xibo\Factory;
 
 
 use Xibo\Entity\Tag;
-use Xibo\Exception\InvalidArgumentException;
 use Xibo\Exception\NotFoundException;
 use Xibo\Service\LogServiceInterface;
 use Xibo\Service\SanitizerServiceInterface;
@@ -95,7 +94,6 @@ class TagFactory extends BaseFactory
      * Get Tag from String
      * @param string $tagString
      * @return Tag
-     * @throws InvalidArgumentException
      */
     public function tagFromString($tagString)
     {
@@ -106,11 +104,6 @@ class TagFactory extends BaseFactory
         // Add to the list
         try {
             $tag = $this->getByTag($explode[0]);
-
-            if ($tag->isRequired == 1 && !isset($explode[1])) {
-                throw new InvalidArgumentException(sprintf('Selected Tag %s requires a value, please enter the Tag in %s|Value format or provide Tag value in the dedicated field.', $explode[0], $explode[0]), 'options');
-            }
-
             if( isset($explode[1])) {
                 $tag->value = $explode[1];
             } else {
@@ -408,29 +401,5 @@ class TagFactory extends BaseFactory
             $this->_countLast = intval($results[0]['total']);
         }
         return $entries;
-    }
-
-    /**
-     * Take the string values on an entity with tags and tag values, combine them into a | separated string
-     * @param $entity
-     * @return string
-     */
-    public function getTagsWithValues($entity)
-    {
-        $tags = '';
-        $arrayOfTags = array_filter(explode(',', $entity->tags));
-        $arrayOfTagValues = array_filter(explode(',', $entity->tagValues));
-
-        for ($i=0; $i<count($arrayOfTags); $i++) {
-            // Is there a matching tag value?
-            if (isset($arrayOfTags[$i]) && (isset($arrayOfTagValues[$i]) && $arrayOfTagValues[$i] !== 'NULL' )) {
-                $tags .= $arrayOfTags[$i] . '|' . $arrayOfTagValues[$i];
-                $tags .= ',';
-            } else {
-                $tags .= $arrayOfTags[$i] . ',';
-            }
-        }
-
-        return rtrim($tags, ',');
     }
 }

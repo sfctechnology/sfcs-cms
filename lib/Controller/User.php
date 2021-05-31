@@ -36,7 +36,6 @@ use Xibo\Exception\XiboException;
 use Xibo\Factory\ApplicationFactory;
 use Xibo\Factory\CampaignFactory;
 use Xibo\Factory\DataSetFactory;
-use Xibo\Factory\DayPartFactory;
 use Xibo\Factory\DisplayFactory;
 use Xibo\Factory\DisplayGroupFactory;
 use Xibo\Factory\LayoutFactory;
@@ -136,9 +135,6 @@ class User extends Base
     /** @var DataSetFactory */
     private $dataSetFactory;
 
-    /** @var DayPartFactory */
-    private $dayPartFactory;
-
     /**
      * Set common dependencies.
      * @param LogServiceInterface $log
@@ -165,11 +161,10 @@ class User extends Base
      * @param PlayerVersionFactory $playerVersionFactory
      * @param PlaylistFactory $playlistFactory
      * @param DataSetFactory $dataSetFactory
-     * @param DayPartFactory $dayPartFactory
      */
     public function __construct($log, $sanitizerService, $state, $user, $help, $date, $config, $userFactory,
                                 $userTypeFactory, $userGroupFactory, $pageFactory, $permissionFactory,
-                                $layoutFactory, $applicationFactory, $campaignFactory, $mediaFactory, $scheduleFactory, $displayFactory, $sessionFactory, $displayGroupFactory, $widgetFactory, $playerVersionFactory, $playlistFactory, $dataSetFactory, $dayPartFactory)
+                                $layoutFactory, $applicationFactory, $campaignFactory, $mediaFactory, $scheduleFactory, $displayFactory, $sessionFactory, $displayGroupFactory, $widgetFactory, $playerVersionFactory, $playlistFactory, $dataSetFactory)
     {
         $this->setCommonDependencies($log, $sanitizerService, $state, $user, $help, $date, $config);
 
@@ -190,7 +185,6 @@ class User extends Base
         $this->playerVersionFactory = $playerVersionFactory;
         $this->playlistFactory = $playlistFactory;
         $this->dataSetFactory = $dataSetFactory;
-        $this->dayPartFactory = $dayPartFactory;
     }
 
     /**
@@ -865,7 +859,7 @@ class User extends Base
             throw new AccessDeniedException();
 
         $user->setChildAclDependencies($this->userGroupFactory, $this->pageFactory);
-        $user->setChildObjectDependencies($this->campaignFactory, $this->layoutFactory, $this->mediaFactory, $this->scheduleFactory, $this->displayFactory, $this->displayGroupFactory, $this->widgetFactory, $this->playerVersionFactory, $this->playlistFactory, $this->dataSetFactory, $this->dayPartFactory);
+        $user->setChildObjectDependencies($this->campaignFactory, $this->layoutFactory, $this->mediaFactory, $this->scheduleFactory, $this->displayFactory, $this->displayGroupFactory, $this->widgetFactory, $this->playerVersionFactory, $this->playlistFactory, $this->dataSetFactory);
 
         if ($this->getSanitizer()->getCheckbox('deleteAllItems') != 1) {
 
@@ -1002,6 +996,8 @@ class User extends Base
     public function editProfile()
     {
         $user = $this->getUser();
+        // Store current (before edit) value of twoFactorTypeId in a variable
+        $oldTwoFactorTypeId = $user->twoFactorTypeId;
 
         // get all other values from the form
         $oldPassword = $this->getSanitizer()->getString('password');
@@ -1016,22 +1012,9 @@ class User extends Base
             $user->twoFactorRecoveryCodes = json_decode($this->getSanitizer()->getStringArray('twoFactorRecoveryCodes'));
         }
 
-        // What situations do we need to check the old password is correct?
-        if ($user->hasPropertyChanged('twoFactorTypeId')
-            || ($user->hasPropertyChanged('email') && $user->twoFactorTypeId === 1)
-            || ($user->hasPropertyChanged('email') && $user->getOriginalValue('twoFactorTypeId') === 1)
-            || $newPassword != null
-        ) {
-            try {
-                $user->checkPassword($oldPassword);
-            } catch (AccessDeniedException $exception) {
-                throw new InvalidArgumentException(__('Please enter your password'), 'password');
-            }
-        }
-
         // check if we have a new password provided, if so check if it was correctly entered
         if ($newPassword != $retypeNewPassword) {
-            throw new InvalidArgumentException(__('Passwords do not match'), 'newPassword');
+            throw new InvalidArgumentException(__('Passwords do not match'), 'password');
         }
 
         // check if we have saved secret, for google auth that is done on jQuery side
@@ -1062,9 +1045,7 @@ class User extends Base
 
         // if we are setting up Google auth, we are expecting a code from the form, validate the code here
         // we want to show QR code and validate the access code also with the previous auth method was set to email
-        if ($user->twoFactorTypeId === 2
-            && ($user->twoFactorSecret === null || $user->getOriginalValue('twoFactorTypeId') === 1)
-        ) {
+        if ($user->twoFactorTypeId === 2 && ($user->twoFactorSecret === null || $oldTwoFactorTypeId === 1)) {
             if (!isset($code)) {
                 throw new InvalidArgumentException(__('Access Code is empty'), 'code');
             }

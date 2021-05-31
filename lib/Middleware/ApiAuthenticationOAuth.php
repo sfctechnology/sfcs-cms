@@ -24,7 +24,6 @@ namespace Xibo\Middleware;
 
 use League\OAuth2\Server\ResourceServer;
 use Slim\Middleware;
-use Xibo\Exception\AccessDeniedException;
 
 class ApiAuthenticationOAuth extends Middleware
 {
@@ -67,11 +66,6 @@ class ApiAuthenticationOAuth extends Middleware
             $user->setChildAclDependencies($app->userGroupFactory, $app->pageFactory);
 
             $user->load();
-
-            // Block access by retired users.
-            if ($user->retired === 1) {
-                throw new AccessDeniedException('Sorry this account does not exist or cannot be authenticated.');
-            }
 
             $this->app->user = $user;
 

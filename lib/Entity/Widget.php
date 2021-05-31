@@ -215,7 +215,6 @@ class Widget implements \JsonSerializable
      */
     public static $widgetMinDuration = 1;
 
-    private $datesToFormat = ['toDt', 'fromDt'];
     //<editor-fold desc="Factories and Dependencies">
     /** @var  DateServiceInterface */
     private $dateService;
@@ -816,9 +815,9 @@ class Widget implements \JsonSerializable
                     $changedProperties['campaignId'][] = $campaignId;
                     $changedProperties['layoutId'][] = $layoutId;
                 }
-
-                $this->audit($this->widgetId, 'Saved', $changedProperties);
             }
+
+            $this->audit($this->widgetId, 'Saved', $changedProperties);
         }
     }
 

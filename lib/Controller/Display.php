@@ -505,6 +505,7 @@ class Display extends Base
             'tags' => $this->getSanitizer()->getString('tags'),
             'exactTags' => $this->getSanitizer()->getCheckbox('exactTags'),
             'showTags' => true,
+            'useRegexForName' => $this->getSanitizer()->getCheckbox('useRegexForName'),
             'clientAddress' => $this->getSanitizer()->getString('clientAddress'),
             'mediaInventoryStatus' => $this->getSanitizer()->getInt('mediaInventoryStatus'),
             'loggedIn' => $this->getSanitizer()->getInt('loggedIn'),
@@ -625,9 +626,6 @@ class Display extends Base
             $display->teamViewerLink = (!empty($teamViewerSerial)) ? 'https://start.teamviewer.com/' . $teamViewerSerial : '';
             $display->webkeyLink = (!empty($webkeySerial)) ? 'https://webkeyapp.com/mgm?publicid=' . $webkeySerial : '';
 
-            // Is a transfer to another CMS in progress?
-            $display->isCmsTransferInProgress = (!empty($display->newCmsAddress));
-
             // Edit and Delete buttons first
             if ($this->getUser()->checkEditable($display)) {
 
@@ -733,16 +731,6 @@ class Display extends Base
 
             if ($this->getUser()->checkEditable($display)) {
 
-                if ($this->getUser()->routeViewable('/layout/view')) {
-                    $display->buttons[] = [
-                        'id' => 'display_button_layouts_jump',
-                        'linkType' => '_self',
-                        'external' => true,
-                        'url' => $this->urlFor('layout.view') . '?activeDisplayGroupId=' . $display->displayGroupId,
-                        'text' => __('Jump to Scheduled Layouts')
-                    ];
-                }
-
                 // File Associations
                 $display->buttons[] = array(
                     'id' => 'displaygroup_button_fileassociations',
@@ -842,14 +830,6 @@ class Display extends Base
                         ['name' => 'form-callback', 'value' => 'setMoveCmsMultiSelectFormOpen']
                     ]
                 ];
-
-                if ($display->isCmsTransferInProgress) {
-                    $display->buttons[] = [
-                        'id' => 'display_button_move_cancel',
-                        'url' => $this->urlFor('display.moveCmsCancel.form', ['id' => $display->displayId]),
-                        'text' => __('Cancel CMS Transfer'),
-                    ];
-                }
             }
         }
 
@@ -1205,7 +1185,7 @@ class Display extends Base
         $display->defaultLayoutId = $this->getSanitizer()->getInt('defaultLayoutId');
         $display->licensed = $this->getSanitizer()->getInt('licensed');
         $display->license = $this->getSanitizer()->getString('license');
-        $display->incSchedule = $this->getSanitizer()->getInt('incSchedule', 0);
+        $display->incSchedule = $this->getSanitizer()->getInt('incSchedule');
         $display->emailAlert = $this->getSanitizer()->getInt('emailAlert');
         $display->alertTimeout = $this->getSanitizer()->getCheckbox('alertTimeout');
         $display->wakeOnLanEnabled = $this->getSanitizer()->getCheckbox('wakeOnLanEnabled');
@@ -1217,12 +1197,12 @@ class Display extends Base
         $display->longitude = $this->getSanitizer()->getDouble('longitude');
         $display->timeZone = $this->getSanitizer()->getString('timeZone');
         $display->displayProfileId = $this->getSanitizer()->getInt('displayProfileId');
-        $display->bandwidthLimit = $this->getSanitizer()->getInt('bandwidthLimit', 0);
+        $display->bandwidthLimit = $this->getSanitizer()->getInt('bandwidthLimit');
 
 
         // Get the display profile and use that to pull in any overrides
         // start with an empty config
-        $display->overrideConfig = $this->editConfigFields($display->getDisplayProfile(), [], $display);
+        $display->overrideConfig = $this->editConfigFields($display->getDisplayProfile(), []);
 
         // Workaround
         // in v3 these will have their own fields.
@@ -1944,47 +1924,6 @@ class Display extends Base
         } else {
             throw new InvalidArgumentException(__('Invalid Two Factor Authentication Code'), 'twoFactorCode');
         }
-    }
-
-    /**
-     * @param $displayId
-     * @throws NotFoundException
-     */
-    public function moveCmsCancelForm($displayId)
-    {
-        $display = $this->displayFactory->getById($displayId);
-
-        if (!$this->getUser()->checkEditable($display)) {
-            throw new AccessDeniedException();
-        }
-
-        $this->getState()->template = 'display-form-moveCmsCancel';
-        $this->getState()->setData([
-            'display' => $display
-        ]);
-    }
-
-    /**
-     * @param $displayId
-     * @throws NotFoundException
-     * @throws XiboException
-     */
-    public function moveCmsCancel($displayId)
-    {
-        $display = $this->displayFactory->getById($displayId);
-
-        if (!$this->getUser()->checkEditable($display)) {
-            throw new AccessDeniedException();
-        }
-
-        $display->newCmsAddress = '';
-        $display->newCmsKey = '';
-        $display->save();
-
-        $this->getState()->hydrate([
-            'message' => sprintf(__('Cancelled CMS Transfer for %s'), $display->display),
-            'id' => $display->displayId
-        ]);
     }
 
     public function addViaCodeForm()

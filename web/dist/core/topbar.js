@@ -1,1 +1,318 @@
-const TopbarTemplate=require("../templates/topbar.hbs"),TopbarLayoutJumpList=require("../templates/toolbar-layout-jump-list.hbs");let Topbar=function(t,o,s=null,e={},a={},l=!1){this.parent=t,this.DOMObject=o,this.jumpList=a,this.customDropdownOptions=s,this.customActions=e,this.showOptions=l,this.firstRun=!0};Topbar.prototype.render=function(){this.firstRun&&(this.firstRun=!1);let t=this;const o=this.parent,s=o.getElementByTypeAndId(o.mainObjectType,o.mainObjectId);let e=$.extend(toolbarTrans,topbarTrans);const a=TopbarTemplate({customDropdownOptions:this.customDropdownOptions,displayTooltips:o.common.displayTooltips,trans:e,mainObject:s,showOptions:t.showOptions});this.DOMObject.html(a);const l=function(o){let s=!1;if(t.DOMObject.find("#"+o.id).click(o.action),null!=o.inactiveCheck){const e=null!=o.inactiveCheckClass?o.inactiveCheckClass:"disabled",a=o.inactiveCheck();t.DOMObject.find("#"+o.id).toggleClass(e,a),s=a}return s};if(null!=this.customDropdownOptions){let o=!1;for(let t=0;t<this.customDropdownOptions.length;t++)l(this.customDropdownOptions[t])||(o=!0);t.DOMObject.find(".dropdown.navbar-submenu:not(.navbar-submenu-options)").toggle(o)}$.isEmptyObject(this.jumpList)||0!=$("#layoutJumpList").length||this.setupJumpList($("#layoutJumpListContainer")),t.showOptions&&(t.DOMObject.find(".navbar-submenu-options-container").off().click((function(t){t.stopPropagation()})),t.DOMObject.find("#displayTooltips").off().click((function(){o.common.displayTooltips=$("#displayTooltips").prop("checked"),o.common.displayTooltips?toastr.success(editorsTrans.tooltipsEnabled):toastr.error(editorsTrans.tooltipsDisabled),o.toolbar.savePrefs(),o.common.reloadTooltips(o.editorContainer)})),"function"==typeof o.resetTour&&t.DOMObject.find("#resetTour").removeClass("hidden").off().click((function(){o.resetTour()}))),this.updateLayoutStatus()},Topbar.prototype.setupJumpList=function(t){const o=TopbarLayoutJumpList(this.jumpList);t.html(o),t.show();const s=t.find("#layoutJumpList");s.select2({ajax:{url:s.data().url,dataType:"json",data:function(t){var o={layout:t.term,start:0,length:10};if(null!=o.layout){var s=o.layout.match(/\[([^}]+)\]/);null!=s&&(o.tags=s[1],o.layout=o.layout.replace(s[0],""))}return null!=t.page&&(o.start=10*(t.page-1)),void 0!==t.term&&(localStorage.liveSearchPlaceholder=t.term),o},processResults:function(t,o){var s=[];$.each(t.data,(function(t,o){s.push({id:o.layoutId,text:o.layout})}));var e=o.page||1;return{results:s,pagination:{more:10*(e=e>1?e-1:e)<t.recordsTotal}}},delay:250}}),s.on("select2:select",(function(t){window.location=s.data().designerUrl.replace(":id",t.params.data.id)})).on("select2:opening",(function(t){if(null!=localStorage.liveSearchPlaceholder&&""!==localStorage.liveSearchPlaceholder){var o=s.data("select2").dropdown.$search;o.val(localStorage.liveSearchPlaceholder),setTimeout((function(){o.trigger("input")}),100)}}))},Topbar.prototype.updateLayoutStatus=function(){const t=this.DOMObject.find("#layout-info-status"),o=this.parent;if(t.find("i").removeClass().addClass("fa fa-spinner fa-spin"),t.removeClass().addClass("label label-default"),null==lD.layout.status)return;let s="",e="";const a={1:"success",2:"warning",3:"info","":"danger"},l={1:"check",2:"exclamation",3:"cogs","":"times"};if(lD.layout.status.messages.length>0){s=lD.layout.status.description;for(let t=0;t<lD.layout.status.messages.length;t++)e+='<div class="status-message">'+lD.layout.status.messages[t]+"</div>"}else s="",e='<div class="status-title text-center">'+lD.layout.status.description+"</div>";let i=null!=a[lD.layout.status.code]?a[lD.layout.status.code]:a[""];t.removeClass().addClass("label label-"+i).attr("data-status-code",lD.layout.status.code),null==t.data("bs.popover")?t.popover({delay:tooltipDelay,title:s,content:e}):(t.data("bs.popover").options.title=s,t.data("bs.popover").options.content=e),t.toggleClass("clickable",null==l[lD.layout.status.code]).on("click",(function(){null==l[lD.layout.status.code]&&o.timeline.scrollToBrokenWidget()}));let n=null!=l[lD.layout.status.code]?l[lD.layout.status.code]:l[""];t.find("i").removeClass().addClass("fa fa-"+n)},module.exports=Topbar;
+// NAVIGATOR Module
+
+// Load templates
+const TopbarTemplate = require('../templates/topbar.hbs');
+const TopbarLayoutJumpList = require('../templates/toolbar-layout-jump-list.hbs');
+
+/**
+ * Bottom topbar contructor
+ * @param {object} container - the container to render the navigator to
+ * @param {object[]} [customDropdownOptions] - customized dropdown buttons
+ * @param {object} [customActions] - customized actions
+ * @param {boolean=} [showOptions] - show options menu
+ */
+let Topbar = function(parent, container, customDropdownOptions = null, customActions = {}, jumpList = {}, showOptions = false) {
+
+    this.parent = parent;
+    
+    this.DOMObject = container;
+
+    // Layout jumplist
+    this.jumpList = jumpList;
+
+    // Custom dropdown buttons
+    this.customDropdownOptions = customDropdownOptions;
+
+    // Custom actions
+    this.customActions = customActions;
+
+    // Options menu
+    this.showOptions = showOptions;
+
+    // Flag to mark if the topbar has been rendered at least one time
+    this.firstRun = true;
+};
+
+/**
+ * Render topbar
+ */
+Topbar.prototype.render = function() {
+
+    // Load preferences when the topbar is rendered for the first time
+    if(this.firstRun) {
+        // Mark topbar as loaded
+        this.firstRun = false;
+    }
+
+    let self = this;
+    const app = this.parent;
+
+    // Get main object 
+    const mainObject = app.getElementByTypeAndId(app.mainObjectType, app.mainObjectId);
+
+    // Get topbar trans
+    let newTopbarTrans = $.extend(toolbarTrans, topbarTrans);
+
+    // Compile layout template with data
+    const html = TopbarTemplate({
+        customDropdownOptions: this.customDropdownOptions,
+        displayTooltips: app.common.displayTooltips,
+        trans: newTopbarTrans,
+        mainObject: mainObject,
+        showOptions: self.showOptions
+    });
+
+    // Append layout html to the main div
+    this.DOMObject.html(html);
+
+    const setButtonActionAndState = function(button) {
+        let buttonInactive = false;
+
+        // Bind action to button
+        self.DOMObject.find('#' + button.id).click(
+            button.action
+        );
+
+        // If there is a inactiveCheck, use that function to switch button state
+        if(button.inactiveCheck != undefined) {
+            const inactiveClass = (button.inactiveCheckClass != undefined) ? button.inactiveCheckClass : 'disabled';
+            const toggleValue = button.inactiveCheck();
+            self.DOMObject.find('#' + button.id).toggleClass(inactiveClass, toggleValue);
+            buttonInactive = toggleValue;
+        }
+
+        return buttonInactive;
+    };
+
+    // Handle custom dropwdown buttons
+    if(this.customDropdownOptions != null) {
+
+        let activeDropdown = false;
+
+        for(let index = 0;index < this.customDropdownOptions.length;index++) {
+            let buttonInactive = setButtonActionAndState(this.customDropdownOptions[index]);
+
+            if(!buttonInactive) {
+                activeDropdown = true;
+            }
+        }
+
+        self.DOMObject.find('.dropdown.navbar-submenu:not(.navbar-submenu-options)').toggle(activeDropdown);
+    }
+
+    // Set layout jumpList if exists
+    if(!$.isEmptyObject(this.jumpList) && $('#layoutJumpList').length == 0) {
+        this.setupJumpList($("#layoutJumpListContainer"));
+    }
+
+    // Options menu
+    if(self.showOptions) {
+        self.DOMObject.find('.navbar-submenu-options-container').off().click(function(e) {
+            e.stopPropagation();
+        });
+
+        // Toggle tooltips
+        self.DOMObject.find('#displayTooltips').off().click(function() {
+
+            app.common.displayTooltips = $('#displayTooltips').prop('checked');
+
+            if(app.common.displayTooltips) {
+                toastr.success(editorsTrans.tooltipsEnabled);
+            } else {
+                toastr.error(editorsTrans.tooltipsDisabled);
+            }
+
+            app.toolbar.savePrefs();
+
+            app.common.reloadTooltips(app.editorContainer);
+        });
+
+        // Reset tour
+        if(typeof app.resetTour === 'function') {
+            self.DOMObject.find('#resetTour').removeClass('hidden').off().click(function() {
+                app.resetTour();
+            });
+        }
+    }
+
+    // Update layout status
+    this.updateLayoutStatus();
+};
+
+/**
+* Setup layout jumplist
+* @param {object} jumpListContainer
+*/
+Topbar.prototype.setupJumpList = function(jumpListContainer) {
+
+    const html = TopbarLayoutJumpList(this.jumpList);
+    const self = this;
+
+    // Append layout html to the main div
+    jumpListContainer.html(html);
+
+    jumpListContainer.show();
+
+    const jumpList = jumpListContainer.find('#layoutJumpList');
+
+    jumpList.select2({
+        ajax: {
+            url: jumpList.data().url,
+            dataType: "json",
+            data: function(params) {
+
+                var query = {
+                    layout: params.term,
+                    start: 0,
+                    length: 10
+                };
+
+                // Tags
+                if(query.layout != undefined) {
+                    var tags = query.layout.match(/\[([^}]+)\]/);
+                    if(tags != null) {
+                        // Add tags to search
+                        query.tags = tags[1];
+
+                        // Replace tags in the query text
+                        query.layout = query.layout.replace(tags[0], '');
+                    }
+                }
+
+                // Set the start parameter based on the page number
+                if(params.page != null) {
+                    query.start = (params.page - 1) * 10;
+                }
+
+                // Find out what is inside the search box for this list, and save it (so we can replay it when the list
+                // is opened again)
+                if(params.term !== undefined) {
+                    localStorage.liveSearchPlaceholder = params.term;
+                }
+
+                return query;
+            },
+            processResults: function(data, params) {
+                var results = [];
+
+                $.each(data.data, function(index, element) {
+                    results.push({
+                        "id": element.layoutId,
+                        "text": element.layout
+                    });
+                });
+
+                var page = params.page || 1;
+                page = (page > 1) ? page - 1 : page;
+
+                return {
+                    results: results,
+                    pagination: {
+                        more: (page * 10 < data.recordsTotal)
+                    }
+                };
+            },
+            delay: 250
+        }
+    });
+
+    jumpList.on("select2:select", function(e) {
+        // OPTIMIZE: Maybe use the layout load without reloading page
+        //self.jumpList.callback(e.params.data.id);
+
+        // Go to the Layout we've selected.
+        window.location = jumpList.data().designerUrl.replace(":id", e.params.data.id);
+    }).on("select2:opening", function(e) {
+        // Set the search box according to the saved value (if we have one)
+
+        if(localStorage.liveSearchPlaceholder != null && localStorage.liveSearchPlaceholder !== "") {
+            var $search = jumpList.data("select2").dropdown.$search;
+            $search.val(localStorage.liveSearchPlaceholder);
+
+            setTimeout(function() {
+                $search.trigger("input");
+            }, 100);
+        }
+    });
+};
+
+
+/**
+ * Update layout status in the info fields
+ */
+Topbar.prototype.updateLayoutStatus = function() {
+
+    const statusContainer = this.DOMObject.find('#layout-info-status');
+    const app = this.parent;
+
+    // Use status loader icon
+    statusContainer.find('i').removeClass().addClass('fa fa-spinner fa-spin');
+    statusContainer.removeClass().addClass('label label-default');
+
+    // Prevent the update if there's no layout status yet
+    if(lD.layout.status == undefined) {
+        return;
+    }
+
+    let title = '';
+    let content = '';
+
+    const labelCodes = {
+        '1': 'success',
+        '2': 'warning',
+        '3': 'info',
+        '': 'danger'
+    };
+
+    const iconCodes = {
+        '1': 'check',
+        '2': 'exclamation',
+        '3': 'cogs',
+        '': 'times'
+    };
+
+    // Create title and description
+    if(lD.layout.status.messages.length > 0) {
+        title = lD.layout.status.description;
+        for(let index = 0;index < lD.layout.status.messages.length;index++) {
+            content += '<div class="status-message">' + lD.layout.status.messages[index] + '</div>';
+        }
+    } else {
+        title = '';
+        content = '<div class="status-title text-center">' + lD.layout.status.description + '</div>';
+    }
+
+    // Update label
+    let labelType = (labelCodes[lD.layout.status.code] != undefined) ? labelCodes[lD.layout.status.code] : labelCodes[''];
+    statusContainer.removeClass().addClass('label label-' + labelType)
+        .attr('data-status-code', lD.layout.status.code);
+
+    // Create or update popover
+    if(statusContainer.data('bs.popover') == undefined) {
+        // Create popover
+        statusContainer.popover(
+            {
+                delay: tooltipDelay,
+                title: title,
+                content: content
+            }
+        );
+    } else {
+        // Update popover
+        statusContainer.data('bs.popover').options.title = title;
+        statusContainer.data('bs.popover').options.content = content;
+    }
+
+    // Click status to scroll timeline to first broken widget
+    statusContainer.toggleClass('clickable', (iconCodes[lD.layout.status.code] == undefined)).on('click', function(){
+        if(iconCodes[lD.layout.status.code] == undefined) {
+            app.timeline.scrollToBrokenWidget();
+        }
+    });
+
+    // Change Icon
+    let iconType = (iconCodes[lD.layout.status.code] != undefined) ? iconCodes[lD.layout.status.code] : iconCodes[''];
+    statusContainer.find('i').removeClass().addClass('fa fa-' + iconType);
+};
+
+module.exports = Topbar;

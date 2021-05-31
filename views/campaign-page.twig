@@ -59,9 +59,6 @@ This is the template for the campaign page
                             {% set title %}{% trans "Layouts" %}{% endset %}
                             {% set values = [{id: 0, value: ""}, {id: 2, value: "Yes"}, {id: 1, value: "No"}] %}
                             {{ inline.dropdown("hasLayouts", "single", title, 0, values, "id", "value") }}
-
-                            {% set title %}{% trans "Layout ID" %}{% endset %}
-                            {{ inline.number("layoutId", title, layoutId) }}
                         </form>
                     </div>
                 </div>
@@ -89,79 +86,76 @@ This is the template for the campaign page
 {% block javaScript %}
     <script type="text/javascript">
         // Configure the DataTable
-        var table;
-        $(document).ready(function() {
-            table = $("#campaigns").DataTable({ "language": dataTablesLanguage,
-                serverSide: true,
-                stateSave: true,
-                stateDuration: 0,
-                stateLoadCallback: function (settings, callback) {
-                    var data = {};
-                    $.ajax({
-                        type: "GET",
-                        async: false,
-                        url: "{{ urlFor("user.pref") }}?preference=campaignGrid",
-                        dataType: 'json',
-                        success: function (json) {
-                            try {
-                                if (json.success) {
-                                    data = JSON.parse(json.data.value);
-                                }
-                            } catch (e) {
-                                // Do nothing
+        var table = $("#campaigns").DataTable({ "language": dataTablesLanguage,
+            serverSide: true,
+            stateSave: true,
+            stateDuration: 0,
+            stateLoadCallback: function (settings, callback) {
+                var data = {};
+                $.ajax({
+                    type: "GET",
+                    async: false,
+                    url: "{{ urlFor("user.pref") }}?preference=campaignGrid",
+                    dataType: 'json',
+                    success: function (json) {
+                        try {
+                            if (json.success) {
+                                data = JSON.parse(json.data.value);
                             }
+                        } catch (e) {
+                            // Do nothing
                         }
-                    });
-                    return data;
-                },
-                stateSaveCallback: function (settings, data) {
-                    $.ajax({
-                        type: "POST",
-                        url: "{{ urlFor("user.pref") }}",
-                        data: {
-                            preference: [{
-                                option: "campaignGrid",
-                                value: JSON.stringify(data)
-                            }]
-                        }
-                    });
-                },
-                "filter": false,
-                searchDelay: 3000,
-                "order": [[ 0, "asc"]],
-                ajax: {
-                    url: "{{ urlFor("campaign.search") }}",
-                    "data": function(d) {
-                        $.extend(d, $("#campaigns").closest(".XiboGrid").find(".FilterDiv form").serializeObject());
                     }
-                },
-                "columns": [
-                    {
-                        "data": "campaign" ,
-                        "render": dataTableSpacingPreformatted
-                    },
-                    { "data": "numberLayouts" },
-                    {
-                        "sortable": false,
-                        "data": dataTableCreateTags
-                    },
-                    {
-                        "data": "totalDuration",
-                        "render": dataTableTimeFromSeconds
-                    },
-                    {
-                        "orderable": false,
-                        "data": dataTableButtonsColumn
+                });
+                return data;
+            },
+            stateSaveCallback: function (settings, data) {
+                $.ajax({
+                    type: "POST",
+                    url: "{{ urlFor("user.pref") }}",
+                    data: {
+                        preference: [{
+                            option: "campaignGrid",
+                            value: JSON.stringify(data)
+                        }]
                     }
-                ]
-            });
-
-            // Data Table events
-            table.on('draw', dataTableDraw);
-            table.on('draw', { form: $("#campaigns").closest(".XiboGrid").find(".FilterDiv form") }, dataTableCreateTagEvents);
-            table.on('processing.dt', dataTableProcessing);
-            dataTableAddButtons(table, $('#campaigns_wrapper').find('.col-sm-6').eq(1));
+                });
+            },
+            "filter": false,
+            searchDelay: 3000,
+            "order": [[ 0, "asc"]],
+            ajax: {
+                url: "{{ urlFor("campaign.search") }}",
+                "data": function(d) {
+                    $.extend(d, $("#campaigns").closest(".XiboGrid").find(".FilterDiv form").serializeObject());
+                }
+            },
+            "columns": [
+                {
+                    "data": "campaign" ,
+                    "render": dataTableSpacingPreformatted
+                },
+                { "data": "numberLayouts" },
+                {
+                    "sortable": false,
+                    "data": dataTableCreateTags
+                },
+                {
+                    "data": "totalDuration",
+                    "render": dataTableTimeFromSeconds
+                },
+                {
+                    "orderable": false,
+                    "data": dataTableButtonsColumn
+                }
+            ]
         });
+
+        // Data Table events
+        table.on('draw', dataTableDraw);
+        table.on('draw', { form: $("#campaigns").closest(".XiboGrid").find(".FilterDiv form") }, dataTableCreateTagEvents);
+        table.on('processing.dt', dataTableProcessing);
+        dataTableAddButtons(table, $('#campaigns_wrapper').find('.col-sm-6').eq(1));
 
         // Callback for the media form
         // Fired when the media form opens
@@ -228,25 +222,6 @@ This is the template for the campaign page
                     {
                         "data": "layout",
                         "render": dataTableSpacingPreformatted
-                    },
-                    {
-                        "name": "status",
-                        "data": function (data, type) {
-                            if (type != "display")
-                                return data.status;
-
-                            var icon = "";
-                            if (data.status == 1)
-                                icon = "fa-check";
-                            else if (data.status == 2)
-                                icon = "fa-exclamation";
-                            else if (data.status == 3)
-                                icon = "fa-cogs";
-                            else
-                                icon = "fa-times";
-
-                            return "<span class='fa " + icon + "' title='" + (data.statusDescription) + ((data.statusMessage == null) ? "" : " - " + (data.statusMessage)) + "'></span>";
-                        }
                     },
                     {
                         "sortable": false,
@@ -404,7 +379,7 @@ This is the template for the campaign page
 
                 $('<input>').attr({
                     type: 'hidden',
-                    name: 'unassignLayoutId[' + i + '][displayOrder]'
+                    name: 'unassignLayoutIdy[' + i + '][displayOrder]'
                 }).val(unassign[i].displayOrder).appendTo($form.find('#unassignLayouts'));
             }
         }

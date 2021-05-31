@@ -11,7 +11,7 @@
             "name": "AGPLv3 or later",
             "url": "http://www.gnu.org/licenses/"
         },
-        "version": "2.3"
+        "version": "2.2"
     },
     "basePath": "/api",
     "schemes": [
@@ -434,13 +434,6 @@
                         "description": "Filter by DataSet Code",
                         "required": false,
                         "type": "string"
-                    },
-                    {
-                        "name": "userId",
-                        "in": "query",
-                        "description": "Filter by user Id",
-                        "required": false,
-                        "type": "integer"
                     },
                     {
                         "name": "embed",
@@ -2782,48 +2775,48 @@
                     "displayGroup"
                 ],
                 "summary": "Action: Change Layout",
-                "description": "Send a change layout action to the provided Display Group. This will be sent to Displays in that Group via XMR.",
+                "description": "Send the change layout action to this DisplayGroup, you can pass layoutId or layout specific campaignId",
                 "operationId": "displayGroupActionChangeLayout",
                 "parameters": [
                     {
                         "name": "displayGroupId",
                         "in": "path",
-                        "description": "This can be either a Display Group or the Display specific Display Group",
+                        "description": "The Display Group Id",
                         "required": true,
                         "type": "integer"
                     },
                     {
                         "name": "layoutId",
                         "in": "formData",
-                        "description": "The ID of the Layout to change to. Either this or a campaignId must be provided.",
-                        "required": false,
+                        "description": "The Layout Id",
+                        "required": true,
                         "type": "integer"
                     },
                     {
                         "name": "campaignId",
                         "in": "formData",
-                        "description": "The Layout specific campaignId of the Layout to change to. Either this or a layoutId must be provided.",
+                        "description": "The layout specific Campaign Id",
                         "required": false,
                         "type": "integer"
                     },
                     {
                         "name": "duration",
                         "in": "formData",
-                        "description": "The duration in seconds for this Layout change to remain in effect, after which normal scheduling is resumed.",
+                        "description": "The duration in seconds for this Layout change to remain in effect",
                         "required": false,
                         "type": "integer"
                     },
                     {
                         "name": "downloadRequired",
                         "in": "formData",
-                        "description": "Flag indicating whether the player should perform a collect before playing the Layout.",
+                        "description": "Flag indicating whether the player should perform a collect before playing the Layout",
                         "required": false,
                         "type": "integer"
                     },
                     {
                         "name": "changeMode",
                         "in": "formData",
-                        "description": "Whether to queue or replace with this action. Queuing will keep the current change layout action and switch after it is finished. If no active change layout action is present, both options are actioned immediately",
+                        "description": "Whether to queue or replace with this action",
                         "required": true,
                         "type": "string"
                     }
@@ -2847,7 +2840,7 @@
                     {
                         "name": "displayGroupId",
                         "in": "path",
-                        "description": "This can be either a Display Group or the Display specific Display Group",
+                        "description": "The display group id",
                         "required": true,
                         "type": "integer"
                     }
@@ -2871,21 +2864,21 @@
                     {
                         "name": "displayGroupId",
                         "in": "path",
-                        "description": "This can be either a Display Group or the Display specific Display Group",
+                        "description": "The Display Group Id",
                         "required": true,
                         "type": "integer"
                     },
                     {
                         "name": "layoutId",
                         "in": "formData",
-                        "description": "The ID of the Layout to change to. Either this or a campaignId must be provided.",
+                        "description": "The Layout Id",
                         "required": true,
                         "type": "integer"
                     },
                     {
                         "name": "campaignId",
                         "in": "formData",
-                        "description": "The Layout specific campaignId of the Layout to change to. Either this or a layoutId must be provided.",
+                        "description": "The layout specific Campaign Id",
                         "required": false,
                         "type": "integer"
                     },
@@ -2899,7 +2892,7 @@
                     {
                         "name": "downloadRequired",
                         "in": "formData",
-                        "description": "Whether to queue or replace with this action. Queuing will keep the current change layout action and switch after it is finished. If no active change layout action is present, both options are actioned immediately",
+                        "description": "Flag indicating whether the player should perform a collect before adding the Overlay",
                         "required": false,
                         "type": "integer"
                     }
@@ -6356,13 +6349,6 @@
                         "type": "string"
                     },
                     {
-                        "name": "statDateLessThan",
-                        "in": "query",
-                        "description": "The statDate filter returns records that are less than a particular date",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
                         "name": "statId",
                         "in": "query",
                         "description": "The statId filter returns records that are greater than a particular statId",
@@ -8686,7 +8672,7 @@
                     {
                         "name": "template",
                         "in": "formData",
-                        "description": "Template for each item",
+                        "description": "Template for each item, replaces [itemsTemplate] in main template, Pass only with overrideTemplate set to 1 or with sourceId=2 ",
                         "required": false,
                         "type": "string"
                     },
@@ -13124,20 +13110,6 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/Playlist"
-                    }
-                },
-                "displayGroups": {
-                    "description": "An array of Display Groups owned by this User",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/DisplayGroup"
-                    }
-                },
-                "dayParts": {
-                    "description": "An array of Dayparts owned by this User",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/DayPart"
                     }
                 },
                 "homePage": {

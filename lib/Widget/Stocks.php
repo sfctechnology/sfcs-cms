@@ -329,7 +329,7 @@ class Stocks extends AlphaVantageBase
         $data = [];
 
         // Parse items out into an array
-        $items = array_map('trim', explode(',', $items));
+        $items = explode(',', $items);
 
         try {
             foreach ($items as $symbol) {

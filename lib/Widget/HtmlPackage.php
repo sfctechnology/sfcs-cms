@@ -24,6 +24,7 @@ namespace Xibo\Widget;
 
 use Respect\Validation\Validator as v;
 use Xibo\Exception\InvalidArgumentException;
+use Xibo\Exception\XiboException;
 use Xibo\Factory\ModuleFactory;
 
 /**
@@ -183,7 +184,7 @@ class HtmlPackage extends ModuleWidget
         $this->setUseDuration($this->getSanitizer()->getCheckbox('useDuration'));
         $this->setOption('name', $this->getSanitizer()->getString('name'));
         $this->setOption('enableStat', $this->getSanitizer()->getString('enableStat'));
-        $this->setOption('nominatedFile', urlencode($this->getSanitizer()->getString('nominatedFile')));
+        $this->setOption('nominatedFile', $this->getSanitizer()->getString('nominatedFile'));
         $this->setOption('updateInterval', $this->getSetting('updateInterval', 259200));
 
         $this->saveWidget();

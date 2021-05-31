@@ -113,10 +113,8 @@ class PlaylistFactory extends BaseFactory
     {
         $playlists = $this->query(null, array('disableUserCheck' => 1, 'regionId' => $regionId));
 
-        if (count($playlists) <= 0) {
-            $this->getLog()->error('Region ' . $regionId . ' does not have a Playlist associated, please try to set a new owner in Permissions.');
-            throw new NotFoundException(__('One of the Regions on this Layout does not have a Playlist, please contact your administrator.'));
-        }
+        if (count($playlists) <= 0)
+            throw new NotFoundException(__('Cannot find playlist'));
 
         return $playlists[0];
     }
@@ -226,7 +224,7 @@ class PlaylistFactory extends BaseFactory
 
         $body = '  
               FROM `playlist` 
-                LEFT OUTER JOIN `user` 
+                INNER JOIN `user` 
                 ON `user`.userId = `playlist`.ownerId
              WHERE 1 = 1 
         ';
@@ -300,21 +298,6 @@ class PlaylistFactory extends BaseFactory
                 $body .= ' AND `playlist`.regionId IS NOT NULL ';
             else
                 $body .= ' AND `playlist`.regionId IS NULL ';
-        }
-
-        if ($this->getSanitizer()->getInt('layoutId', $filterBy) !== null) {
-
-            $body .= '
-                AND playlist.playlistId IN (
-                       SELECT lkplaylistplaylist.childId
-                        FROM region
-                        INNER JOIN playlist
-                            ON playlist.regionId = region.regionId
-                        INNER JOIN lkplaylistplaylist
-                            ON lkplaylistplaylist.parentId = playlist.playlistId
-                        WHERE region.layoutId = :layoutId
-                )';
-            $params['layoutId'] = $this->getSanitizer()->getInt('layoutId', $filterBy);
         }
 
         // Logged in user view permissions

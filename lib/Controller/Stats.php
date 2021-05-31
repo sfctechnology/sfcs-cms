@@ -265,13 +265,6 @@ class Stats extends Base
      *      required=false
      *   ),
      *  @SWG\Parameter(
-     *      name="statDateLessThan",
-     *      in="query",
-     *      description="The statDate filter returns records that are less than a particular date",
-     *      type="string",
-     *      required=false
-     *   ),
-     *  @SWG\Parameter(
      *      name="statId",
      *      in="query",
      *      description="The statId filter returns records that are greater than a particular statId",
@@ -368,7 +361,6 @@ class Stats extends Base
         $layoutIds = $this->getSanitizer()->getIntArray('layoutId');
         $mediaIds = $this->getSanitizer()->getIntArray('mediaId');
         $statDate = $this->getSanitizer()->getDate('statDate');
-        $statDateLessThan = $this->getSanitizer()->getDate('statDateLessThan');
         $statId = $this->getSanitizer()->getString('statId');
         $campaignId = $this->getSanitizer()->getInt('campaignId');
         $eventTag = $this->getSanitizer()->getString('eventTag');
@@ -382,6 +374,21 @@ class Stats extends Base
 
         // CMS timezone
         $defaultTimezone = $this->getConfig()->getSetting('defaultTimezone');
+
+        // Band the dates out
+        if ($fromDt != null) {
+            $fromDt->startOfDay();
+        }
+
+        if ($toDt != null) {
+            $toDt->addDay()->startOfDay();
+        }
+
+        // What if the fromdt and todt are exactly the same?
+        // in this case assume an entire day from midnight on the fromdt to midnight on the todt (i.e. add a day to the todt)
+        if ($fromDt != null && $toDt != null && $fromDt == $toDt) {
+            $toDt->addDay();
+        }
 
         // Merge displayId and displayIds
         if ($displayId != 0) {
@@ -403,7 +410,6 @@ class Stats extends Base
                 'layoutIds' => $layoutIds,
                 'mediaIds' => $mediaIds,
                 'statDate' => $statDate,
-                'statDateLessThan' => $statDateLessThan,
                 'statId' => $statId,
                 'campaignId' => $campaignId,
                 'eventTag' => $eventTag,
@@ -969,18 +975,16 @@ class Stats extends Base
         $tags = $this->getSanitizer()->getString('tags');
         $onlyLoggedIn = $this->getSanitizer()->getCheckbox('onlyLoggedIn') == 1;
 
-        $currentDate = $this->getDate()->parse();
+        $currentDate = $this->getDate()->parse()->startOfDay()->format('Y-m-d');
 
         // fromDt is always start of selected day
         $fromDt = $this->getDate()->parse($fromDt)->startOfDay();
-        $toDt = $this->getDate()->parse($toDt);
 
         // If toDt is current date then make it current datetime
-        // Else todat is next day
-        if ($toDt->format('Y-m-d') == $currentDate->format('Y-m-d')) {
+        if ($this->getDate()->parse($toDt)->startOfDay()->format('Y-m-d') == $currentDate) {
             $toDt = $this->getDate()->parse();
         } else {
-            $toDt = $toDt->addDay()->startOfDay();
+            $toDt = $this->getDate()->parse()->startOfDay();
         }
 
         // Get an array of display id this user has access to.

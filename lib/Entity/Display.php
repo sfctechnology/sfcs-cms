@@ -41,7 +41,6 @@ use Xibo\Storage\StorageServiceInterface;
 /**
  * Class Display
  * @package Xibo\Entity
- * @property $isCmsTransferInProgress Is a transfer to another CMS in progress?
  *
  * @SWG\Definition()
  */
@@ -678,7 +677,7 @@ class Display implements \JsonSerializable
             $this->edit();
         }
 
-        if ($options['audit'] && $this->getChangedProperties() != [])
+        if ($options['audit'])
             $this->getLog()->audit('Display', $this->displayId, 'Display Saved', $this->getChangedProperties());
 
         // Trigger an update of all dynamic DisplayGroups

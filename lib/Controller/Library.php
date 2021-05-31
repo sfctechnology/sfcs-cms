@@ -529,9 +529,7 @@ class Library extends Base
             'ownerUserGroupId' => $this->getSanitizer()->getInt('ownerUserGroupId'),
             'assignable' => $this->getSanitizer()->getInt('assignable'),
             'notPlayerSoftware' => 1,
-            'notSavedReport' => 1,
-            'layoutId' => $this->getSanitizer()->getInt('layoutId'),
-            'includeLayoutBackgroundImage' => ($this->getSanitizer()->getInt('layoutId') != null) ? 1 : 0
+            'notSavedReport' => 1
         ]));
 
         // Add some additional row content
@@ -1531,7 +1529,6 @@ class Library extends Base
             // If the media type is a module, then pretend its a generic file
             $this->getLog()->info('Removing Expired File %s', $entry->name);
             $entry->setChildObjectDependencies($this->layoutFactory, $this->widgetFactory, $this->displayGroupFactory, $this->displayFactory, $this->scheduleFactory, $this->playerVersionFactory);
-            $this->getLog()->audit('Media', $entry->mediaId, 'Removing Expired', ['mediaId' => $entry->mediaId, 'name' => $entry->name, 'expired' => $this->getDate()->getLocalDate($entry->expires)]);
             $entry->delete();
         }
     }

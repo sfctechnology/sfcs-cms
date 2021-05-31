@@ -464,8 +464,7 @@ class State extends Middleware
                 $container->dateService,
                 $container->configService,
                 $container->dataSetFactory,
-                $container->dataSetColumnFactory,
-                $container->userFactory
+                $container->dataSetColumnFactory
             );
         });
 
@@ -1145,8 +1144,7 @@ class State extends Middleware
                 $container->widgetFactory,
                 $container->playerVersionFactory,
                 $container->playlistFactory,
-                $container->dataSetFactory,
-                $container->dayPartFactory
+                $container->dataSetFactory
             );
         });
 

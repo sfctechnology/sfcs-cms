@@ -164,15 +164,7 @@
                     {"data": "logDate", "render": dataTableDateFromUnix},
                     {"data": "userName"},
                     {"data": "entity"},
-                    {
-                        "name": "entityId",
-                        "data" : function (data) {
-                            if (data.entityId === 0) {
-                                return ''
-                            }
-                            return data.entityId;
-                        }
-                    },
+                    {"data": "entityId"},
                     {"data": "message"},
                     {
                         "data": function (data, type, row, meta) {

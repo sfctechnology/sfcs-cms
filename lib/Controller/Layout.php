@@ -28,7 +28,6 @@ use Xibo\Entity\Region;
 use Xibo\Entity\Session;
 use Xibo\Entity\Widget;
 use Xibo\Exception\AccessDeniedException;
-use Xibo\Exception\GeneralException;
 use Xibo\Exception\InvalidArgumentException;
 use Xibo\Exception\NotFoundException;
 use Xibo\Exception\XiboException;
@@ -1267,7 +1266,7 @@ class Layout extends Base
             if ($this->getUser()->routeViewable('/schedulenow/form/now/:from/:id') === true) {
                 $layout->buttons[] = array(
                     'id' => 'layout_button_schedulenow',
-                    'url' => $this->urlFor('schedulenow.now.form', ['id' => $layout->campaignId, 'from' => 'Layout']),
+                    'url' => $this->urlFor('schedulenow.now.form', ['id' => $layout->campaignId, 'from' => 'Campaign']),
                     'text' => __('Schedule Now')
                 );
             }
@@ -1278,35 +1277,6 @@ class Layout extends Base
                     'url' => $this->urlFor('layout.assignTo.campaign.form', ['id' => $layout->layoutId]),
                     'text' => __('Assign to Campaign')
                 );
-            }
-
-            $layout->buttons[] = ['divider' => true];
-
-            if ($this->getUser()->routeViewable('/playlist/view')) {
-                $layout->buttons[] = [
-                    'id' => 'layout_button_playlist_jump',
-                    'linkType' => '_self', 'external' => true,
-                    'url' => $this->urlFor('playlist.view') .'?layoutId=' . $layout->layoutId,
-                    'text' => __('Jump to Playlists included on this Layout')
-                ];
-            }
-
-            if ($this->getUser()->routeViewable('/campaign/view')) {
-                $layout->buttons[] = [
-                    'id' => 'layout_button_campaign_jump',
-                    'linkType' => '_self', 'external' => true,
-                    'url' => $this->urlFor('campaign.view') .'?layoutId=' . $layout->layoutId,
-                    'text' => __('Jump to Campaigns containing this Layout')
-                ];
-            }
-
-            if ($this->getUser()->routeViewable('/library/view')) {
-                $layout->buttons[] = [
-                    'id' => 'layout_button_media_jump',
-                    'linkType' => '_self', 'external' => true,
-                    'url' => $this->urlFor('library.view') .'?layoutId=' . $layout->layoutId,
-                    'text' => __('Jump to Media included on this Layout')
-                ];
             }
 
             $layout->buttons[] = ['divider' => true];
@@ -1484,11 +1454,7 @@ class Layout extends Base
             throw new AccessDeniedException();
             
         // Edits always happen on Drafts, get the draft Layout using the Parent Layout ID
-        if ($layout->schemaVersion < 2) {
-            $resolution = $this->resolutionFactory->getByDesignerDimensions($layout->width, $layout->height);
-        } else {
-            $resolution = $this->resolutionFactory->getByDimensions($layout->width, $layout->height);
-        }
+        $resolution = $this->resolutionFactory->getByDimensions($layout->width, $layout->height);
 
         // If we have a background image, output it
         $backgroundId = $this->getSanitizer()->getInt('backgroundOverride', $layout->backgroundImageId);
@@ -1580,25 +1546,35 @@ class Layout extends Base
     public function copy($layoutId)
     {
         // Get the layout
-        $originalLayout = $this->layoutFactory->getById($layoutId);
+        $layout = $this->layoutFactory->getById($layoutId);
 
         // Check Permissions
-        if (!$this->getUser()->checkViewable($originalLayout)) {
+        if (!$this->getUser()->checkViewable($layout))
             throw new AccessDeniedException();
-        }
+
         // Make sure we're not a draft
-        if ($originalLayout->isChild()) {
-            throw new InvalidArgumentException(__('Cannot copy a Draft Layout'), 'layoutId');
-        }
+        if ($layout->isChild())
+            throw new InvalidArgumentException('Cannot copy a Draft Layout', 'layoutId');
 
         // Load the layout for Copy
-        $originalLayout->load(['loadTags' => false]);
+        $layout->load(['loadTags' => false]);
+        $originalLayout = $layout;
 
         // Clone
-        $layout = clone $originalLayout;
-        $tags = $this->tagFactory->getTagsWithValues($layout);
+        $layout = clone $layout;
+        $tags = '';
 
-        $this->getLog()->debug('Tag values from original layout: ' . $tags);
+        $arrayOfTags = array_filter(explode(',', $layout->tags));
+        $arrayOfTagValues = array_filter(explode(',', $layout->tagValues));
+
+        for ($i=0; $i<count($arrayOfTags); $i++) {
+            if (isset($arrayOfTags[$i]) && (isset($arrayOfTagValues[$i]) && $arrayOfTagValues[$i] !== 'NULL' )) {
+                $tags .= $arrayOfTags[$i] . '|' . $arrayOfTagValues[$i];
+                $tags .= ',';
+            } else {
+                $tags .= $arrayOfTags[$i] . ',';
+            }
+        }
 
         $layout->layout = $this->getSanitizer()->getString('name');
         $layout->description = $this->getSanitizer()->getString('description');
@@ -1930,8 +1906,7 @@ class Layout extends Base
         // Render the form
         $this->getState()->template = 'layout-form-export';
         $this->getState()->setData([
-            'layout' => $layout,
-            'saveAs' => 'export_' . preg_replace('/[^a-z0-9]+/', '-', strtolower($layout->layout))
+            'layout' => $layout
         ]);
     }
 
@@ -1952,20 +1927,13 @@ class Layout extends Base
 
         // Make sure we're not a draft
         if ($layout->isChild())
-            throw new InvalidArgumentException('Cannot export a Draft Layout', 'layoutId');
-
-        // Save As?
-        $saveAs = $this->getSanitizer()->getString('saveAs');
+            throw new InvalidArgumentException('Cannot manage tags on a Draft Layout', 'layoutId');
 
         // Make sure our file name is reasonable
-        if (empty($saveAs)) {
-            $saveAs = 'export_' . preg_replace('/[^a-z0-9]+/', '-', strtolower($layout->layout));
-        } else {
-            $saveAs = preg_replace('/[^a-z0-9]+/', '-', strtolower($saveAs));
-        }
+        $layoutName = preg_replace('/[^a-z0-9]+/', '-', strtolower($layout->layout));
 
-        $fileName = $this->getConfig()->getSetting('LIBRARY_LOCATION') . 'temp/' . $saveAs . '.zip';
-        $layout->toZip($this->dataSetFactory, $fileName, ['includeData' => ($this->getSanitizer()->getCheckbox('includeData') == 1), 'user' => $this->getUser()]);
+        $fileName = $this->getConfig()->getSetting('LIBRARY_LOCATION') . 'temp/export_' . $layoutName . '.zip';
+        $layout->toZip($this->dataSetFactory, $fileName, ['includeData' => ($this->getSanitizer()->getCheckbox('includeData')== 1)]);
 
         if (ini_get('zlib.output_compression')) {
             ini_set('zlib.output_compression', 'Off');
@@ -2327,7 +2295,7 @@ class Layout extends Base
 
             // We also build the XLF at this point, and if we have a problem we prevent publishing and raise as an
             // error message
-            $draft->xlfToDisk(['notify' => true, 'exceptionOnError' => true, 'exceptionOnEmptyRegion' => false, 'publishing' => true]);
+            $draft->xlfToDisk(['notify' => true, 'exceptionOnError' => true, 'exceptionOnEmptyRegion' => false]);
 
             // Return
             $this->getState()->hydrate([

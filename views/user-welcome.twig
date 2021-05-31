@@ -37,20 +37,11 @@
         // New wizard tour
         tour = window.tour = new Tour({
             debug: false,
-            keyboard: false,
             framework: "bootstrap3", 
             showProgressBar: false,     // don't show the progress bar on this step only
             showProgressText: false,    // don't show the progress text on this step only
-            highlightOpacity: 0.6,
-            onElementUnavailable: cmsOnElementUnavailable,
             onEnd: function () {
                 setNewUserWizardState();
-            },
-            onModalHidden: function(tour, stepNumber) {
-                // If the modal is closed in step 19, go to next step automaticaly
-                console.debug('onModalHidden');
-                console.debug(stepNumber == 6);
-                return (stepNumber == 6);
             },
             steps: [
                 { // 0
@@ -102,44 +93,49 @@
                     title: "",
                     delayOnElement: {
                         delayElement: "element",
-                        maxDelay: 5000
+                        maxDelay: 10000
                     },
                     content: "{% trans "This is the layout grid and from here is where you can add new and manage existing layouts." %}",
-                    template: next_template,
-                    onElementUnavailableStep: 1
+                    template: next_template
                 }, { // 4
                     element: ".btn-success a",
                     placement: "left",
                     title: "",
                     content: "{% trans "Create a new layout by clicking on <b>Add Layout</b>" %}",
                     reflex: true,
-                    template: no_nav_template,
-                    onElementUnavailableStep: 1
+                    template: no_nav_template
                 }, {
                     element: "#name",
                     placement: "bottom",
-                    container: '.bootbox',
                     title: "",
-                    content: "{% trans "Name your layout so you can easily identify it for scheduling." %}",
-                    reflex: "click change",
-                    template: no_nav_template,
                     delayOnElement: {
                         delayElement: "element",
                         maxDelay: 5000
                     },
-                    onElementUnavailableStep: 4
+                    content: "{% trans "Name your layout so you can easily identify it for scheduling." %}",
+                    reflex: "blur",
+                    template: no_nav_template
                 }, { // 6
                     element: ".save-button",
-                    container: '.bootbox',
-                    placement: "top",
+                    placement: "left",
                     title: "",
                     content: "{% trans "Press <b>Save</b>." %}",
+                    reflex: true,
                     template: no_nav_template,
-                    onElementUnavailableStep: 4
+                    delay: {
+                        show: 500,
+                        hide: 5000
+                    },
+                    onHidden: function (tour) {
+                        if ($(".form-error").length === 1) {
+                            tour.goTo(5);
+                            return false;
+                        }
+                    }
                 },
                 {
                     element: '#layout-editor',
-                    placement: "top",
+                    orphan: true,
                     title: "",
                     delayOnElement: {
                         delayElement: "element",
@@ -185,7 +181,7 @@
                     delay: 500,
                     backdrop: true,
                     template: next_template,
-                    onElementUnavailable: 10
+                    onElementUnavailable: tourStepBroken
                 }, {
                     title: "",
                     content: "{% trans "Let's start by opening the Navigator edit mode. Click on the edit button." %}",
@@ -196,29 +192,26 @@
                 }, { // 13
                     title: "",
                     content: "{% trans "Click anywhere inside the region to edit it" %}",
-                    element: '#layout-navigator div[data-type="region"]:first',
+                    element: '#layout-navigator div[data-type="region"]',
                     smartPlacement: true,
                     delay: 500,
                     reflex: true,
                     template: no_nav_template
                 }, {
                     title: "",
-                    content: "{% trans "Grab the Region handle, and drag to resize." %}",
-                    element: '#layout-navigator div[data-type="region"]:first .ui-resizable-se',
+                    content: "{% trans "Grab the region handle, and drag to resize." %}",
+                    element: '#layout-navigator div[data-type="region"] .ui-resizable-se',
                     placement: "bottom",
-                    reflex: "mouseover",
-                    delay: 400,
-                    template: no_nav_template
+                    delay: 500,
+                    reflex: "mouseup",
+                    template: no_nav_template,
+                    onElementUnavailable: tourStepBroken
                 }, { // 15
                     title: "",
                     content: "{% trans "When you are happy with your positioning, click save to save changes." %}",
                     element: "#properties-panel button[data-action='save']",
                     placement: "left",
                     reflex: true,
-                    delayOnElement: {
-                        delayElement: "element",
-                        maxDelay: 1000
-                    },
                     template: no_nav_template
                 }, { 
                     title: "",
@@ -232,12 +225,16 @@
                     title: "",
                     container: '#layout-editor',
                     content: "{% trans "You will now have an empty region that has been resized and positioned on a black background. Let's add some content!" %}",
-                    element: '#layout-timeline .designer-region:first',
+                    element: '#layout-timeline .designer-region',
                     placement: "bottom",
                     template: next_template,
-                    delayOnElement: {
-                        delayElement: "element",
-                        maxDelay: 4000
+                    delay: 1000,
+                    onShown: function (tour) {
+                        // If we have a widget already, got to the properties step
+                        if ($('#layout-timeline .designer-widget').length > 0) {
+                            tour.goTo(22);
+                            return false;
+                        }
                     }
                 }, { // 18
                     title: "",
@@ -259,7 +256,7 @@
                     element: "#layout-editor-toolbar #content-2 .toolbar-pane-content",
                     placement: "top",
                     template: next_template,
-                    delay: 500
+                    onElementUnavailable: tourStepBroken
                 }, { // 20
                     title: "",
                     content: "{% trans "Add by <b>dragging</b> the widget to a region, or clicking on the <b>plus button</b> and click on the target region. Click <b>Next</b> after adding the widget." %}",
@@ -341,7 +338,7 @@
                     element: '#properties-panel input#name',
                     placement: "left",
                     template: no_nav_template,
-                    reflex: 'click change',
+                    reflex: 'focusin',
                 }, {
                     title: "",
                     content: "{% trans "Click in the <b>Set a duration</b> box to select that option." %}",
@@ -349,14 +346,15 @@
                     placement: "left",
                     template: no_nav_template,
                     reflex: true,
-                    delay: 500
+                    delay: 500,
+                    onElementUnavailable: tourStepBroken
                 }, { // 28
                     title: "",
                     content: "{% trans "Let’s override the default time to 30 seconds." %}",
                     element: '#properties-panel input#duration',
                     placement: "left",
                     template: no_nav_template,
-                    reflex: 'click change',
+                    reflex: 'focusin',
                     delay: 500
                 }, {
                     title: "",
@@ -379,10 +377,7 @@
                     element: '#layout-timeline .designer-widget .widgetLabel .widgetDuration',
                     placement: "top",
                     template: next_template,
-                    delayOnElement: {
-                        delayElement: "element",
-                        maxDelay: 4000
-                    }
+                    delay: 500
                 }, {
                     title: "",
                     content: "{% trans "Now change the default background from black to a colour of your choice. Click in the back button to go back to the layout options." %}",
@@ -411,7 +406,7 @@
                     element: '#properties-panel input#backgroundColor',
                     placement: "left",
                     template: no_nav_template,
-                    reflex: 'click change',
+                    reflex: 'focusout',
                     delay: 500
                 }, { // 34
                     title: "",
@@ -424,12 +419,9 @@
                 },  {
                     title: "",
                     content: "{% trans "You can take a look at how your layout will look on your displays by clicking on the Play button on the Preview window." %}",
-                    element: '#layout-viewer-navbar #play-btn',
+                    element: '#layout-viewer #play-btn',
                     placement: "right",
-                    delayOnElement: {
-                        delayElement: "element",
-                        maxDelay: 4000
-                    },
+                    delay: 500,
                     template: next_template
                 }, { // 36
                     title: "",
@@ -466,18 +458,16 @@
                     title: "",
                     element: '.welcome-screen-modal .modal-dialog',
                     content: "{% trans "Your layout is now ready to be scheduled to displays / display groups!" %}",
-                    element: '#layout-editor',
-                    placement: "top",
+                    orphan: true,
+                    placement: "bottom",
                     template: next_template,
-                    delayOnElement: {
-                        delayElement: "element",
-                        maxDelay: 10000
-                    }
+                    delay: 3000
                 }, {
                     title: "Success!",
                     content: "{% trans "And that is how easy it is to create a basic layout. Ready for more? Jump into the User Manual for guidance and top tips!" %}",
                     orphan: true,
-                    template: final_template
+                    template: final_template,
+                    delay: 300
                 }
             ]
         });
@@ -632,50 +622,33 @@
         }
 
         $("#reshowWelcomeMenuItem").on("click", function() {
-            restartTour(tour);
+            restartTour(tour, true, true);
         });
     });
 
     function tourStepBroken(tour, stepNumber) {
-        // Restart tour and go to a stable step
-        restartTour(tour, Number(stepNumber-1));
+        restartTour(tour, true, true);
     }
 
     // Restart tour and/or save to prefs
-    function restartTour(tour, fromStep, saveToPrefs) {
-        saveToPrefs = (saveToPrefs === undefined) ? true : saveToPrefs;
-
-        if(tour == undefined) {
-            return false;
-        }
+    function restartTour(tour, saveToPrefs, fromStart) {
+        saveToPrefs = (saveToPrefs === undefined) ? false : saveToPrefs;
+        fromStart = (fromStart === undefined) ? false : fromStart;
 
         if(saveToPrefs) {
             setNewUserWizardState(false);
         }
 
         // Reshow the user welcome wizard
-        if(tour.ended()) {
+        if(fromStart) {
             tour.restart();
-        } else if(fromStep != undefined && (fromStep != tour.getCurrentStepIndex() || tour.getCurrentStepIndex() == null)) {
-            tour.restart();
-            setTimeout(function() { tour.goTo(fromStep); }, 500);
         } else {
-            // Start tour
             tour.start();
         }
     }
 
-    function cmsOnElementUnavailable(tour, step) {
-        var currentStep = tour.getStep(step);
-
-        if(currentStep.onElementUnavailableStep != undefined) {
-            restartTour(tour, currentStep.onElementUnavailableStep);
-        } else {
-            restartTour(tour, step - 1);
-        }
-    }
-
     function setNewUserWizardState(seen) {
+        
         seen = (seen === undefined) ? true : seen;
 
         // If var is invalid, skip set

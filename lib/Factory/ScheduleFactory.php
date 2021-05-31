@@ -197,7 +197,6 @@ class ScheduleFactory extends BaseFactory
             SELECT `schedule`.eventTypeId, 
                 layout.layoutId, 
                 `layout`.status, 
-                `layout`.duration,
                 `command`.code, 
                 schedule.fromDt, 
                 schedule.toDt,

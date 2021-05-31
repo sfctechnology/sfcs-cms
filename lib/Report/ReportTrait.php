@@ -1,24 +1,4 @@
 <?php
-/*
- * Copyright (C) 2020 Xibo Signage Ltd
- *
- * Xibo - Digital Signage - http://www.xibo.org.uk
- *
- * This file is part of Xibo.
- *
- * Xibo is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
- *
- * Xibo is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with Xibo.  If not, see <http://www.gnu.org/licenses/>.
- */
 
 namespace Xibo\Report;
 
@@ -254,12 +234,10 @@ trait ReportTrait
      * @param \Jenssegers\Date\Date $fromDt
      * @param \Jenssegers\Date\Date $toDt
      * @param string $groupByFilter
-     * @param string $table
-     * @param string $customLabel Custom Label
      * @return string
      * @throws \Xibo\Exception\InvalidArgumentException
      */
-    public function getTemporaryPeriodsTable($fromDt, $toDt, $groupByFilter, $table = 'temp_periods', $customLabel = 'Y-m-d H:i:s')
+    public function getTemporaryPeriodsTable($fromDt, $toDt, $groupByFilter)
     {
         // My from/to dt represent the entire range we're interested in.
         // we need to generate periods according to our grouping, within that range.
@@ -287,12 +265,11 @@ trait ReportTrait
         // Drop table if exists
 
         $this->getStore()->getConnection()->exec('
-                DROP TABLE IF EXISTS `' . $table . '`');
+                DROP TABLE IF EXISTS temp_periods ');
 
         $this->getStore()->getConnection()->exec('
-                CREATE TEMPORARY TABLE `' . $table . '` (
+                CREATE TEMPORARY TABLE temp_periods (
                     id INT,
-                    customLabel VARCHAR(20),
                     label VARCHAR(20),
                     start INT,
                     end INT
@@ -301,10 +278,9 @@ trait ReportTrait
 
         // Prepare an insert statement
         $periods = $this->getStore()->getConnection()->prepare('
-                INSERT INTO `' . $table . '` (id, customLabel, label, start, end) 
-                VALUES (:id, :customLabel, :label, :start, :end)
+                INSERT INTO temp_periods (id, label, start, end) 
+                VALUES (:id, :label, :start, :end)
             ');
-
 
         // Loop until we've covered all periods needed
         $loopDate = $fromDt->copy();
@@ -313,7 +289,6 @@ trait ReportTrait
             if ($groupByFilter == 'byhour') {
                 $periods->execute([
                     'id' => $loopDate->hour,
-                    'customLabel' => $loopDate->format($customLabel),
                     'label' => $loopDate->format('g:i A'),
                     'start' => $loopDate->format('U'),
                     'end' => $loopDate->addHour()->format('U')
@@ -321,7 +296,6 @@ trait ReportTrait
             } else if ($groupByFilter == 'byday') {
                 $periods->execute([
                     'id' => $loopDate->year . $loopDate->month . $loopDate->day,
-                    'customLabel' => $loopDate->format($customLabel),
                     'label' => $loopDate->format('Y-m-d'),
                     'start' => $loopDate->format('U'),
                     'end' => $loopDate->addDay()->format('U')
@@ -329,7 +303,6 @@ trait ReportTrait
             } else if ($groupByFilter == 'byweek') {
                 $periods->execute([
                     'id' => $loopDate->weekOfYear . $loopDate->year,
-                    'customLabel' => $loopDate->format($customLabel),
                     'label' => $loopDate->format('Y-m-d (\wW)'),
                     'start' => $loopDate->format('U'),
                     'end' => $loopDate->addWeek()->format('U')
@@ -337,7 +310,6 @@ trait ReportTrait
             } else if ($groupByFilter == 'bymonth') {
                 $periods->execute([
                     'id' => $loopDate->year . $loopDate->month,
-                    'customLabel' => $loopDate->format($customLabel),
                     'label' => $loopDate->format('M'),
                     'start' => $loopDate->format('U'),
                     'end' => $loopDate->addMonth()->format('U')
@@ -345,7 +317,6 @@ trait ReportTrait
             } else if ($groupByFilter == 'bydayofweek') {
                 $periods->execute([
                     'id' => $loopDate->dayOfWeek,
-                    'customLabel' => $loopDate->format($customLabel),
                     'label' => $loopDate->format('D'),
                     'start' => $loopDate->format('U'),
                     'end' => $loopDate->addDay()->format('U')
@@ -353,7 +324,6 @@ trait ReportTrait
             } else if ($groupByFilter == 'bydayofmonth') {
                 $periods->execute([
                     'id' => $loopDate->day,
-                    'customLabel' => $loopDate->format($customLabel),
                     'label' => $loopDate->format('d'),
                     'start' => $loopDate->format('U'),
                     'end' => $loopDate->addDay()->format('U')
@@ -364,9 +334,9 @@ trait ReportTrait
             }
         }
 
-        $this->getLog()->debug(json_encode($this->store->select('SELECT * FROM ' . $table, []), JSON_PRETTY_PRINT));
+        $this->getLog()->debug(json_encode($this->store->select('SELECT * FROM temp_periods', []), JSON_PRETTY_PRINT));
 
-        return $table;
+        return 'temp_periods';
     }
 
     public function getUserId() {
@@ -415,21 +385,15 @@ trait ReportTrait
      */
     public function gridRenderSort()
     {
-        $columns = $this->getSanitizer()->getParam('columns', null);
-        if ($columns === null || !is_array($columns) || count($columns) <= 0) {
-            return null;
-        }
+        $columns = $this->getSanitizer()->getStringArray('columns');
 
-        $order = $this->getSanitizer()->getParam('order', null);
-        if ($order === null || !is_array($order) || count($order) <= 0) {
+        if ($columns == null || !is_array($columns))
             return null;
-        }
 
-        return array_map(function ($element) use ($columns) {
-            return ((isset($columns[$element['column']]['name']) && $columns[$element['column']]['name'] != '')
-                    ? '`' . $columns[$element['column']]['name'] . '`'
-                    : '`' . $columns[$element['column']]['data'] . '`')
-                . (($element['dir'] == 'desc') ? ' DESC' : '');
-        }, $order);
+        $order = array_map(function ($element) use ($columns) {
+            return ((isset($columns[$element['column']]['name']) && $columns[$element['column']]['name'] != '') ? '`' . $columns[$element['column']]['name'] . '`' : '`' . $columns[$element['column']]['data'] . '`') . (($element['dir'] == 'desc') ? ' DESC' : '');
+        }, $this->getSanitizer()->getStringArray('order'));
+
+        return $order;
     }
 }

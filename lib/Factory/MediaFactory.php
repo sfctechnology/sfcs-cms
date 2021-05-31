@@ -211,7 +211,7 @@ class MediaFactory extends BaseFactory
             $media->mediaType = $requestOptions['fileType'];
             $media->duration = $requestOptions['duration'];
             $media->moduleSystemFile = 0;
-            $media->isRemote = true;
+            $media->isRemote = false;
             $media->urlDownload = true;
             $media->extension = $requestOptions['extension'];
             $media->enableStat = $requestOptions['enableStat'];
@@ -352,13 +352,12 @@ class MediaFactory extends BaseFactory
     /**
      * Get by Media Id
      * @param int $mediaId
-     * @param int $disableUserCheck
      * @return Media
      * @throws NotFoundException
      */
-    public function getById($mediaId, $disableUserCheck = 1)
+    public function getById($mediaId)
     {
-        $media = $this->query(null, ['disableUserCheck' => $disableUserCheck, 'mediaId' => $mediaId, 'allModules' => 1]);
+        $media = $this->query(null, array('disableUserCheck' => 1, 'mediaId' => $mediaId, 'allModules' => 1));
 
         if (count($media) <= 0)
             throw new NotFoundException(__('Cannot find media'));
@@ -450,12 +449,11 @@ class MediaFactory extends BaseFactory
      * Get Media by LayoutId
      * @param int $layoutId
      * @param int $edited
-     * @param int $excludeDynamicPlaylistMedia
      * @return array[Media]
      */
-    public function getByLayoutId($layoutId, $edited = -1, $excludeDynamicPlaylistMedia = 0)
+    public function getByLayoutId($layoutId, $edited = -1)
     {
-        return $this->query(null, ['disableUserCheck' => 1, 'layoutId' => $layoutId, 'isEdited' => $edited, 'excludeDynamicPlaylistMedia' => $excludeDynamicPlaylistMedia]);
+        return $this->query(null, ['disableUserCheck' => 1, 'layoutId' => $layoutId, 'isEdited' => $edited]);
     }
 
     /**
@@ -707,12 +705,7 @@ class MediaFactory extends BaseFactory
                         ON widget.widgetId = lkwidgetmedia.widgetId
                      WHERE region.layoutId = :layoutId ';
 
-            // include Media only for non dynamic Playlists #2392
-            if ($this->getSanitizer()->getInt('excludeDynamicPlaylistMedia') === 1) {
-                $body .= ' AND lkplaylistplaylist.childId IN (SELECT playlistId FROM playlist WHERE playlist.playlistId = lkplaylistplaylist.childId AND playlist.isDynamic = 0) ';
-            }
-
-            if ($this->getSanitizer()->getInt('widgetId') !== null) {
+            if ($this->getSanitizer()->getInt('widgetId', $filterBy) !== null) {
                 $body .= ' AND `widget`.widgetId = :widgetId ';
                 $params['widgetId'] = $this->getSanitizer()->getInt('widgetId', $filterBy);
             }
@@ -720,11 +713,6 @@ class MediaFactory extends BaseFactory
             $body .= '    )
                 AND media.type <> \'module\'
             ';
-
-            if ($this->getSanitizer()->getInt('includeLayoutBackgroundImage', $filterBy) === 1) {
-                $body .= ' OR media.mediaId IN ( SELECT `layout`.backgroundImageId FROM `layout` WHERE `layout`.layoutId = :layoutId ) ';
-            }
-
             $params['layoutId'] = $this->getSanitizer()->getInt('layoutId', $filterBy);
         }
 

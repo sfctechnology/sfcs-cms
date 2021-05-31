@@ -227,6 +227,7 @@ class DisplayGroup extends Base
             'dynamicCriteria' => $this->getSanitizer()->getString('dynamicCriteria'),
             'tags' => $this->getSanitizer()->getString('tags'),
             'exactTags' => $this->getSanitizer()->getCheckbox('exactTags'),
+            'useRegexForName' => $this->getSanitizer()->getCheckbox('useRegexForName'),
             'isDisplaySpecific' => $this->getSanitizer()->getInt('isDisplaySpecific'),
             'displayGroupIdMembers' => $this->getSanitizer()->getInt('displayGroupIdMembers'),
             'userId' => $this->getSanitizer()->getInt('userId'),
@@ -1483,46 +1484,46 @@ class DisplayGroup extends Base
      *  operationId="displayGroupActionChangeLayout",
      *  tags={"displayGroup"},
      *  summary="Action: Change Layout",
-     *  description="Send a change layout action to the provided Display Group. This will be sent to Displays in that Group via XMR.",
+     *  description="Send the change layout action to this DisplayGroup, you can pass layoutId or layout specific campaignId",
      *  @SWG\Parameter(
      *      name="displayGroupId",
      *      in="path",
-     *      description="This can be either a Display Group or the Display specific Display Group",
+     *      description="The Display Group Id",
      *      type="integer",
      *      required=true
      *   ),
      *  @SWG\Parameter(
      *      name="layoutId",
      *      in="formData",
-     *      description="The ID of the Layout to change to. Either this or a campaignId must be provided.",
+     *      description="The Layout Id",
      *      type="integer",
-     *      required=false
+     *      required=true
      *   ),
      *  @SWG\Parameter(
      *      name="campaignId",
      *      in="formData",
-     *      description="The Layout specific campaignId of the Layout to change to. Either this or a layoutId must be provided.",
+     *      description="The layout specific Campaign Id",
      *      type="integer",
      *      required=false
      *   ),
      *  @SWG\Parameter(
      *      name="duration",
      *      in="formData",
-     *      description="The duration in seconds for this Layout change to remain in effect, after which normal scheduling is resumed.",
+     *      description="The duration in seconds for this Layout change to remain in effect",
      *      type="integer",
      *      required=false
      *   ),
      *  @SWG\Parameter(
      *      name="downloadRequired",
      *      in="formData",
-     *      description="Flag indicating whether the player should perform a collect before playing the Layout.",
+     *      description="Flag indicating whether the player should perform a collect before playing the Layout",
      *      type="integer",
      *      required=false
      *   ),
      *  @SWG\Parameter(
      *      name="changeMode",
      *      in="formData",
-     *      description="Whether to queue or replace with this action. Queuing will keep the current change layout action and switch after it is finished. If no active change layout action is present, both options are actioned immediately",
+     *      description="Whether to queue or replace with this action",
      *      type="string",
      *      required=true
      *   ),
@@ -1620,7 +1621,6 @@ class DisplayGroup extends Base
      * Cause the player to revert to its scheduled content
      * @param int $displayGroupId
      * @throws ConfigurationException when the message cannot be sent
-     * @throws \Xibo\Exception\NotFoundException
      *
      * @SWG\Post(
      *  path="/displaygroup/{displayGroupId}/action/revertToSchedule",
@@ -1631,7 +1631,7 @@ class DisplayGroup extends Base
      *  @SWG\Parameter(
      *      name="displayGroupId",
      *      in="path",
-     *      description="This can be either a Display Group or the Display specific Display Group",
+     *      description="The display group id",
      *      type="integer",
      *      required=true
      *   ),
@@ -1673,21 +1673,21 @@ class DisplayGroup extends Base
      *  @SWG\Parameter(
      *      name="displayGroupId",
      *      in="path",
-     *      description="This can be either a Display Group or the Display specific Display Group",
+     *      description="The Display Group Id",
      *      type="integer",
      *      required=true
      *   ),
      *  @SWG\Parameter(
      *      name="layoutId",
      *      in="formData",
-     *      description="The ID of the Layout to change to. Either this or a campaignId must be provided.",
+     *      description="The Layout Id",
      *      type="integer",
      *      required=true
      *   ),
      *  @SWG\Parameter(
      *      name="campaignId",
      *      in="formData",
-     *      description="The Layout specific campaignId of the Layout to change to. Either this or a layoutId must be provided.",
+     *      description="The layout specific Campaign Id",
      *      type="integer",
      *      required=false
      *   ),
@@ -1701,7 +1701,7 @@ class DisplayGroup extends Base
      *  @SWG\Parameter(
      *      name="downloadRequired",
      *      in="formData",
-     *      description="Whether to queue or replace with this action. Queuing will keep the current change layout action and switch after it is finished. If no active change layout action is present, both options are actioned immediately",
+     *      description="Flag indicating whether the player should perform a collect before adding the Overlay",
      *      type="integer",
      *      required=false
      *   ),

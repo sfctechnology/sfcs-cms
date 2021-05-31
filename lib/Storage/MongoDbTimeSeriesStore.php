@@ -22,7 +22,6 @@
 
 namespace Xibo\Storage;
 
-use Jenssegers\Date\Date;
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\UTCDateTime;
 use MongoDB\Client;
@@ -406,34 +405,35 @@ class MongoDbTimeSeriesStore implements TimeSeriesStoreInterface
     {
         $collection = $this->client->selectCollection($this->config['database'], $this->table);
         try {
-            // _id is the same as statDate for the purposes of sorting (stat date being the date/time of stat insert)
-            $earliestDate = $collection->find([], [
-                'limit' => 1,
-                'sort' => ['start' => 1]
+            $earliestDate = $collection->aggregate([
+                [
+                    '$group' => [
+                        '_id' => [],
+                        'minDate' => ['$min' => '$statDate'],
+                    ]
+                ]
             ])->toArray();
 
-            if (count($earliestDate) > 0) {
-                return Date::instance($earliestDate[0]['start']->toDateTime());
+            if(count($earliestDate) > 0) {
+                return [
+                    'minDate' => $earliestDate[0]['minDate']->toDateTime()->format('U')
+                ];
             }
 
         } catch (\MongoDB\Exception\RuntimeException $e) {
             $this->log->error($e->getMessage());
         }
 
-        return null;
+        return [];
     }
 
-    /**
-     * @inheritdoc
-     * @throws \Xibo\Exception\GeneralException|\Xibo\Exception\InvalidArgumentException
-     */
+    /** @inheritdoc */
     public function getStats($filterBy = [])
     {
         // do we consider that the fromDt and toDt will always be provided?
         $fromDt = isset($filterBy['fromDt']) ? $filterBy['fromDt'] : null;
         $toDt = isset($filterBy['toDt']) ? $filterBy['toDt'] : null;
         $statDate = isset($filterBy['statDate']) ? $filterBy['statDate'] : null;
-        $statDateLessThan = isset($filterBy['statDateLessThan']) ? $filterBy['statDateLessThan'] : null;
 
         // In the case of user switches from mysql to mongo - laststatId were saved as integer
         if (isset($filterBy['statId'])) {
@@ -468,27 +468,13 @@ class MongoDbTimeSeriesStore implements TimeSeriesStoreInterface
 
             $toDt = new UTCDateTime($toDt->format('U')*1000);
             $match['$match']['start'] = [ '$lte' => $toDt];
-
-        } else if (($fromDt != null) && ($toDt == null)) {
-            $fromDt = new UTCDateTime($fromDt->format('U')*1000);
-            $match['$match']['start'] = [ '$gte' => $fromDt];
         }
 
-        // statDate and statDateLessThan Filter
+        // statDate Filter
         // get the next stats from the given date
-        $statDateQuery = [];
         if ($statDate != null) {
             $statDate = new UTCDateTime($statDate->format('U')*1000);
-            $statDateQuery['$gte'] = $statDate;
-        }
-        
-        if ($statDateLessThan != null) {
-            $statDateLessThan = new UTCDateTime($statDateLessThan->format('U')*1000);
-            $statDateQuery['$lt'] = $statDateLessThan;
-        }
-
-        if (count($statDateQuery) > 0) {
-            $match['$match']['statDate'] = $statDateQuery;
+            $match['$match']['statDate'] = [ '$gte' => $statDate];
         }
 
         if (!empty($statId)) {
@@ -548,92 +534,64 @@ class MongoDbTimeSeriesStore implements TimeSeriesStoreInterface
             $match['$match']['mediaId'] = [ '$in' => $mediaIds ];
         }
 
-        // Select collection
         $collection = $this->client->selectCollection($this->config['database'], $this->table);
 
-        // Paging
-        // ------
-        // Check whether or not we've requested a page, if we have then we need a count of records total for paging
-        // if we haven't then we don't bother getting a count
-        $total = 0;
-        if ($start !== null && $length !== null) {
-            // We add a group pipeline to get a total count of records
-            $group = [
-                '$group' => [
-                    '_id' => null,
-                    'count' => ['$sum' => 1],
-                ]
+
+        // Get total
+        try {
+            $totalQuery = [
+                $match,
+                [
+                    '$group' => [
+                        '_id'=> null,
+                        'count' => ['$sum' => 1],
+                    ]
+                ],
             ];
+            $totalCursor = $collection->aggregate($totalQuery, ['allowDiskUse' => true]);
 
-            if (count($match) > 0) {
-                $totalQuery = [
-                    $match,
-                    $group,
-                ];
-            } else {
-                $totalQuery = [
-                    $group,
-                ];
-            }
+            $totalCount = $totalCursor->toArray();
+            $total = (count($totalCount) > 0) ? $totalCount[0]['count'] : 0;
 
-            // Get total
-            try {
-                $totalCursor = $collection->aggregate($totalQuery, ['allowDiskUse' => true]);
-
-                $totalCount = $totalCursor->toArray();
-                $total = (count($totalCount) > 0) ? $totalCount[0]['count'] : 0;
-
-            } catch (\MongoDB\Exception\RuntimeException $e) {
-                $this->log->error('Error: Total Count. ' . $e->getMessage());
-                throw new GeneralException(__('Sorry we encountered an error getting Proof of Play data, please consult your administrator'));
-            } catch (\Exception $e) {
-                $this->log->error('Error: Total Count. ' . $e->getMessage());
-                throw new GeneralException(__('Sorry we encountered an error getting Proof of Play data, please consult your administrator'));
-            }
+        } catch (\MongoDB\Exception\RuntimeException $e) {
+            $this->log->error($e->getMessage());
+            throw new GeneralException(__('Sorry we encountered an error getting Proof of Play data, please consult your administrator'));
+        } catch (\Exception $e) {
+            $this->log->error($e->getMessage());
+            throw new GeneralException(__('Sorry we encountered an error getting Proof of Play data, please consult your administrator'));
         }
 
         try {
-
-            $project = [
-                '$project' => [
-                    'id'=> '$_id',
-                    'type'=> 1,
-                    'start'=> 1,
-                    'end'=> 1,
-                    'layout'=> '$layoutName',
-                    'display'=> '$displayName',
-                    'media'=> '$mediaName',
-                    'tag'=> '$eventName',
-                    'duration'=> '$duration',
-                    'count'=> '$count',
-                    'displayId'=> 1,
-                    'layoutId'=> 1,
-                    'widgetId'=> 1,
-                    'mediaId'=> 1,
-                    'campaignId'=> 1,
-                    'statDate'=> 1,
-                    'engagements'=> 1,
-                    'tagFilter' => 1
-                ]
+            $query = [
+                $match,
+                [
+                    '$project' => [
+                        'id'=> '$_id',
+                        'type'=> 1,
+                        'start'=> 1,
+                        'end'=> 1,
+                        'layout'=> '$layoutName',
+                        'display'=> '$displayName',
+                        'media'=> '$mediaName',
+                        'tag'=> '$eventName',
+                        'duration'=> '$duration',
+                        'count'=> '$count',
+                        'displayId'=> 1,
+                        'layoutId'=> 1,
+                        'widgetId'=> 1,
+                        'mediaId'=> 1,
+                        'campaignId'=> 1,
+                        'statDate'=> 1,
+                        'engagements'=> 1,
+                        'tagFilter' => 1
+                    ]
+                ],
             ];
 
-            if (count($match) > 0) {
+            // Sort by id (statId) - we must sort before we do pagination as mongo stat has descending order indexing on start/end
+            $query[]['$sort'] = ['id'=> 1];
 
-                $query = [
-                    $match,
-                    $project,
-                ];
-            } else {
-
-                $query = [
-                    $project,
-                ];
-            }
-
-            // Paging
             if ($start !== null && $length !== null) {
-                // Sort by id (statId) - we must sort before we do pagination as mongo stat has descending order indexing on start/end
-                $query[]['$sort'] = ['id'=> 1];
                 $query[]['$skip'] =  $start;
                 $query[]['$limit'] = $length;
             }
@@ -642,14 +600,14 @@ class MongoDbTimeSeriesStore implements TimeSeriesStoreInterface
 
             $result = new TimeSeriesMongoDbResults($cursor);
 
-            // Total (we have worked this out above if we have paging enabled, otherwise its 0)
+            // Total
             $result->totalCount = $total;
 
         } catch (\MongoDB\Exception\RuntimeException $e) {
-            $this->log->error('Error: Get total. '. $e->getMessage());
+            $this->log->error($e->getMessage());
             throw new GeneralException(__('Sorry we encountered an error getting Proof of Play data, please consult your administrator'));
         } catch (\Exception $e) {
-            $this->log->error('Error: Get total. '. $e->getMessage());
+            $this->log->error($e->getMessage());
             throw new GeneralException(__('Sorry we encountered an error getting Proof of Play data, please consult your administrator'));
         }
 
@@ -713,30 +671,60 @@ class MongoDbTimeSeriesStore implements TimeSeriesStoreInterface
     /** @inheritdoc */
     public function deleteStats($maxage, $fromDt = null, $options = [])
     {
-        // Filter the records we want to delete.
+        // Set default options
+        $options = array_merge([
+            'maxAttempts' => 10,
+            'statsDeleteSleep' => 3,
+            'limit' => 1000,
+        ], $options);
+
         // we dont use $options['limit'] anymore.
         // we delete all the records at once based on filter criteria (no-limit approach)
-        $filter = [
-            'start' => ['$lte' => new UTCDateTime($maxage->format('U')*1000)],
-        ];
 
-        // Do we also limit the from date?
-        if ($fromDt !== null) {
-            $filter['end'] = ['$gt' => new UTCDateTime($fromDt->format('U')*1000)];
+        $toDt = new UTCDateTime($maxage->format('U')*1000);
+
+        $collection = $this->client->selectCollection($this->config['database'], $this->table);
+
+        $rows = 1;
+        $count = 0;
+
+        if ($fromDt != null) {
+
+            $start = new UTCDateTime($fromDt->format('U')*1000);
+            $filter =  [
+                'start' => ['$lte' => $toDt],
+                'end' => ['$gt' => $start]
+            ];
+
+        } else {
+
+            $filter =  [
+                'start' => ['$lte' => $toDt]
+            ];
         }
 
-        // Run the delete and return the number of records we deleted.
         try {
-            $deleteResult = $this->client
-                ->selectCollection($this->config['database'], $this->table)
-                ->deleteMany($filter);
+            $deleteResult = $collection->deleteMany(
+                $filter
+            );
+            $rows = $deleteResult->getDeletedCount();
 
-            return $deleteResult->getDeletedCount();
 
         } catch (\MongoDB\Exception\RuntimeException $e) {
             $this->log->error($e->getMessage());
-            throw new GeneralException('Stats cannot be deleted.');
         }
+
+        $count += $rows;
+
+        // Give MongoDB time to recover
+        if ($rows > 0) {
+            $this->log->debug('Stats delete effected ' . $rows . ' rows, sleeping.');
+            sleep($options['statsDeleteSleep']);
+        }
+
+
+        return $count;
+
     }
 
     /** @inheritdoc */

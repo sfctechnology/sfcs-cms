@@ -19,7 +19,6 @@
  * along with Xibo.  If not, see <http://www.gnu.org/licenses/>.
  */
 namespace Xibo\Controller;
-use RobThree\Auth\TwoFactorAuth;
 use Xibo\Entity\User;
 use Xibo\Exception\AccessDeniedException;
 use Xibo\Exception\ConfigurationException;
@@ -36,6 +35,7 @@ use Xibo\Service\DateServiceInterface;
 use Xibo\Service\LogServiceInterface;
 use Xibo\Service\SanitizerServiceInterface;
 use Xibo\Storage\StorageServiceInterface;
+use RobThree\Auth\TwoFactorAuth;
 
 /**
  * Class Login
@@ -197,8 +197,8 @@ class Login extends Base
                 /* @var User $user */
                 $user = $this->userFactory->getByName($username);
 
-                // DOOH user/Retired user
-                if ($user->userTypeId === 4 || $user->retired === 1) {
+                // DOOH user
+                if ($user->userTypeId === 4) {
                     throw new AccessDeniedException('Sorry this account does not exist or does not have permission to access the web portal.');
                 }
 

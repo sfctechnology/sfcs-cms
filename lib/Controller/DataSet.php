@@ -45,9 +45,6 @@ class DataSet extends Base
     /** @var  DataSetColumnFactory */
     private $dataSetColumnFactory;
 
-    /** @var \Xibo\Factory\UserFactory */
-    private $userFactory;
-
     /**
      * Set common dependencies.
      * @param LogServiceInterface $log
@@ -59,15 +56,13 @@ class DataSet extends Base
      * @param ConfigServiceInterface $config
      * @param DataSetFactory $dataSetFactory
      * @param DataSetColumnFactory $dataSetColumnFactory
-     * @param \Xibo\Factory\UserFactory $userFactory
      */
-    public function __construct($log, $sanitizerService, $state, $user, $help, $date, $config, $dataSetFactory, $dataSetColumnFactory, $userFactory)
+    public function __construct($log, $sanitizerService, $state, $user, $help, $date, $config, $dataSetFactory, $dataSetColumnFactory)
     {
         $this->setCommonDependencies($log, $sanitizerService, $state, $user, $help, $date, $config);
 
         $this->dataSetFactory = $dataSetFactory;
         $this->dataSetColumnFactory = $dataSetColumnFactory;
-        $this->userFactory = $userFactory;
     }
 
     /**
@@ -92,9 +87,6 @@ class DataSet extends Base
     public function displayPage()
     {
         $this->getState()->template = 'dataset-page';
-        $this->getState()->setData([
-            'users' => $this->userFactory->query(),
-        ]);
     }
 
     /**
@@ -129,13 +121,6 @@ class DataSet extends Base
      *      required=false
      *   ),
      *  @SWG\Parameter(
-     *      name="userId",
-     *      in="query",
-     *      description="Filter by user Id",
-     *      type="integer",
-     *      required=false
-     *   ),
-     *  @SWG\Parameter(
      *      name="embed",
      *      in="query",
      *      description="Embed related data such as columns",
@@ -164,7 +149,6 @@ class DataSet extends Base
             'dataSet' => $this->getSanitizer()->getString('dataSet'),
             'useRegexForName' => $this->getSanitizer()->getCheckbox('useRegexForName'),
             'code' => $this->getSanitizer()->getString('code'),
-            'userId' => $this->getSanitizer()->getInt('userId'),
         ];
 
         $dataSets = $this->dataSetFactory->query($this->gridRenderSort(), $this->gridRenderFilter($filter));
@@ -1129,14 +1113,8 @@ class DataSet extends Base
         // Set this DataSet as active.
         $dataSet->setActive();
 
-        // Getting the dependant DataSet to process the current DataSet on
-        $dependant = null;
-        if ($dataSet->runsAfter != null && $dataSet->runsAfter != $dataSet->dataSetId) {
-            $dependant = $this->dataSetFactory->getById($dataSet->runsAfter);
-        }
-
         // Call the remote service requested
-        $data = $this->dataSetFactory->callRemoteService($dataSet, $dependant, false);
+        $data = $this->dataSetFactory->callRemoteService($dataSet, null, false);
 
         if ($data->number > 0) {
             // Process the results, but don't record them

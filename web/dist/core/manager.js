@@ -1,1 +1,428 @@
-const Change=require("../core/change.js"),managerTemplate=require("../templates/manager.hbs"),inverseChangeMap={transform:{inverse:"transform",parseData:!0},create:{inverse:"delete"},saveForm:{inverse:"saveForm"},addMedia:{inverse:"delete"},addWidget:{inverse:"delete"},order:{inverse:"order"}};let Manager=function(e,t,a){this.parent=e,this.DOMObject=t,this.extended=!0,this.visible=a,this.changeUniqueId=0,this.changeHistory=[],this.toggleExtended=function(){this.extended=!this.extended,this.render()},this.changesToUpload=function(){for(let e=this.changeHistory.length-1;e>=0;e--)if(!this.changeHistory[e].uploaded)return!0;return!1}};Manager.prototype.addChange=function(e,t,a,r,n,{upload:i=!0,addToHistory:s=!0,updateTargetId:o=!1,updateTargetType:d=null,customRequestPath:l=null,customRequestReplace:g=null}={}){const h=this.changeUniqueId++,c=new Change(h,e,t,a,r,n);return s&&(this.changeHistory.push(c),this.render()),i?this.uploadChange(c,o,d,l,g):Promise.resolve("Change added!")},Manager.prototype.uploadChange=function(e,t,a,r,n){const i=this,s=this.parent;if(!e||e.uploaded)return Promise.reject("Change already uploaded!");e.uploading=!0;const o=null!=r?r:urlsForApi[e.target.type][e.type];let d=o.url;if(n&&(d=d.replace(n.tag,n.replace)),e.target){let t=e.target.id;(null==t||o.useMainObjectId)&&(t=s.mainObjectId),d=d.replace(":id",t)}return new Promise((function(r,n){$.ajax({url:d,type:o.type,data:e.newState}).done(function(s){if(s.success){if(e.uploaded=!0,e.uploading=!1,t)if("create"===e.type||"addWidget"===e.type)e.target.id=s.id;else if("addMedia"===e.type){e.target.id=[];for(let t=0;t<s.data.newWidgets.length;t++)e.target.id.push(s.data.newWidgets[t].widgetId)}null!=a&&(e.target.type=a),r(s)}else s.login?(window.location.href=window.location.href,location.reload(!1)):null==s.message?n(s):n(s.message);i.render()}.bind(e)).fail((function(e,t,a){console.error(e,t,a),n({jqXHR:e,textStatus:t,errorThrown:a})}))}))},Manager.prototype.revertChange=function(){if(this.changeHistory.length<=0)return Promise.reject("There are no changes in history!");const e=this,t=this.parent,a=this.changeHistory[this.changeHistory.length-1],r=inverseChangeMap[a.type].inverse,n=inverseChangeMap[a.type].parseData;return new Promise((function(i,s){if(a.uploaded){const n=urlsForApi[a.target.type][r],o=function(){let d=n.url;if(a.target){let e="";$.isArray(a.target.id)?(e=a.target.id[0],a.target.id.shift()):e=a.target.id,(null==e||n.useMainObjectId)&&(e=t.mainObjectId),d=d.replace(":id",e)}$.ajax({url:d,type:n.type,data:a.oldState}).done((function(n){n.success?$.isArray(a.target.id)&&0==a.target.id.length||$.isNumeric(a.target.id)?(e.changeHistory.pop(),"delete"===r&&t.selectObject(),i(n)):(toastr.success(n.message),o()):n.login?(window.location.href=window.location.href,location.reload(!1)):null==n.message?s(n):s(n.message)})).fail((function(e,t,a){console.error(e,t,a),s({jqXHR:e,textStatus:t,errorThrown:a})}))};o()}else{let s=a.oldState,o=t.getElementByTypeAndId(a.target.type,a.target.type+"_"+a.target.id);null!=n&&n&&(s=JSON.parse(s.regions)[0]),o[r](s,!1),e.changeHistory.pop(),i({type:r,target:a.target.type,message:"Change reverted",localRevert:!0})}}))},Manager.prototype.saveAllChanges=async function(){const e=this;if(!this.changesToUpload())return Promise.resolve("No changes to upload");let t=[];for(let a=0;a<e.changeHistory.length;a++){const r=e.changeHistory[a];r.uploaded||r.uploading||(r.uploading=!0,t.push(await e.uploadChange(r)),e.render())}return Promise.all(t)},Manager.prototype.removeAllChanges=function(e,t){const a=this;return new Promise((function(r,n){for(let r=0;r<a.changeHistory.length;r++){const n=a.changeHistory[r];n.target.type===e&&(n.target.id===t||$.isArray(n.target.id)&&n.target.id.includes(t))&&(a.changeHistory.splice(r,1),r--)}a.render(),r("All Changes Removed")}))},Manager.prototype.removeLastChange=function(){this.changeHistory.pop(),this.render()},Manager.prototype.render=function(){if(0==this.visible)return;const e=managerTemplate(this);this.DOMObject.html(e),this.DOMObject.draggable(),this.DOMObject.find("#layout-manager-header .title").click(this.toggleExtended.bind(this))},module.exports=Manager;
+// MANAGER Module
+/**
+ * History manager, that stores all the changes and operations that can be applied to them (upload/revert)
+ */
+
+const Change = require('../core/change.js');
+const managerTemplate = require('../templates/manager.hbs');
+
+// Map from a operation to its inverse, and detail if the operation is done on the element or the layout
+const inverseChangeMap = {
+    transform: {
+        inverse: 'transform',
+        parseData: true
+    },
+    create: {
+        inverse: 'delete'
+    },
+    saveForm: {
+        inverse: 'saveForm'
+    },
+    addMedia: {
+        inverse: 'delete'
+    },
+    addWidget: {
+        inverse: 'delete'
+    },
+    order: {
+        inverse: 'order'
+    }
+};
+
+/**
+ * History Manager
+ */
+let Manager = function(parent, container, visible) {
+
+    this.parent = parent;
+    
+    this.DOMObject = container;
+
+    this.extended = true;
+
+    this.visible = visible;
+
+    this.changeUniqueId = 0;
+
+    this.changeHistory = []; // Array of changes
+
+    this.toggleExtended = function() {  
+        this.extended = !this.extended;
+
+        // Render template container
+        this.render();
+    };
+
+    // Return true if there are some not uploaded changes
+    this.changesToUpload = function() {
+
+        for(let index = this.changeHistory.length - 1;index >= 0;index--) {
+
+            if(!this.changeHistory[index].uploaded) {
+                return true;
+            }
+        }
+
+        return false;
+    };
+};
+
+/**
+ * Save a editor change to the history array
+ * @param  {string} type -Type of change ( resize, move )
+ * @param  {string} targetType - Target object Type ( widget, region, layout, ... )
+ * @param  {string} targetID - Target object ID
+ * @param {object=} [oldValues] - Previous object change
+ * @param {object=} [newValues] - New object change
+ * @param {object =} [options] - Navigator options
+ * @param {bool=} [options.upload = true] - Upload change in real time
+ * @param {bool=} [options.addToHistory = true] - Add change to the history array
+ * @param {bool=} [options.updateTargetId = false] - Update change target id with the one returned from the API on upload
+ * @param {string=} [options.updateTargetType = null] - Update change target type after upload with the value passed on this variable
+ * @param {object=} [options.customRequestPath = null] - Custom Request Path ( url and type )
+ * @param {object=} [options.customRequestReplace = null] - Custom Request replace ( tag and replace )
+*/
+Manager.prototype.addChange = function(changeType, targetType, targetId, oldValues, newValues, {upload = true, addToHistory = true, updateTargetId = false, updateTargetType = null, customRequestPath = null, customRequestReplace = null} = {}) {
+
+    const changeId = this.changeUniqueId++;
+
+    // create new change and add it to the array
+    const newChange = new Change(
+        changeId,
+        changeType,
+        targetType,
+        targetId,
+        oldValues,
+        newValues
+    );
+
+    // Add change to the history array
+    if(addToHistory) {
+        this.changeHistory.push(newChange);
+
+        // Render template container
+        this.render();
+    }
+
+    // Upload change
+    if(upload) {
+        return this.uploadChange(newChange, updateTargetId, updateTargetType, customRequestPath, customRequestReplace);
+    } else {
+        return Promise.resolve('Change added!');
+    }
+
+};
+
+/**
+ * Upload first change in the history array
+ * 
+ * @param {object} change 
+ * @param {bool=} updateId 
+ * @param {string=} updateType 
+ * @param {object=} customRequestPath 
+ * @param {object=} customRequestReplace 
+ */
+Manager.prototype.uploadChange = function(change, updateId, updateType, customRequestPath, customRequestReplace) {
+
+    const self = this;
+    const app = this.parent;
+
+    // Test for empty history array
+    if(!change || change.uploaded ) {
+        return Promise.reject('Change already uploaded!');
+    }
+
+    change.uploading = true;
+
+    const linkToAPI = (customRequestPath != null) ? customRequestPath : urlsForApi[change.target.type][change.type];
+
+    let requestPath = linkToAPI.url;
+
+    // Custom replace tag
+    if(customRequestReplace) {
+        requestPath = requestPath.replace(customRequestReplace.tag, customRequestReplace.replace);
+    }
+
+    // replace id if necessary/exists
+    if(change.target) {
+        let replaceId = change.target.id;
+
+        // If the replaceId is not set or the change needs the main object Id
+        if(replaceId == null || linkToAPI.useMainObjectId) {
+            replaceId = app.mainObjectId;
+        }
+
+        requestPath = requestPath.replace(':id', replaceId);
+    }
+
+    // Run ajax request and save promise
+    return new Promise(function(resolve, reject) {
+        $.ajax({
+            url: requestPath,
+            type: linkToAPI.type,
+            data: change.newState,
+        }).done(function(data) {
+            if(data.success) {
+
+                change.uploaded = true;
+                change.uploading = false;
+
+                // Update the Id of the change with the new element
+                if(updateId) {
+                    if(change.type === 'create' || change.type === 'addWidget') {
+                        change.target.id = data.id;
+                    } else if(change.type === 'addMedia') {
+                        change.target.id = data.data.newWidgets[0].widgetId;
+                    }
+                }
+
+                // If set: Update the type of change to enable the revert
+                if(updateType != null) {
+                    change.target.type = updateType;
+                }
+
+                // Resolve promise
+                resolve(data);
+
+            } else {
+
+                // Login Form needed?
+                if(data.login) {
+
+                    window.location.href = window.location.href;
+                    location.reload(false);
+                } else {
+                    // Just an error we dont know about
+                    if(data.message == undefined) {
+                        reject(data);
+                    } else {
+                        reject(data.message);
+                    }
+                }
+            }
+
+            // Render/Update Manager
+            self.render();
+
+        }.bind(change)).fail(function(jqXHR, textStatus, errorThrown) {
+            // Output error to console
+            console.error(jqXHR, textStatus, errorThrown);
+
+            // Reject promise and return an object with all values
+            reject({jqXHR, textStatus, errorThrown});
+        });
+    });
+};
+
+
+/**
+ * Revert change by ID or the last one in the history array
+*/
+Manager.prototype.revertChange = function() {
+
+    // Prevent trying to revert if there are no changes in history
+    if(this.changeHistory.length <= 0) {
+        return Promise.reject('There are no changes in history!');
+    }
+
+    const self = this;
+
+    const app = this.parent;
+
+    // Get the last change in the array
+    const lastChange = this.changeHistory[this.changeHistory.length - 1];
+
+    const inverseOperation = inverseChangeMap[lastChange.type].inverse;
+    const parseData = inverseChangeMap[lastChange.type].parseData;
+
+    return new Promise(function(resolve, reject) {
+
+        if(!lastChange.uploaded) { // Revert on the client side ( non uploaded change )
+
+            // Get data to apply
+            let data = lastChange.oldState;
+
+            // Get element by type,from the main object
+            let element = app.getElementByTypeAndId(
+                lastChange.target.type, // Type
+                lastChange.target.type + '_' + lastChange.target.id // Id
+            );
+
+            // If the operation needs data parsing
+            if(parseData != undefined && parseData) {
+                data = JSON.parse(data.regions)[0];
+            }
+
+            // Apply inverse operation to the element
+            element[inverseOperation](data, false);
+
+            // Remove change from history
+            self.changeHistory.pop();
+
+            resolve({
+                type: inverseOperation,
+                target: lastChange.target.type,
+                message: 'Change reverted',
+                localRevert: true
+            });
+        } else { // Revert using the API
+
+            const linkToAPI = urlsForApi[lastChange.target.type][inverseOperation];
+            let requestPath = linkToAPI.url;
+
+            // replace id if necessary/exists
+            if(lastChange.target) {
+                let replaceId = lastChange.target.id;
+
+                // If the replaceId is not set or the change needs the layoutId, set it to the replace var
+                if(replaceId == null || linkToAPI.useMainObjectId) {
+                    replaceId = app.mainObjectId;
+                }
+
+                requestPath = requestPath.replace(':id', replaceId);
+            }
+
+            $.ajax({
+                url: requestPath,
+                type: linkToAPI.type,
+                data: lastChange.oldState,
+            }).done(function(data) {
+                if(data.success) {
+
+                    // Remove change from history
+                    self.changeHistory.pop();
+
+                    // If the operation is a deletion, unselect object before deleting
+                    if(inverseOperation === 'delete') {
+
+                        // Unselect selected object before deleting
+                        app.selectObject();
+                    }
+
+                    // Resolve promise
+                    resolve(data);
+
+                } else {
+                    // Login Form needed?
+                    if(data.login) {
+
+                        window.location.href = window.location.href;
+                        location.reload(false);
+                    } else {
+                        // Just an error we dont know about
+                        if(data.message == undefined) {
+                            reject(data);
+                        } else {
+                            reject(data.message);
+                        }
+                    }
+                }
+
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                // Output error to console
+                console.error(jqXHR, textStatus, errorThrown);
+
+                // Reject promise and return an object with all values
+                reject({jqXHR, textStatus, errorThrown});
+            });
+        }
+    });
+};
+
+/**
+ * Save all the changes in the history array
+*/
+Manager.prototype.saveAllChanges = async function() {
+
+    const self = this;
+
+    // stop method if there are no changes to be saved
+    if(!this.changesToUpload()) {
+        return Promise.resolve('No changes to upload');
+    }
+
+    let promiseArray = [];
+        
+    for(let index = 0;index < self.changeHistory.length;index++) {
+
+        const change = self.changeHistory[index];
+
+        // skip already uploaded changes
+        if(change.uploaded || change.uploading) {
+            continue;
+        }
+        
+        change.uploading = true;
+        
+        promiseArray.push(await self.uploadChange(change));
+
+        // Render manager container to update the change
+        self.render();
+    }
+
+    return Promise.all(promiseArray);
+};
+
+/**
+ * Remove all the changes in the history array related to a specific object
+ * @param  {string} targetType - Target object Type ( widget, region, layout, ... )
+ * @param  {string} targetId - Target object ID
+*/
+Manager.prototype.removeAllChanges = function(targetType, targetId) {
+
+    const self = this;
+
+    return new Promise(function(resolve, reject) {
+        
+        for(let index = 0;index < self.changeHistory.length;index++) {
+
+            const change = self.changeHistory[index];
+            
+            if(change.target.type === targetType && change.target.id === targetId) {
+
+                self.changeHistory.splice(index, 1);
+
+                // When change is removed, we need to decrement the index
+                index--;
+            }
+        }
+
+        // Render template container
+        self.render();
+
+        resolve('All Changes Removed');
+    });
+};
+
+
+/**
+ * Remove last change
+*/
+Manager.prototype.removeLastChange = function() {
+    
+    this.changeHistory.pop();
+    this.render();
+};
+
+/**
+ * Render Manager
+ */
+Manager.prototype.render = function() {
+
+    if(this.visible == false) {
+        return;
+    }
+    // Compile layout template with data
+    const html = managerTemplate(this);
+
+    // Append layout html to the main div
+    this.DOMObject.html(html);
+
+    //Make the history div draggable
+    this.DOMObject.draggable();
+
+    //Add toggle visibility event
+    this.DOMObject.find('#layout-manager-header .title').click(this.toggleExtended.bind(this));
+};
+
+module.exports = Manager;

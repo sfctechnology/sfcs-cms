@@ -30,6 +30,7 @@ body {
   width: 180px;
   position: fixed;
   height: 100%;
+  z-index: 999;
 }
 .green {
   background: #23ae89 !important;
@@ -87,9 +88,10 @@ ul.sidebar .sidebar-main .menu-icon {
 }
 ul.sidebar .sidebar-title {
   font-size: 12px;
-  height: 35px;
-  line-height: 40px;
+  height: 34px;
+  line-height: 24px;
   text-transform: uppercase;
+  padding: 10px 0;
 }
 #page-wrapper:not(.active) ul.sidebar .sidebar-title {
   display: none;
@@ -100,13 +102,13 @@ ul.sidebar .sidebar-title {
   margin: 13px 0;
 }
 ul.sidebar .sidebar-list {
-  height: 40px;
+  height: 24px;
 }
 ul.sidebar .sidebar-list a {
   text-indent: 25px;
   font-size: 15px;
   color: #b2bfdc;
-  line-height: 40px;
+  line-height: 24px;
 }
 ul.sidebar .sidebar-list a:hover {
   color: #fff;
@@ -120,7 +122,7 @@ ul.sidebar .sidebar-list a:hover {
 ul.sidebar .sidebar-list .menu-icon {
   float: right;
   padding-right: 29px;
-  line-height: 40px;
+  line-height: 20px;
   width: 70px;
 }
 ul.sidebar .sidebar-list a:hover .menu-icon {
@@ -167,13 +169,13 @@ ul.sidebar .sidebar-list a:hover .menu-icon {
 }
 #page-wrapper.active #sidebar-wrapper {
   left: 150px;
-  z-index: 3;
+  z-index: 1;
 }
 
 /* Header */
 .row.header {
   height: 60px;
-  background: #FFFFFF;
+  background: #273759;
   margin-bottom: 15px;
 }
 .row.header > div:last-child {
@@ -212,7 +214,7 @@ ul.sidebar .sidebar-list a:hover .menu-icon {
   vertical-align: middle;
 }
 .row.header .user > .item a {
-  color: #FFA500;
+  color: #919191;
   display: block;
 }
 .row.header .user > .item i {
@@ -301,9 +303,11 @@ ul.sidebar .sidebar-list a:hover .menu-icon {
 .widget .widget-body table tbody * {
   font-size: 13px !important;
 }
+
 .widget .widget-body table tbody .btn-tag { 
     padding: 0px 5px;
 }
+
 .widget .widget-body.no-padding .error, .widget .widget-body.no-padding .message {
   padding: 20px;
 }
@@ -373,6 +377,8 @@ ul.sidebar .sidebar-title {
 .news-widget div.article {
   padding-top: 15px;
 }
+
+
 
 /* Horizontal Menu */
 .navbar-default {

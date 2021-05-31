@@ -123,8 +123,7 @@ class Report extends Base
             'useRegexForName' => $this->getSanitizer()->getCheckbox('useRegexForName'),
             'userId' => $this->getSanitizer()->getInt('userId'),
             'reportScheduleId' => $this->getSanitizer()->getInt('reportScheduleId'),
-            'reportName' => $this->getSanitizer()->getString('reportName'),
-            'onlyMySchedules' => $this->getSanitizer()->getCheckbox('onlyMySchedules')
+            'reportName' => $this->getSanitizer()->getString('reportName')
         ]));
 
         /** @var \Xibo\Entity\ReportSchedule $reportSchedule */
@@ -562,8 +561,7 @@ class Report extends Base
             'saveAs' => $this->getSanitizer()->getString('saveAs'),
             'useRegexForName' => $this->getSanitizer()->getCheckbox('useRegexForName'),
             'userId' => $this->getSanitizer()->getInt('userId'),
-            'reportName' => $this->getSanitizer()->getString('reportName'),
-            'onlyMyReport' => $this->getSanitizer()->getCheckbox('onlyMyReport')
+            'reportName' => $this->getSanitizer()->getString('reportName')
         ]));
 
         foreach ($savedReports as $savedReport) {
